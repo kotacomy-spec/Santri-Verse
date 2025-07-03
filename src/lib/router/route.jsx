@@ -1,9 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "@/pages/home";
+import LoginPages from "@/pages/auth/Login";
+import MusyrifPage from "@/pages/Muysrif/Musyrif";
 
 export const routes = createBrowserRouter([
   {
-    path: "/home",
-    element: <App />,
+    path: "/auth/login",
+    element: <LoginPages />,
+  },
+  {
+    path: "/musyrif/dashboard",
+    element: <MusyrifPage />,
   },
 ]);
