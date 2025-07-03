@@ -1,5 +1,5 @@
 import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
-import Dashboard from "@/components/views/Musyrif/dashboard";
+import Dashboard from "@/components/views/Musyrif/Dashboard";
 
 const MusyrifPage = () => {
   return (
