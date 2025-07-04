@@ -1,4 +1,4 @@
-const Dashboard = () => {
+const DashboardMusyrif = () => {
   return (
     <div>
       <h1>Musyrif Dashboard</h1>
@@ -6,4 +6,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardMusyrif;

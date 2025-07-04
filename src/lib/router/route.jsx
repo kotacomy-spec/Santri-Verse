@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPages from "@/pages/auth/Login";
 import MusyrifPage from "@/pages/Muysrif/Musyrif";
+import NotFoundPage from "@/notfound";
 
 export const routes = createBrowserRouter([
   {
@@ -10,5 +11,9 @@ export const routes = createBrowserRouter([
   {
     path: "/musyrif/dashboard",
     element: <MusyrifPage />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
