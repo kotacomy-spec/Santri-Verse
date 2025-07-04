@@ -1,10 +1,10 @@
 import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
-import Dashboard from "@/components/views/Musyrif/Dashboard";
+import DashboardMusyrif from "@/components/views/Musyrif/DashboardMusyrif";
 
 const MusyrifPage = () => {
   return (
     <DashboardLayout>
-      <Dashboard></Dashboard>
+      <DashboardMusyrif />
     </DashboardLayout>
   );
 };
