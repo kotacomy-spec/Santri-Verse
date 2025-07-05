@@ -8,13 +8,52 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Toaster, toast } from "sonner";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { supabase } from "@/lib/supabase/supabaseClient";
+
+import { useNavigate } from "react-router-dom";
 
 const LoginPages = () => {
   const [visiBility, setVisibility] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const toastId = toast.loading("Mohon Tunggu Sebentar...");
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (!email || !password) {
+        toast.error("Harap isi semua field", {
+          id: toastId,
+        });
+        return;
+      }
+
+      if (error) throw error;
+
+      toast.success("Berhasil Login", {
+        id: toastId,
+      });
+
+      navigate("/musyrif/dashboard");
+    } catch (error) {
+      toast.error(error?.message || "Login Gagal coba lagi", {
+        id: toastId,
+      });
+      return;
+    }
+  };
 
   return (
     <>
@@ -26,73 +65,77 @@ const LoginPages = () => {
             </CardTitle>
             <CardDescription>
               <div className="w-ful flex justify-center mb-2">
-                {/* Logone sek urung nemu sementara gae vite sek */}
                 <img src="/vite.svg" alt="" width={80} height={80} />
               </div>
-              {/* Masukkan email untuk masuk ke akun anda */}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-2">
-                  <Label className={"text-[1rem]"} htmlFor="email">
-                    Email
-                  </Label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                      <Mail size={20} />
-                    </div>
-                    <Input
-                      className={
-                        "w-full pl-12 h-[3rem] pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent"
-                      }
-                      id="email"
-                      type="email"
-                      placeholder="orangtua@gmail.com"
-                      required
-                    />
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label className={"text-[1rem]"} htmlFor="email">
+                  Email
+                </Label>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    <Mail size={20} />
                   </div>
-                </div>
-                <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <Label className={"text-[1rem]"} htmlFor="password">
-                      Password
-                    </Label>
-                    <a
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                      href="#"
-                    >
-                      Lupa password ?
-                    </a>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                      <Lock />
-                    </div>
-                    <Input
-                      className={
-                        "h-[3rem] w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent"
-                      }
-                      id="password"
-                      type={visiBility ? "password" : "text"}
-                      placeholder="passwordkamu"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setVisibility(!visiBility)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    >
-                      {visiBility ? <EyeOff size={20} /> : <Eye size={20} />}
-                    </button>
-                  </div>
+                  <Input
+                    className={
+                      "w-full pl-12 h-[3rem] pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent"
+                    }
+                    id="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="orangtua@gmail.com"
+                    required
+                    value={email}
+                  />
                 </div>
               </div>
-            </form>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label className={"text-[1rem]"} htmlFor="password">
+                    Password
+                  </Label>
+                  <a
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    href="#"
+                  >
+                    Lupa password ?
+                  </a>
+                </div>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    <Lock />
+                  </div>
+                  <Input
+                    className={
+                      "h-[3rem] w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent"
+                    }
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    type={visiBility ? "password" : "text"}
+                    placeholder="passwordkamu"
+                    value={password}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setVisibility(!visiBility)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {visiBility ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+              </div>
+            </div>
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button type="submit" className="w-full h-[2.5rem]">
+            <Button
+              type="submit"
+              onClick={handleLogin}
+              className="w-full h-[2.5rem]"
+            >
               Login
             </Button>
           </CardFooter>
