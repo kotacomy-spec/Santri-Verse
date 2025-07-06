@@ -49,7 +49,7 @@ const UserNav = () => {
       .eq("id", userId)
       .single();
 
-    const username = userProfile.full_name;
+    const username = userProfile.username;
     setUserInfo({
       username: username,
       email: userEmail,
