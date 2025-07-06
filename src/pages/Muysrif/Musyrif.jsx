@@ -3,7 +3,7 @@ import DashboardMusyrif from "@/components/views/Musyrif/DashboardMusyrif";
 
 const MusyrifPage = () => {
   return (
-    <DashboardLayout>
+    <DashboardLayout type="musyrif">
       <DashboardMusyrif />
     </DashboardLayout>
   );
