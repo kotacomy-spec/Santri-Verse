@@ -6,6 +6,11 @@
 
 ## 📌 Fitur Utama
 
+### 📝 Pendaftaran Santri (PSB)
+
+- Formulir pendaftaran santri baru secara online
+- Data calon santri akan masuk ke sistem dan bisa diverifikasi oleh admin
+
 ### 🎓 Untuk Musyrif
 
 - **Manajemen Pelanggaran**
@@ -104,6 +109,11 @@ Pastikan Anda telah mengatur file `.env` dan konfigurasi Supabase dengan benar.
 **Mondok** is a web-based pesantren (Islamic boarding school) management system built with **React**, **Tailwind CSS**, **Supabase**, and **Shadcn/UI**.
 
 ### 🎯 Key Features
+
+#### 📝 Student Registration (PSB)
+
+- Online registration form for new students
+- Submitted student data is stored in the system and can be verified by admin
 
 #### 🎓 For Musyrif (Supervisors)
 
