@@ -15,7 +15,7 @@ const sidebarMusyrif = [
   {
     key: "Dashboard",
     label: "Dashboard",
-    href: "/musyrif",
+    href: "/musyrif/dashboard",
     icon: <LayoutDashboard size={18} />,
   },
   {
