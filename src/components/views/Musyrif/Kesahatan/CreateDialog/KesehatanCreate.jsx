@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/command";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/lib/supabase/supabaseClient";
+import { toast } from "sonner";
 
 const CreateKesehatan = (props) => {
   const { dialogstate, setDialogState } = props;
@@ -49,6 +50,7 @@ const CreateKesehatan = (props) => {
   const [value, setValue] = useState("");
   const [musyrif, setMusyrif] = useState();
   const [santriData, setSantri] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const getData = async () => {
     setLoading(true);
@@ -59,10 +61,10 @@ const CreateKesehatan = (props) => {
       .from("santri")
       .select(`nama, id`);
 
-    const { data: MusyirfProfile } = await supabase
-      .from("profiles")
-      .select("id , username")
-      .eq("id", musyrifId)
+    const { data: musyrifData } = await supabase
+      .from("musyrif")
+      .select("id, profile:profiles(id, username)")
+      .eq("profile_id", musyrifId)
       .single();
 
     const formatted = SantriData.map((item) => ({
@@ -71,11 +73,64 @@ const CreateKesehatan = (props) => {
     }));
 
     setSantri(formatted);
-    setMusyrif(MusyirfProfile);
+    setMusyrif(musyrifData);
     setLoading(false);
   };
 
-  //   const handleSubmitForm()
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+
+    if (!value) {
+      toast.error("Pilih santri terlebih dahulu");
+      return;
+    }
+
+    if (!Prioritas) {
+      toast.error("Pilih prioritas terlebih dahulu");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const formData = new FormData(e.target);
+
+      const diperiksa_oleh = formData.get("diperiksa_oleh");
+      const diagnosa = formData.get("diagnosa");
+      const keluhan = formData.get("keluhan");
+
+      console.log(value);
+      const insertData = {
+        santri_id: value,
+        musyrif_id: musyrif?.id,
+        tgl_diperiksa: date?.toISOString(),
+        diperiksa_oleh,
+        diagnosa,
+        prioritas: Prioritas,
+        keluhan,
+      };
+
+      const { error } = await supabase
+        .from("kesehatan_santri")
+        .insert([insertData]);
+
+      if (error) throw error;
+      toast.success("Data Berhasil Ditambah");
+
+      setValue("");
+      setPrioritas("");
+      setDate(new Date());
+      e.target.reset();
+
+      handleClose();
+      setIsSubmitting(false);
+    } catch (error) {
+      if (error) {
+        toast.error(error?.message || "Terjadi kesalahan saat insert data");
+        console.log(error?.message);
+      }
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -99,11 +154,11 @@ const CreateKesehatan = (props) => {
             if (!open) handleClose();
           }}
         >
-          <form>
-            <DialogContent className="sm:max-w-[800px]">
+          <DialogContent className="sm:max-w-[800px]">
+            <form onSubmit={handleSubmitForm}>
               <DialogHeader>
                 <DialogTitle>Tambah Data Kesehatan Santri</DialogTitle>
-                <DialogDescription>
+                <DialogDescription className={`mb-3 -mt-1`}>
                   Tambahkan data kesehatan santri agar kami dapat memantau
                   kondisi dan penanganannya dengan baik.
                 </DialogDescription>
@@ -167,13 +222,14 @@ const CreateKesehatan = (props) => {
                                 {santriData.map((santri) => (
                                   <CommandItem
                                     key={santri.value}
-                                    value={santri.value}
-                                    onSelect={(currentValue) => {
-                                      setValue(
-                                        currentValue === value
-                                          ? ""
-                                          : currentValue
+                                    value={santri.label}
+                                    onSelect={(currentLabel) => {
+                                      const selectedSantri = santriData.find(
+                                        (item) => item.label === currentLabel
                                       );
+                                      if (selectedSantri) {
+                                        setValue(selectedSantri.value);
+                                      }
                                       setOpenCombo(false);
                                     }}
                                   >
@@ -213,7 +269,7 @@ const CreateKesehatan = (props) => {
                     <Input
                       id="musyrif"
                       name="musyrif"
-                      defaultValue={musyrif?.username}
+                      defaultValue={musyrif?.profile.username}
                       placeholder="Nama musyrif"
                       disabled
                     />
@@ -309,12 +365,20 @@ const CreateKesehatan = (props) => {
                 <Button
                   className={`bg-green-700 cursor-pointer hover:bg-green-800`}
                   type="submit"
+                  disabled={isSubmitting}
                 >
-                  Simpan
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Menyimpan...
+                    </>
+                  ) : (
+                    "Simpan"
+                  )}
                 </Button>
               </DialogFooter>
-            </DialogContent>
-          </form>
+            </form>
+          </DialogContent>
         </Dialog>
       </div>
     </>

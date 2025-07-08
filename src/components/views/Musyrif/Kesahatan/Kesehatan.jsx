@@ -38,6 +38,8 @@ import {
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase/supabaseClient";
 import CreateKesehatan from "./CreateDialog/KesehatanCreate";
+import DeleteKesehatanRecordDialog from "./DeleteDialog/Delete";
+import { Link } from "react-router-dom";
 
 const Kesehatan = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,13 +48,17 @@ const Kesehatan = () => {
   const [kesehatanSantri, setKesehatanSantri] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [createDialog, setCreateDialog] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [filteredData, setFilteredData] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const getKesehatanSantri = async () => {
     setLoading(true);
     const { data: kesehatanData } = await supabase
       .from("kesehatan_santri")
       .select(`*, santri:santri_id(id, nama)`)
-      .order("id", { ascending: false });
+      .order("created_at", { ascending: false });
 
     setKesehatanSantri(kesehatanData);
     setLoading(false);
@@ -115,6 +121,28 @@ const Kesehatan = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const filtered = kesehatanSantri.filter((item) => {
+      const statusMatch =
+        statusFilter === "all" || item.status === statusFilter;
+      const priorityMatch =
+        priorityFilter === "all" || item.prioritas === priorityFilter;
+
+      const searchMatch = item.santri.nama
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      return searchMatch && statusMatch && priorityMatch;
+    });
+    setFilteredData(filtered);
+  }, [searchTerm, statusFilter, priorityFilter, kesehatanSantri]);
+
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   const getStatusVariant = (status) => {
     switch (status) {
       case "Dalam Perawatan":
@@ -146,6 +174,10 @@ const Kesehatan = () => {
       <CreateKesehatan
         dialogstate={createDialog}
         setDialogState={setCreateDialog}
+      />
+      <DeleteKesehatanRecordDialog
+        deleteId={deleteId}
+        setDialogState={setDeleteId}
       />
       <div className="bg-background text-foreground">
         <Card>
@@ -253,7 +285,7 @@ const Kesehatan = () => {
                         </TableCell>
                       </TableRow>
                     ))
-                  ) : kesehatanSantri.length === 0 ? (
+                  ) : paginatedData.length === 0 ? (
                     <TableRow>
                       <TableCell
                         colSpan={8}
@@ -263,7 +295,7 @@ const Kesehatan = () => {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    kesehatanSantri.map((item) => (
+                    paginatedData.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell className="font-medium">
                           KS-{item.id}
@@ -289,9 +321,17 @@ const Kesehatan = () => {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem>Edit</DropdownMenuItem>
-                              <DropdownMenuItem>Detail</DropdownMenuItem>
-                              <DropdownMenuItem className="text-red-600">
+                              <DropdownMenuItem asChild>
+                                <Link
+                                  to={`/musyrif/kesehatan/detail/${item.id}`}
+                                >
+                                  Detail
+                                </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => setDeleteId(item.id)}
+                                className="text-red-600 "
+                              >
                                 Hapus
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -308,7 +348,13 @@ const Kesehatan = () => {
                 <span className="text-sm text-muted-foreground">
                   Baris per halaman
                 </span>
-                <Select defaultValue="10">
+                <Select
+                  value={String(rowsPerPage)}
+                  onValueChange={(value) => {
+                    setRowsPerPage(Number(value));
+                    setCurrentPage(1);
+                  }}
+                >
                   <SelectTrigger className="w-[70px]">
                     <SelectValue />
                   </SelectTrigger>
@@ -319,13 +365,24 @@ const Kesehatan = () => {
                   </SelectContent>
                 </Select>
                 <span className="text-sm text-muted-foreground mx-4">
-                  Halaman 1 dari 1
+                  Halaman {currentPage} dari {totalPages || 1}
                 </span>
                 <div className="flex gap-1">
-                  <Button variant="outline" size="sm" disabled>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage((prev) => prev - 1)}
+                  >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
-                  <Button variant="outline" size="sm" disabled>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={currentPage === totalPages || totalPages === 0}
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                  >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>

@@ -1,13 +1,15 @@
 import UserNav from "@/components/UserComponent/UserNav";
-import { BookOpen, ChevronDown } from "lucide-react";
+import { BookOpenText, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const DashboardSidebar = (props) => {
   const { sidebarItems } = props;
   const [openMenus, setOpenMenu] = useState({});
-  const currentPath = window.location.pathname;
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-  const isActive = (href) => currentPath === href;
+  const isActive = (href) => currentPath.startsWith(href);
 
   const toggleMenu = (key) => {
     setOpenMenu((prev) => ({
@@ -20,7 +22,7 @@ const DashboardSidebar = (props) => {
     <div className="fixed lg:relative lg:translate-x-0 -translate-x-full z-50 flex h-screen w-full max-w-[300px] flex-col justify-between border-r-1 border-default-200 bg-white px-4 py-6 transition-all">
       <div>
         <div className="flex justify-center mb-5">
-          <BookOpen className="w-20 h-20 text-green-600" />
+          <BookOpenText className="w-20 h-20 text-green-600 " />
         </div>
         <div className="space-y-1">
           {sidebarItems.map((item) => (
