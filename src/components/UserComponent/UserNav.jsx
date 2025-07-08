@@ -53,6 +53,7 @@ const UserNav = () => {
     setUserInfo({
       username: username,
       email: userEmail,
+      picture: userProfile.profile_picture,
     });
   };
 
@@ -83,10 +84,22 @@ const UserNav = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center w-full gap-2 cursor-pointer px-2 py-1 rounded-md hover:bg-muted transition">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/vite.svg" alt="@shadcn" />
-              <AvatarFallback>SC</AvatarFallback>
-            </Avatar>
+            {userInfo?.picture ? (
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={userInfo.picture} alt={userInfo.username} />
+                <AvatarFallback>
+                  {userInfo?.username
+                    ? userInfo.username.charAt(0).toUpperCase()
+                    : "SC"}
+                </AvatarFallback>
+              </Avatar>
+            ) : (
+              <Avatar className="h-8 w-8">
+                <AvatarFallback className="bg-muted animate-pulse">
+                  <div className="h-4 w-4 bg-gray-300 rounded animate-pulse"></div>
+                </AvatarFallback>
+              </Avatar>
+            )}
             <div className="grid text-left text-sm leading-tight">
               <span className="truncate font-medium">
                 {userInfo?.username ? (
@@ -94,24 +107,14 @@ const UserNav = () => {
                     {userInfo.username}
                   </span>
                 ) : (
-                  <div className="flex items-center gap-1">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                    <span className="text-muted-foreground text-sm">
-                      Loading
-                    </span>
-                  </div>
+                  <div className="h-4 bg-muted rounded animate-pulse w-20 mb-2"></div>
                 )}
               </span>
               <span className="text-muted-foreground truncate text-xs">
                 {userInfo?.email ? (
                   <span className="truncate font-medium">{userInfo.email}</span>
                 ) : (
-                  <div className="flex items-center gap-1">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                    <span className="text-muted-foreground text-sm">
-                      Loading
-                    </span>
-                  </div>
+                  <div className="h-3 bg-muted rounded animate-pulse w-24"></div>
                 )}
               </span>
             </div>
@@ -120,33 +123,44 @@ const UserNav = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
-            <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">
-                {userInfo?.username ? (
-                  <span className="truncate font-medium">
-                    {userInfo.username}
-                  </span>
-                ) : (
-                  <div className="flex items-center gap-1">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                    <span className="text-muted-foreground text-sm">
-                      Loading
+            <div className="flex gap-2">
+              {userInfo?.picture ? (
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={userInfo.picture} alt={userInfo.username} />
+                  <AvatarFallback>
+                    {userInfo?.username
+                      ? userInfo.username.charAt(0).toUpperCase()
+                      : "SC"}
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback className="bg-muted animate-pulse">
+                    <div className="h-4 w-4 bg-gray-300 rounded animate-pulse"></div>
+                  </AvatarFallback>
+                </Avatar>
+              )}
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  {userInfo?.username ? (
+                    <span className="truncate font-medium">
+                      {userInfo.username}
                     </span>
-                  </div>
-                )}
-              </p>
-              <p className="text-xs leading-none text-muted-foreground">
-                {userInfo?.email ? (
-                  <span className="truncate font-medium">{userInfo.email}</span>
-                ) : (
-                  <div className="flex items-center gap-1">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                    <span className="text-muted-foreground text-sm">
-                      Loading
+                  ) : (
+                    <div className="h-4 bg-muted rounded animate-pulse w-20"></div>
+                  )}
+                </p>
+
+                <p className="text-xs leading-none text-muted-foreground">
+                  {userInfo?.email ? (
+                    <span className="truncate font-medium">
+                      {userInfo.email}
                     </span>
-                  </div>
-                )}
-              </p>
+                  ) : (
+                    <div className="h-3 bg-muted rounded animate-pulse w-24"></div>
+                  )}
+                </p>
+              </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
