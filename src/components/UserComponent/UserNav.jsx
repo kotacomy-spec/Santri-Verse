@@ -20,11 +20,11 @@ import { supabase } from "@/lib/supabase/supabaseClient";
 import { toast } from "sonner";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
@@ -183,9 +183,12 @@ const UserNav = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent>
+        <DialogContent className={`sm:max-w-[500px]`}>
           <DialogHeader>
             <DialogTitle>Yakin ingin logout?</DialogTitle>
+            <DialogDescription>
+              Anda harus login menggunakan akun anda lagi jika ingin masuk
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setOpenDialog(false)}>
