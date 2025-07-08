@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginPages from "@/pages/auth/Login";
 import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import NotFoundPage from "@/notfound";
+import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
+import SantriPage from "@/pages/Santri/Santri";
 
 export const routes = createBrowserRouter([
   {
@@ -11,6 +13,14 @@ export const routes = createBrowserRouter([
   {
     path: "/musyrif/dashboard",
     element: <MusyrifPage />,
+  },
+  {
+    path: "/orangtua",
+    element: <OrangtuaPage />,
+  },
+  {
+    path: "/santri",
+    element: <SantriPage />,
   },
   {
     path: "*",
