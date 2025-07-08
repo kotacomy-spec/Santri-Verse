@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPages from "@/pages/auth/Login";
 import MusyrifPage from "@/pages/Muysrif/Musyrif";
-import Kesehatan from "@/pages/Muysrif/Kesehatan";
+import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
+import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
 import NotFoundPage from "@/notfound";
 import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
 import SantriPage from "@/pages/Santri/Santri";
@@ -16,6 +17,14 @@ export const routes = createBrowserRouter([
     element: <MusyrifPage />,
   },
   {
+    path: "/musyrif/kesehatan",
+    element: <Kesehatan />,
+  },
+  {
+    path: "/musyrif/kesehatan/detail/:id",
+    element: <DetailKesehatanPage />,
+  },
+  {
     path: "/orangtua",
     element: <OrangtuaPage />,
   },
@@ -28,7 +37,7 @@ export const routes = createBrowserRouter([
     element: <NotFoundPage />,
   },
   {
-    path: "/musyrif/kesehatan",
-    element: <Kesehatan />,
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
