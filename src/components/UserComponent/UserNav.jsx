@@ -14,6 +14,7 @@ import {
   User,
   Settings,
   LogOut,
+  MessageCircle,
   Loader2,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/supabaseClient";
@@ -28,14 +29,17 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserNav = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [userInfo, setUserInfo] = useState({});
 
+  const navigate = useNavigate();
   const menuItem = [
-    { label: "Profile", icon: User },
-    { label: "Settings", icon: Settings },
+    { label: "Profile", icon: User, href: "/profile" },
+    { label: "Chat", icon: MessageCircle, href: "/chat" },
+    { label: "Settings", icon: Settings, href: "/settings" },
   ];
 
   const getUserProfile = async () => {
@@ -51,6 +55,7 @@ const UserNav = () => {
 
     const username = userProfile.username;
     setUserInfo({
+      id: userId,
       username: username,
       email: userEmail,
       picture: userProfile.profile_picture,
@@ -72,6 +77,7 @@ const UserNav = () => {
       toast.success("Berhasil Logout", {
         id: toastId,
       });
+      navigate("/auth/login");
     } catch (error) {
       toast.error(error?.message || "Terjadi Kesalahan", {
         id: toastId,
@@ -166,10 +172,15 @@ const UserNav = () => {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             {menuItem.map((item, index) => (
-              <DropdownMenuItem key={index} className="flex items-center gap-2">
-                <item.icon className="size-4" />
-                <span>{item.label}</span>
-              </DropdownMenuItem>
+              <Link to={`${item.href}/${userInfo.id}`}>
+                <DropdownMenuItem
+                  key={index}
+                  className="flex items-center gap-2"
+                >
+                  <item.icon className="size-4" />
+                  <span>{item.label}</span>
+                </DropdownMenuItem>
+              </Link>
             ))}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

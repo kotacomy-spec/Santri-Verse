@@ -682,7 +682,7 @@ const KesehatanDetailEdit = () => {
                           handleInputChange("prioritas", value)
                         }
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className={`w-full`}>
                           <SelectValue placeholder="Pilih prioritas" />
                         </SelectTrigger>
                         <SelectContent>
@@ -721,7 +721,7 @@ const KesehatanDetailEdit = () => {
                           }
                         }}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className={`w-full`}>
                           <SelectValue placeholder="Pilih status" />
                         </SelectTrigger>
                         <SelectContent>

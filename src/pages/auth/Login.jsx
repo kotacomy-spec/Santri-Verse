@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, BookOpenText } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -65,7 +65,7 @@ const LoginPages = () => {
             </CardTitle>
             <CardDescription>
               <div className="w-ful flex justify-center mb-2">
-                <img src="/vite.svg" alt="" width={80} height={80} />
+                <BookOpenText className="w-20 h-20 text-green-600 " />
               </div>
             </CardDescription>
           </CardHeader>
@@ -134,7 +134,7 @@ const LoginPages = () => {
             <Button
               type="submit"
               onClick={handleLogin}
-              className="w-full h-[2.5rem]"
+              className="w-full h-[2.5rem] bg-green-700 hover:bg-green-800"
             >
               Login
             </Button>

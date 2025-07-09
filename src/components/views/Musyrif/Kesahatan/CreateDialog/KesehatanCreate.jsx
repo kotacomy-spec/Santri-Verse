@@ -98,8 +98,8 @@ const CreateKesehatan = (props) => {
       const diperiksa_oleh = formData.get("diperiksa_oleh");
       const diagnosa = formData.get("diagnosa");
       const keluhan = formData.get("keluhan");
+      const status = "Menunggu";
 
-      console.log(value);
       const insertData = {
         santri_id: value,
         musyrif_id: musyrif?.id,
@@ -108,6 +108,7 @@ const CreateKesehatan = (props) => {
         diagnosa,
         prioritas: Prioritas,
         keluhan,
+        status,
       };
 
       const { error } = await supabase
