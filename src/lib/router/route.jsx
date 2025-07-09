@@ -35,8 +35,8 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/profile/:id",
-    element: <ProfilePages/>
-  }
+    element: <ProfilePages />,
+  },
   {
     path: "*",
     element: <NotFoundPage />,
