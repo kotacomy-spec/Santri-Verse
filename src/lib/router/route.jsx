@@ -4,6 +4,8 @@ import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
 import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
 import NotFoundPage from "@/notfound";
+import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
+import SantriPage from "@/pages/Santri/Santri";
 
 export const routes = createBrowserRouter([
   {
@@ -23,7 +25,15 @@ export const routes = createBrowserRouter([
     element: <DetailKesehatanPage />,
   },
   {
-    path: "/not-found",
+    path: "/orangtua",
+    element: <OrangtuaPage />,
+  },
+  {
+    path: "/santri",
+    element: <SantriPage />,
+  },
+  {
+    path: "*",
     element: <NotFoundPage />,
   },
   {
