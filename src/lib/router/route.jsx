@@ -6,6 +6,7 @@ import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
 import NotFoundPage from "@/notfound";
 import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
 import SantriPage from "@/pages/Santri/Santri";
+import ProfilePages from "@/pages/Profile";
 
 export const routes = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const routes = createBrowserRouter([
     path: "/santri",
     element: <SantriPage />,
   },
+  {
+    path: "/profile/:id",
+    element: <ProfilePages/>
+  }
   {
     path: "*",
     element: <NotFoundPage />,
