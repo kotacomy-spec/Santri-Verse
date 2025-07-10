@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,30 +31,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase/supabaseClient";
-import CreateKesehatan from "./CreateDialog/KesehatanCreate";
-import DeleteKesehatanRecordDialog from "./DeleteDialog/Delete";
-import { Link } from "react-router-dom";
+import CreateJenisPelanggaran from "./CreateDialog/JenisPelanggaranCreate";
+import DeleteJenisPelanggaranDialog from "./DeleteDialog/Delete";
+import EditJenisPelanggaranData from "./EditDialog/EditDialog";
 
-const Kesehatan = () => {
+const JenisPelanggaran = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [priorityFilter, setPriorityFilter] = useState("all");
-  const [kesehatanSantri, setKesehatanSantri] = useState([]);
+  const [pelanggaranSantri, setJenisPelanggaran] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [createDialog, setCreateDialog] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [filteredData, setFilteredData] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const getKesehatanSantri = async () => {
     setLoading(true);
-    const { data: kesehatanData } = await supabase
-      .from("kesehatan_santri")
-      .select(`*, santri:santri_id(id, nama)`)
+    const { data: jenisPelanggaranData } = await supabase
+      .from("jenis_pelanggaran")
+      .select("id, nama, keterangan, aktif")
       .order("created_at", { ascending: false });
 
-    setKesehatanSantri(kesehatanData);
+    setJenisPelanggaran(jenisPelanggaranData);
     setLoading(false);
   };
 
@@ -63,39 +62,39 @@ const Kesehatan = () => {
     getKesehatanSantri();
 
     const channel = supabase
-      .channel("kesehatan_santri_changes")
+      .channel("jenis_pelanggaran_changes")
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
-          table: "kesehatan_santri",
+          table: "jenis_pelanggaran",
         },
         async (payload) => {
           if (payload.eventType === "INSERT") {
             const { data: NewRecord } = await supabase
-              .from("kesehatan_santri")
-              .select(`*, santri:santri_id(id, nama)`)
+              .from("jenis_pelanggaran")
+              .select("id, nama, keterangan, aktif")
               .eq("id", payload.new.id)
               .single();
 
             if (NewRecord) {
-              // setKesehatanSantri((prev) => [...prev, NewRecord]);
-              setKesehatanSantri((prev) => [NewRecord, ...prev]);
+              //setJenisPelanggaran((prev) => [...prev, NewRecord]);
+              setJenisPelanggaran((prev) => [NewRecord, ...prev]);
             }
           } else if (payload.eventType === "UPDATE") {
             const { data: updatedRecord } = await supabase
-              .from("kesehatan_santri")
-              .select(`*, santri:santri_id(id, nama)`)
+              .from("jenis_pelanggaran")
+              .select("id, nama, keterangan, aktif")
               .eq("id", payload.new.id)
               .single();
             if (updatedRecord) {
-              // setKesehatanSantri((prev) =>
+              //setJenisPelanggaran((prev) =>
               //   prev.map((item) =>
               //     item.id === payload.new.id ? updatedRecord : item
               //   )
               // );
-              setKesehatanSantri((prev) => {
+              setJenisPelanggaran((prev) => {
                 const filtered = prev.filter(
                   (item) => item.id !== payload.new.id
                 );
@@ -103,7 +102,7 @@ const Kesehatan = () => {
               });
             }
           } else if (payload.eventType === "DELETE") {
-            setKesehatanSantri((prev) =>
+            setJenisPelanggaran((prev) =>
               prev.filter((item) => item.id !== payload.old.id)
             );
           }
@@ -117,20 +116,20 @@ const Kesehatan = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = kesehatanSantri.filter((item) => {
+    const filtered = pelanggaranSantri.filter((item) => {
       const statusMatch =
-        statusFilter === "all" || item.status === statusFilter;
-      const priorityMatch =
-        priorityFilter === "all" || item.prioritas === priorityFilter;
+        statusFilter === "all" ||
+        (statusFilter === "aktif" && item.aktif === true) ||
+        (statusFilter === "tidak-aktif" && item.aktif === false);
 
-      const searchMatch = item.santri.nama
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+      const searchMatch =
+        item.nama?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.keterangan?.toLowerCase().includes(searchTerm.toLowerCase());
 
-      return searchMatch && statusMatch && priorityMatch;
+      return statusMatch && searchMatch;
     });
     setFilteredData(filtered);
-  }, [searchTerm, statusFilter, priorityFilter, kesehatanSantri]);
+  }, [searchTerm, statusFilter, pelanggaranSantri]);
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   const paginatedData = filteredData.slice(
@@ -140,25 +139,10 @@ const Kesehatan = () => {
 
   const getStatusVariant = (status) => {
     switch (status) {
-      case "Dalam Perawatan":
-        return "bg-sky-500";
-      case "Selesai":
-        return "bg-green-700";
-      case "Menunggu":
-        return "bg-gray-200 text-black";
-      default:
-        return "bg-gray-200 text-black";
-    }
-  };
-
-  const getPriorityVariant = (priority) => {
-    switch (priority) {
-      case "Tinggi":
-        return "bg-red-500";
-      case "Sedang":
-        return "bg-orange-500";
-      case "Rendah":
-        return "bg-gray-200 text-black";
+      case true:
+        return "bg-green-600 text-white";
+      case false:
+        return "bg-red-500 text-white";
       default:
         return "bg-gray-200 text-black";
     }
@@ -166,24 +150,25 @@ const Kesehatan = () => {
 
   return (
     <>
-      <CreateKesehatan
+      <CreateJenisPelanggaran
         dialogstate={createDialog}
         setDialogState={setCreateDialog}
       />
-      <DeleteKesehatanRecordDialog
+      <DeleteJenisPelanggaranDialog
         deleteId={deleteId}
         setDialogState={setDeleteId}
       />
+      <EditJenisPelanggaranData editId={editId} setDialogState={setEditId} />
       <div className="bg-background text-foreground">
         <Card>
           <div className="container mx-auto p-6">
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h1 className="text-3xl font-bold tracking-tight">
-                  Data Kesehatan Santri
+                  Master Data Pelanggaran Santri
                 </h1>
                 <p className="text-muted-foreground mt-1">
-                  Kelola data kesehatan santri.
+                  Kelola data pelanggaran santri.
                 </p>
               </div>
             </div>
@@ -192,44 +177,27 @@ const Kesehatan = () => {
               <div className="relative flex-1 min-w-64">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
-                  placeholder="Cari santri..."
+                  placeholder="Cari jenis pelanggaran..."
                   className="pl-10"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-
-              <div className="flex gap-2">
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Status" />
+              <div>
+                <Select
+                  onValueChange={(value) => setStatusFilter(value)}
+                  defaultValue="all"
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Pilih Status" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Semua Status</SelectItem>
-                    <SelectItem value="Dalam Perawatan">
-                      Dalam Perawatan
-                    </SelectItem>
-                    <SelectItem value="Selesai">Selesai</SelectItem>
-                    <SelectItem value="Menunggu">Menunggu</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select
-                  value={priorityFilter}
-                  onValueChange={setPriorityFilter}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Prioritas" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Semua Prioritas</SelectItem>
-                    <SelectItem value="Tinggi">Tinggi</SelectItem>
-                    <SelectItem value="Sedang">Sedang</SelectItem>
-                    <SelectItem value="Rendah">Rendah</SelectItem>
+                    <SelectItem value="aktif">Aktif</SelectItem>
+                    <SelectItem value="tidak-aktif">Tidak Aktif</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-
               <div className="flex gap-2">
                 <Button
                   className={`bg-green-700 hover:bg-green-800 cursor-pointer`}
@@ -239,17 +207,14 @@ const Kesehatan = () => {
                 </Button>
               </div>
             </div>
-
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>No Refrensi</TableHead>
-                    <TableHead>Nama Santri</TableHead>
-                    <TableHead>Keluhan</TableHead>
-                    <TableHead>Prioritas</TableHead>
+                    <TableHead>No</TableHead>
+                    <TableHead>Jenis Pelanggaran</TableHead>
+                    <TableHead>Keterangan</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead>Tanggal</TableHead>
                     <TableHead className="w-[50px]"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -290,24 +255,23 @@ const Kesehatan = () => {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    paginatedData.map((item) => (
+                    paginatedData.map((item, index) => (
                       <TableRow key={item.id}>
                         <TableCell className="font-medium">
-                          KS-{item.id}
+                          {index + 1}
                         </TableCell>
-                        <TableCell>{item.santri.nama}</TableCell>
-                        <TableCell>{item.keluhan}</TableCell>
-                        <TableCell className="max-w-[300px]">
-                          <Badge className={getPriorityVariant(item.prioritas)}>
-                            <div className=" truncate">{item.prioritas}</div>
-                          </Badge>
-                        </TableCell>
+                        <TableCell>{item.nama}</TableCell>
                         <TableCell>
-                          <Badge className={getStatusVariant(item.status)}>
-                            {item.status}
+                          {item.keterangan || "Keterangan Tidak Diatur"}
+                        </TableCell>
+                        <TableCell className="max-w-[300px]">
+                          <Badge className={getStatusVariant(item.aktif)}>
+                            <div className=" truncate">
+                              {item.aktif ? "Aktif" : "Tidak Aktif"}
+                            </div>
                           </Badge>
                         </TableCell>
-                        <TableCell>{item.tgl_diperiksa}</TableCell>
+
                         <TableCell>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -316,12 +280,10 @@ const Kesehatan = () => {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem asChild>
-                                <Link
-                                  to={`/musyrif/kesehatan/detail/${item.id}`}
-                                >
-                                  Detail
-                                </Link>
+                              <DropdownMenuItem
+                                onClick={() => setEditId(item.id)}
+                              >
+                                Edit
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() => setDeleteId(item.id)}
@@ -390,4 +352,4 @@ const Kesehatan = () => {
   );
 };
 
-export default Kesehatan;
+export default JenisPelanggaran;
