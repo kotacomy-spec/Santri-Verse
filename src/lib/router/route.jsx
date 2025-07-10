@@ -10,6 +10,8 @@ import KategoriPelanggaranPages from "@/pages/Muysrif/MasterData/Pelanggaran/Kat
 import KeteranganIzinPages from "@/pages/Muysrif/MasterData/Perizinan/KeteranganIzin";
 import ProfilePages from "@/pages/Profile";
 import NotFoundPage from "@/notfound";
+import ProfilePages from "@/pages/Profile";
+
 
 export const routes = createBrowserRouter([
   {
