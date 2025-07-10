@@ -118,3 +118,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme{
+  --font-quicksand:"Quicksand";
+  --font-manrope:"Manrope";
+  --font-fredoka:"Fredoka";
+}
