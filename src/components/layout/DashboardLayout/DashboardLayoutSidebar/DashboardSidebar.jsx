@@ -1,10 +1,15 @@
 import UserNav from "@/components/UserComponent/UserNav";
-import { ChevronDown } from "lucide-react";
+import { BookOpenText, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const DashboardSidebar = (props) => {
   const { sidebarItems } = props;
   const [openMenus, setOpenMenu] = useState({});
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const isActive = (href) => currentPath.startsWith(href);
 
   const toggleMenu = (key) => {
     setOpenMenu((prev) => ({
@@ -17,17 +22,22 @@ const DashboardSidebar = (props) => {
     <div className="fixed lg:relative lg:translate-x-0 -translate-x-full z-50 flex h-screen w-full max-w-[300px] flex-col justify-between border-r-1 border-default-200 bg-white px-4 py-6 transition-all">
       <div>
         <div className="flex justify-center mb-5">
-          <img src="/vite.svg" alt="" width={80} height={60} />
+          <BookOpenText className="w-20 h-20 text-green-600 " />
         </div>
         <div className="space-y-1">
           {sidebarItems.map((item) => (
             <div key={item.key}>
               <div
-                className="flex items-center justify-between gap-3 p-3 cursor-pointer hover:bg-gray-200 rounded-lg transition-all"
+                className={`flex items-center justify-between gap-3 p-3 cursor-pointer rounded-lg transition-all 
+              ${
+                isActive(item.href)
+                  ? "bg-green-100 text-green-700 font-semibold"
+                  : "hover:bg-gray-200"
+              }`}
                 onClick={() =>
                   item.childMenu
                     ? toggleMenu(item.key)
-                    : window.location.assign(item.href)
+                    : (window.location.href = item.href)
                 }
               >
                 <div className="flex items-center gap-3">

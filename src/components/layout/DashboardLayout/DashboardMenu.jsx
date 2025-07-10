@@ -8,14 +8,13 @@ import {
   Layers,
   FileWarning,
   Settings,
-  Gavel,
 } from "lucide-react";
 
 const sidebarMusyrif = [
   {
     key: "Dashboard",
     label: "Dashboard",
-    href: "/musyrif",
+    href: "/musyrif/dashboard",
     icon: <LayoutDashboard size={18} />,
   },
   {
@@ -71,12 +70,6 @@ const sidebarMusyrif = [
             label: "Kategori Pelanggaran",
             href: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
             icon: <Settings size={18} />,
-          },
-          {
-            key: "Tindakan Disiplin",
-            label: "Tindakan Disiplin",
-            href: "/musyrif/master-data/pelanggaran/tindakan-disiplin",
-            icon: <Gavel size={18} />,
           },
         ],
       },

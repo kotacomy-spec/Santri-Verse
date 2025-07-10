@@ -3,6 +3,9 @@ import { sidebarMusyrif } from "./DashboardMenu";
 
 const DashboardLayout = (props) => {
   const { children, type } = props;
+  {
+    type;
+  }
   return (
     <>
       <div className="max-w-screen-3xl 3xl:container flex">
