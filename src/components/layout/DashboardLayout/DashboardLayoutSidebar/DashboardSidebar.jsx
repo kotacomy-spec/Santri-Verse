@@ -1,10 +1,11 @@
 import UserNav from "@/components/UserComponent/UserNav";
+import { cn } from "@/lib/utils";
 import { BookOpenText, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const DashboardSidebar = (props) => {
-  const { sidebarItems } = props;
+  const { sidebarItems, IsOpen } = props;
   const [openMenus, setOpenMenu] = useState({});
   const location = useLocation();
   const currentPath = location.pathname;
@@ -19,7 +20,12 @@ const DashboardSidebar = (props) => {
   };
 
   return (
-    <div className="fixed lg:relative lg:translate-x-0 -translate-x-full z-50 flex h-screen w-full max-w-[300px] flex-col justify-between border-r-1 border-default-200 bg-white px-4 py-6 transition-all">
+    <div
+      className={cn(
+        "fixed z-50 flex h-screen w-full max-w-[300px] -translate-x-full flex-col justify-between border-r-1 border-default-200 bg-white px-4 py-6 transition-all lg:relative lg:translate-x-0",
+        { "translate-x-0": IsOpen }
+      )}
+    >
       <div>
         <div className="flex justify-center mb-5">
           <BookOpenText className="w-20 h-20 text-green-600 " />
