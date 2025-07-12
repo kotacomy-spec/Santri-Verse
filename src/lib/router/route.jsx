@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPages from "@/pages/auth/Login";
-import MusyrifPage from "@/pages/Muysrif/Musyrif";
+// import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
 import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
 import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
@@ -11,6 +11,8 @@ import KeteranganIzinPages from "@/pages/Muysrif/MasterData/Perizinan/Keterangan
 import PelanggaranPages from "@/pages/Muysrif/Pelanggaran/PelanggaranPages";
 import PelanggaranCreatePages from "@/pages/Muysrif/Pelanggaran/CreatePelanggaranPages";
 import ProfilePages from "@/pages/Profile";
+import MusyrifPage from "@/pages/Muysrif/Musyrif";
+import EditPelanggaranPages from "@/pages/Muysrif/Pelanggaran/EditPelanggaranPages";
 import NotFoundPage from "@/notfound";
 
 export const routes = createBrowserRouter([
@@ -22,6 +24,10 @@ export const routes = createBrowserRouter([
     path: "/musyrif/dashboard",
     element: <MusyrifPage />,
   },
+  // {
+  //   path: "/musyrif/dashboard/slicing",
+  //   element: <DashboardSlicing />,
+  // },
   {
     path: "/musyrif/kesehatan",
     element: <Kesehatan />,
@@ -53,6 +59,10 @@ export const routes = createBrowserRouter([
   {
     path: "/musyrif/pelanggaran/create",
     element: <PelanggaranCreatePages />,
+  },
+  {
+    path: "/musyrif/pelanggaran/edit/:id",
+    element: <EditPelanggaranPages />,
   },
   {
     path: "/santri",
