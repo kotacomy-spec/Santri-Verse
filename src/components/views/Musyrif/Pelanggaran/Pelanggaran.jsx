@@ -314,7 +314,7 @@ const Pelanggaran = () => {
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem asChild>
                                 <Link
-                                  to={`/musyrif/kesehatan/detail/${item.id}`}
+                                  to={`/musyrif/pelanggaran/edit/${item.id}`}
                                 >
                                   Detail
                                 </Link>
