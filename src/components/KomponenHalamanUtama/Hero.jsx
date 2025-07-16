@@ -2,7 +2,6 @@ import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Hero = () => {
-  // Variants untuk animasi container
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -14,7 +13,6 @@ const Hero = () => {
     },
   };
 
-  // Variants untuk animasi item
   const itemVariants = {
     hidden: { y: 50, opacity: 0 },
     visible: {
@@ -27,7 +25,6 @@ const Hero = () => {
     },
   };
 
-  // Variants untuk animasi title
   const titleVariants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
@@ -40,7 +37,6 @@ const Hero = () => {
     },
   };
 
-  // Variants untuk floating circles
   const circleVariants = {
     animate: {
       y: [-10, 10, -10],
@@ -56,7 +52,6 @@ const Hero = () => {
   return (
     <>
       <section className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 flex justify-center items-center relative overflow-hidden">
-        {/* Animated background circles */}
         <div className="absolute inset-0 opacity-5">
           <motion.div
             variants={circleVariants}
@@ -86,7 +81,7 @@ const Hero = () => {
           <motion.div variants={itemVariants}>
             <motion.h1
               variants={titleVariants}
-              className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight text-center mb-2"
+              className="md:text-4xl text-3xl lg:text-6xl font-bold text-gray-900 leading-tight text-center mb-2"
             >
               Pesantren {""}
               <motion.span
@@ -106,14 +101,17 @@ const Hero = () => {
 
             <motion.p
               variants={itemVariants}
-              className="text-xl max-w-3xl text-center text-gray-600 leading-relaxed mx-5"
+              className="md:text-xl max-w-3xl text-center text-gray-600 leading-relaxed mx-5"
             >
               Pondok Pesantren Santri Verse - Membentuk generasi Qur'ani yang
               berakhlak mulia dan berprestasi.
             </motion.p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="flex gap-4 mt-8">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col md:flex-row gap-4 mt-8"
+          >
             <motion.button
               whileHover={{
                 scale: 1.05,
@@ -145,7 +143,6 @@ const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Animated particles */}
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
