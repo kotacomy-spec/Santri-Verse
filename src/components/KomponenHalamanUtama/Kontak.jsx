@@ -49,7 +49,7 @@ const Kontak = () => {
                   <h4 className="text-lg font-semibold text-emerald-600">
                     Alamat
                   </h4>
-                  <p className="text-emerald-700">
+                  <p className="text-emerald-700 max-w-2 text-center">
                     JL. Ambatron, RT.03/RW.01, Sigma, Kec.Ohio,Kabupaten
                     Ambatukam, Android Selatan
                   </p>

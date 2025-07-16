@@ -40,7 +40,9 @@ const Navbar = () => {
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
                 <BookOpenText className="w-6 h-6 text-white" />
               </div>
-              <h1 className="font-bold text-gray-800 text-lg">Santri Verse</h1>
+              <h1 className="font-bold text-gray-800 text-lg">
+                Santri<span className="text-emerald-600"> Verse</span>
+              </h1>
             </div>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -109,7 +111,7 @@ const Navbar = () => {
                     <BookOpenText className="w-6 h-6 text-emerald-600" />
                   </div>
                   <h1 className="font-bold text-gray-800 text-lg">
-                    Santri<span className="text-emerald-600">Verse</span>
+                    Santri<span className="text-emerald-600"> Verse</span>
                   </h1>
                 </div>
                 <button
