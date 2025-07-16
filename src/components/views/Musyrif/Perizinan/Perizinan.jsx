@@ -32,10 +32,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase/supabaseClient";
-import DeletePelanggaranRecordDialog from "./DeleteDialog/Delete";
+// import DeletePelanggaranRecordDialog from "./DeleteDialog/Delete";
 import { Link } from "react-router-dom";
 
-const Pelanggaran = () => {
+const Perizinan = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [PelanggaranSantri, SetPelanggaranSantri] = useState([]);
@@ -60,6 +60,7 @@ const Pelanggaran = () => {
 
   useEffect(() => {
     getKesehatanSantri();
+
     const channel = supabase
       .channel("pelanggaran_data_changes")
       .on(
@@ -162,17 +163,17 @@ const Pelanggaran = () => {
 
   return (
     <>
-      <DeletePelanggaranRecordDialog
+      {/* <DeletePelanggaranRecordDialog
         deleteId={deleteId}
         setDialogState={setDeleteId}
-      />
+      /> */}
       <div className="bg-background text-foreground">
         <Card>
           <div className="container mx-auto p-6">
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h1 className="text-3xl font-bold tracking-tight">
-                  Data Pelanggaran Santri
+                  Data Perizinan Santri
                 </h1>
                 <p className="text-mu ted-foreground mt-1">
                   Dokumentasi pelanggaran santri untuk tindak lanjut dan
@@ -385,4 +386,4 @@ const Pelanggaran = () => {
   );
 };
 
-export default Pelanggaran;
+export default Perizinan;

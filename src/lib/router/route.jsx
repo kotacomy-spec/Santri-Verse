@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import HalamanUtama from "@/components/views/HalamanUtama";
 import LoginPages from "@/pages/auth/Login";
 // import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
@@ -13,9 +14,14 @@ import PelanggaranCreatePages from "@/pages/Muysrif/Pelanggaran/CreatePelanggara
 import ProfilePages from "@/pages/Profile";
 import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import EditPelanggaranPages from "@/pages/Muysrif/Pelanggaran/EditPelanggaranPages";
+import PerizinanPages from "@/pages/Muysrif/Perizinan/PerizinanPages";
 import NotFoundPage from "@/notfound";
 
 export const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <HalamanUtama />,
+  },
   {
     path: "/auth/login",
     element: <LoginPages />,
@@ -63,6 +69,10 @@ export const routes = createBrowserRouter([
   {
     path: "/musyrif/pelanggaran/edit/:id",
     element: <EditPelanggaranPages />,
+  },
+  {
+    path: "/musyrif/perizinan",
+    element: <PerizinanPages />,
   },
   {
     path: "/santri",
