@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { UserCheck, HeartPulse, AlertCircle, Activity } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";

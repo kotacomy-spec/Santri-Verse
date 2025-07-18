@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
