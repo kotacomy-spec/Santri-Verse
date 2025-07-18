@@ -1,13 +1,15 @@
-import { useState } from "react";
+/* eslint-disable */
+import { useState, useEffect } from "react";
 import { BookOpenText, X } from "lucide-react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import Lenis from "lenis";
 
 const navLinks = [
-  { name: "Beranda", path: "/" },
-  { name: "Tentang", path: "/tentang" },
-  { name: "Fitur", path: "/fitur" },
-  { name: "Kontak", path: "/kontak" },
+  { name: "Beranda", path: "hero" },
+  { name: "Tentang", path: "about" },
+  { name: "Fitur", path: "fitur" },
+  { name: "Kontak", path: "kontak" },
 ];
 
 const containerVariants = {
@@ -23,8 +25,38 @@ const itemVariants = {
   show: { opacity: 1, y: 0 },
 };
 
-const Navbar = () => {
+const Navbar = ({ scrollToSection }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [lenis, setLenis] = useState(null);
+
+  useEffect(() => {
+    const lenisInstance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
+
+    function raf(time) {
+      lenisInstance.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+    setLenis(lenisInstance);
+
+    return () => {
+      if (lenisInstance) {
+        lenisInstance.destroy();
+      }
+    };
+  }, []);
+
+  const handleScrollTo = (targetId) => {
+    if (lenis && scrollToSection) {
+      scrollToSection(targetId, lenis);
+    }
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -47,18 +79,18 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center space-x-8">
               {navLinks.map((link) => (
-                <Link
+                <button
                   key={link.name}
-                  to={link.path}
+                  onClick={() => handleScrollTo(link.path)}
                   className="px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-emerald-600"
                 >
                   {link.name}
-                </Link>
+                </button>
               ))}
             </div>
 
             <Link
-              to="/auth/login"
+              to={"/auth/login"}
               className="hidden md:inline-block px-6 py-2 rounded-lg transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 transform hover:scale-105"
             >
               Login
@@ -134,24 +166,22 @@ const Navbar = () => {
                     variants={itemVariants}
                     className="mb-2"
                   >
-                    <Link
-                      to={link.path}
-                      className="block px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 font-medium"
-                      onClick={() => setIsOpen(false)}
+                    <button
+                      onClick={() => handleScrollTo(link.path)}
+                      className="block w-full text-left px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 font-medium"
                     >
                       {link.name}
-                    </Link>
+                    </button>
                   </motion.div>
                 ))}
               </motion.div>
               <div className="p-5 border-t border-gray-100">
-                <Link
-                  to={"/auth/login"}
+                <button
+                  onClick={() => handleScrollTo("auth-login")}
                   className="block w-full text-center px-6 py-3 rounded-full transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-medium shadow-md shadow-emerald-100"
-                  onClick={() => setIsOpen(false)}
                 >
                   Login
-                </Link>
+                </button>
               </div>
             </motion.div>
           </>
