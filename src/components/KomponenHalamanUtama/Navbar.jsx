@@ -82,7 +82,7 @@ const Navbar = ({ scrollToSection }) => {
                 <button
                   key={link.name}
                   onClick={() => handleScrollTo(link.path)}
-                  className="px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-emerald-600"
+                  className="cursor-pointer px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-emerald-600"
                 >
                   {link.name}
                 </button>
@@ -168,7 +168,7 @@ const Navbar = ({ scrollToSection }) => {
                   >
                     <button
                       onClick={() => handleScrollTo(link.path)}
-                      className="block w-full text-left px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 font-medium"
+                      className="cursor-pointer block w-full text-left px-4 py-3 rounded-lg transition-all text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 font-medium"
                     >
                       {link.name}
                     </button>
