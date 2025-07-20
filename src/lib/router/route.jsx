@@ -16,6 +16,8 @@ import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import EditPelanggaranPages from "@/pages/Muysrif/Pelanggaran/EditPelanggaranPages";
 import PerizinanPages from "@/pages/Muysrif/Perizinan/PerizinanPages";
 import NotFoundPage from "@/notfound";
+import EditProfil from "@/pages/Orang Tua/SettingsAccount/EditProfil";
+import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
 
 export const routes = createBrowserRouter([
   {
@@ -81,6 +83,14 @@ export const routes = createBrowserRouter([
   {
     path: "/profile/:id",
     element: <ProfilePages />,
+  },
+  {
+    path:"/orangtua/editprofil",
+    element:<EditProfil/>
+  },
+  {
+    path:"/orangtua/ubahkatasandi",
+    element:<UbahPassword/>
   },
   {
     path: "*",

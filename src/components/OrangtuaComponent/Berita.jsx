@@ -67,7 +67,7 @@ export default function Berita() {
               return (
                 <CarouselItem
                   key={berita.id}
-                  className={"md:h-[470px] h-[30vh]"}
+                  className={"md:h-[470px] h-[30vh] "}
                 >
                   <div className="relative rounded-2xl  h-full  bg-cover group overflow-hidden bg-center bg-no-repeat flex  items-end justify-center ">
                     <div
@@ -102,8 +102,8 @@ export default function Berita() {
               );
             })}
           </CarouselContent>
-          <CarouselPrevious className={"md:left-5 md:flex hidden "} />
-          <CarouselNext className={"md:right-5 md:flex hidden "} />
+          <CarouselPrevious className={"md:left-5 md:flex hidden hover:cursor-pointer"} />
+          <CarouselNext className={"md:right-5 md:flex hidden hover:cursor-pointer"} />
         </Carousel>
       </div>
     </>
