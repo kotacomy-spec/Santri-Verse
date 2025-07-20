@@ -13,7 +13,7 @@ import React from "react";
 const beritaSementara = [
   {
     id: 1,
-    image: "url('/public/berita.jpg')",
+    image: "url('/berita.jpg')",
     title: "Siswa Lahir di Ohio",
     waktu: "Rabu, 9 Juni 2025",
     deskripsi:
@@ -21,7 +21,7 @@ const beritaSementara = [
   },
   {
     id: 2,
-    image: "url('/public/berita.jpg')",
+    image: "url('/berita.jpg')",
     title: "Santri Ini Menang Melawan Thanos",
     waktu: "Sabtu, 18 Maret 2098",
     deskripsi:
@@ -29,7 +29,7 @@ const beritaSementara = [
   },
   {
     id: 3,
-    image: "url('/public/berita.jpg')",
+    image: "url('/berita.jpg')",
     title: "Puluhan Santri di PHK ",
     waktu: "Senin, 29 Agustus 1930",
     deskripsi:
@@ -37,7 +37,7 @@ const beritaSementara = [
   },
   {
     id: 4,
-    image: "url('/public/berita.jpg')",
+    image: "url('/berita.jpg')",
     title: "Beasiswa Kuliah di Jepang",
     waktu: "Selasa, 1 Desember 2045",
     deskripsi:
@@ -45,7 +45,7 @@ const beritaSementara = [
   },
   {
     id: 5,
-    image: "url('/public/berita.jpg')",
+    image: "url('/berita.jpg')",
     title: "Santri Menciptakan Bom Dari Kertas Ujian",
     waktu: "Jum'at, 10 Mei 2003",
     deskripsi:
