@@ -10,6 +10,8 @@ import KategoriPelanggaranPages from "@/pages/Muysrif/MasterData/Pelanggaran/Kat
 import KeteranganIzinPages from "@/pages/Muysrif/MasterData/Perizinan/KeteranganIzin";
 import ProfilePages from "@/pages/Profile";
 import NotFoundPage from "@/notfound";
+import EditProfil from "@/pages/Orang Tua/SettingsAccount/EditProfil";
+import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
 
 export const routes = createBrowserRouter([
   {
@@ -51,6 +53,14 @@ export const routes = createBrowserRouter([
   {
     path: "/profile/:id",
     element: <ProfilePages />,
+  },
+  {
+    path:"/orangtua/editprofil",
+    element:<EditProfil/>
+  },
+  {
+    path:"/orangtua/ubahkatasandi",
+    element:<UbahPassword/>
   },
   {
     path: "*",
