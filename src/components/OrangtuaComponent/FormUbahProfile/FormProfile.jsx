@@ -50,7 +50,7 @@ export default function FormProfile() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ ease: "easeInOut" }}
-                className="absolute bg-orange-200 text-orange-500 z-10 md:w-xl md:top-10 left-0 right-0 md:mx-auto mx-8 flex  px-4 py-4 justify-between items-center rounded-xl"
+                className="absolute bg-red-100 text-red-600 z-10 md:w-xl md:top-10 left-0 right-0 md:mx-auto mx-8 flex  px-4 py-4 justify-between items-center rounded-xl"
               >
                 <div className="flex gap-4">
                   <CircleAlert />

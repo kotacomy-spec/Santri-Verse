@@ -10,8 +10,9 @@ import {
   X,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import { AnimatePresence, easeInOut, motion, scale, useInView } from "framer-motion";
+import { AnimatePresence,  motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
+import Notification from "@/components/OrangtuaComponent/NotificationHeader";
 
 const dataSementaraAkunOrtu = "url('/profile-default.png')";
 
@@ -35,6 +36,7 @@ const dataSideBar = [
 
 export default function OrangtuaHeader({ title }) {
   const [tampil, setTampil] = useState(false);
+  const [muncul, setMuncul] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -42,11 +44,36 @@ export default function OrangtuaHeader({ title }) {
     <>
       <motion.div
         ref={ref}
-        initial={{ opacity: 0,y:-20 }}
-        animate={isInView ? { opacity: 1,y:0 } : {}}
+        initial={{ opacity: 0, y: -20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1, ease: "easeInOut" }}
-        className="flex h-full justify-between border-b-2 border-gray-200  py-3 px-4 mx-6"
+        className="flex h-full justify-between border-b-2 border-gray-200  py-3 px-4 mx-6 relative"
       >
+        <AnimatePresence>
+          {muncul ? (
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0,
+                x:300,
+                y:-300
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                x:0,
+                y:0
+              }}
+              exit={{ opacity: 0,x:300,y:-300, scale: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className={`
+            absolute top-20  right-0  z-10`}
+            >
+              <Notification/>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+
         <div className="flex justify-between gap-2 items-center">
           <Link
             to="/orangtua"
@@ -62,9 +89,14 @@ export default function OrangtuaHeader({ title }) {
           </div>
         </div>
         <div className="flex justify-between items-center gap-4">
-          <a className=" text-green-700 hover:cursor-pointer">
+          <button
+            onClick={() => {
+              setMuncul(!muncul);
+            }}
+            className=" text-green-700 hover:cursor-pointer"
+          >
             <Bell size={22} />
-          </a>
+          </button>
           <button
             onClick={() => setTampil(!tampil)}
             className=" text-green-700 hover:cursor-pointer"
@@ -88,15 +120,15 @@ export default function OrangtuaHeader({ title }) {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.4,ease:"easeInOut" }}
               className={`fixed top-0 bg-white/70 backdrop-blur-sm right-0 h-dvh lg:w-[20%] md:w-[40%] w-[60%] z-20 ${
                 tampil ? "translate-x-0" : "translate-x-full"
               }`}
             >
               <div className="flex justify-end w-full">
                 <motion.button
-                whileHover={{ scale: 1.1, rotate:180 }}
-                transition={{ duration:0.3, ease:easeInOut }}
+                  whileHover={{ scale: 1.1, rotate: 180 }}
+                  transition={{ duration: 0.3, ease: "linear" }}
                   onClick={() => setTampil(!tampil)}
                   className="flex  justify-center items-center  hover:cursor-pointer   text-green-700 px-4 py-3"
                 >
@@ -123,10 +155,10 @@ export default function OrangtuaHeader({ title }) {
                     return (
                       <Link
                         to={menu.link}
-                        className={`flex gap-2 text-sm font-medium px-4 py-2 rounded-md hover:bg-green-100/80 hover:scale-105 duration-300 ease-in-out hover:shadow-md ${
+                        className={`flex gap-2 text-sm font-medium px-4 py-2 rounded-md  ${
                           window.location.pathname === menu.link
-                            ? "bg-green-700 text-green-100"
-                            : "text-green-700"
+                            ? "bg-green-700 text-green-100 hover:bg-green-100/80 hover:text-green-700 hover:scale-105 duration-300 ease-in-out hover:shadow-md"
+                            : "text-green-700 hover:bg-green-100/80 hover:scale-105 duration-300 ease-in-out hover:shadow-md"
                         }`}
                       >
                         {menu.icon}
