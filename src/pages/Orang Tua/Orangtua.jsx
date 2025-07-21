@@ -1,14 +1,13 @@
-import NavbarOrangtua from "@/components/NavbarOrangtua/NavbarOrangtua";
-import OrangtuaHeader from "@/components/OrangtuaComponent/OrangtuaHeader";
-import OrangtuaHome from "@/components/OrangtuaComponent/OrangtuaHome";
+
+import OrangtuaHeader from "@/components/views/Orangtua/OrangtuaHeader";
+import OrangtuaHome from "@/components/views/Orangtua/OrangtuaHome";
 
 export default function OrangtuaPage() {
   return (
     <>
-      <div className="font-manrope">
-        <OrangtuaHeader />
+      <div className="font-manrope pb-12">
+        <OrangtuaHeader title={"Monitoring Santri"} />
         <OrangtuaHome />
-        <NavbarOrangtua />
       </div>
     </>
   );
