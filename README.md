@@ -1,6 +1,6 @@
-# Mondok 🕌
+# Santri Verse 🕌
 
-**Mondok** adalah aplikasi manajemen pesantren berbasis web yang dibangun dengan **React**, **Tailwind CSS**, **Supabase**, dan **Shadcn/UI**. Proyek ini ditujukan untuk mengelola kegiatan santri, musyrif, dan orang tua dalam lingkungan pondok pesantren.
+**Santri Verse* adalah aplikasi manajemen pesantren berbasis web yang dibangun dengan **React**, **Tailwind CSS**, **Supabase**, dan **Shadcn/UI**. Proyek ini ditujukan untuk mengelola kegiatan santri, musyrif, dan orang tua dalam lingkungan pondok pesantren.
 
 ---
 
@@ -106,7 +106,7 @@ Pastikan Anda telah mengatur file `.env` dan konfigurasi Supabase dengan benar.
 
 ## 🇬🇧 English Version
 
-**Mondok** is a web-based pesantren (Islamic boarding school) management system built with **React**, **Tailwind CSS**, **Supabase**, and **Shadcn/UI**.
+**Santri Verse** is a web-based pesantren (Islamic boarding school) management system built with **React**, **Tailwind CSS**, **Supabase**, and **Shadcn/UI**.
 
 ### 🎯 Key Features
 
