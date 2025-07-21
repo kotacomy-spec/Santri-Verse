@@ -1,6 +1,6 @@
 # Santri Verse 🕌
 
-**Santri Verse* adalah aplikasi manajemen pesantren berbasis web yang dibangun dengan **React**, **Tailwind CSS**, **Supabase**, dan **Shadcn/UI**. Proyek ini ditujukan untuk mengelola kegiatan santri, musyrif, dan orang tua dalam lingkungan pondok pesantren.
+**Santri Verse**  adalah aplikasi manajemen pesantren berbasis web yang dibangun dengan **React**, **Tailwind CSS**, **Supabase**, dan **Shadcn/UI**. Proyek ini ditujukan untuk mengelola kegiatan santri, musyrif, dan orang tua dalam lingkungan pondok pesantren.
 
 ---
 
