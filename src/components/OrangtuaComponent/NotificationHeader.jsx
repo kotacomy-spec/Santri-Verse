@@ -81,9 +81,9 @@ export default function Notification() {
                 whileHover={{ scale:1.02 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 key={data.id}
-                className={`flex justify-center items-center gap-x-4  px-6 py-4 cursor-pointer bg-green-100 hover:bg-white ${bacaSemua}`}
+                className={`group flex justify-center items-center gap-x-4  px-6 py-4 cursor-pointer bg-green-100 hover:bg-white ${bacaSemua}`}
               >
-                <div className=" border border-green-700/50 w-fit h-fit bg-green-100 text-green-700 p-2 rounded-full">
+                <div className="group-hover:bg-green-100 border border-green-700/50 w-fit h-fit bg-white text-green-700 p-2 rounded-full duration-300 ease-in-out">
                   {data.icon}
                 </div>
                 <div className="flex flex-col gap-y-1">
