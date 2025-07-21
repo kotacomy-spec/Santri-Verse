@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import AuthRole from "./Auth";
 import HalamanUtama from "@/components/views/HalamanUtama";
 import LoginPages from "@/pages/auth/Login";
 // import MusyrifPage from "@/pages/Muysrif/Musyrif";
@@ -28,51 +29,90 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/musyrif/dashboard",
-    element: <MusyrifPage />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <MusyrifPage />
+      </AuthRole>
+    ),
   },
-  // {
-  //   path: "/musyrif/dashboard/slicing",
-  //   element: <DashboardSlicing />,
-  // },
   {
     path: "/musyrif/kesehatan",
-    element: <Kesehatan />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <Kesehatan />
+      </AuthRole>
+    ),
   },
   {
     path: "/musyrif/kesehatan/detail/:id",
-    element: <DetailKesehatanPage />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <DetailKesehatanPage />
+      </AuthRole>
+    ),
   },
   {
     path: "/musyrif/master-data/pelanggaran/jenis-pelanggaran",
-    element: <JenisPelanggaranPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <JenisPelanggaranPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <KategoriPelanggaranPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/musyrif/master-data/perizinan/keterangan-izin",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <KeteranganIzinPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/musyrif/pelanggaran",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PelanggaranPages />
+      </AuthRole>
+    ),
+  },
+
+  {
+    path: "/musyrif/pelanggaran/create",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PelanggaranCreatePages />
+      </AuthRole>
+    ),
+  },
+
+  {
+    path: "/musyrif/pelanggaran/edit/:id",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <EditPelanggaranPages />
+      </AuthRole>
+    ),
+  },
+
+  {
+    path: "/musyrif/perizinan",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PerizinanPages />,
+      </AuthRole>
+    ),
   },
   {
     path: "/orangtua",
     element: <OrangtuaPage />,
-  },
-  {
-    path: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
-    element: <KategoriPelanggaranPages />,
-  },
-  {
-    path: "/musyrif/master-data/perizinan/keterangan-izin",
-    element: <KeteranganIzinPages />,
-  },
-  {
-    path: "/musyrif/pelanggaran",
-    element: <PelanggaranPages />,
-  },
-  {
-    path: "/musyrif/pelanggaran/create",
-    element: <PelanggaranCreatePages />,
-  },
-  {
-    path: "/musyrif/pelanggaran/edit/:id",
-    element: <EditPelanggaranPages />,
-  },
-  {
-    path: "/musyrif/perizinan",
-    element: <PerizinanPages />,
   },
   {
     path: "/santri",
