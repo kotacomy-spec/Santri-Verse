@@ -1,9 +1,12 @@
 /* eslint-disable */
 import { useState, useEffect } from "react";
-import { BookOpenText, X } from "lucide-react";
+import { BookOpenText, Loader2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Lenis from "lenis";
+import { toast } from "sonner";
+import { supabase } from "@/lib/supabase/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const navLinks = [
   { name: "Beranda", path: "hero" },
@@ -28,6 +31,66 @@ const itemVariants = {
 const Navbar = ({ scrollToSection }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [lenis, setLenis] = useState(null);
+  const [IsLogin, SetIsLogin] = useState(false);
+  const [IsLoading, SetIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  const checkUserLogin = async () => {
+    try {
+      const { data, error } = await supabase.auth.getUser();
+
+      if (error || !data.user) {
+        SetIsLogin(false);
+        return null;
+      }
+
+      SetIsLogin(true);
+
+      const { data: UserRole, error: ProfileError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
+
+      if (ProfileError) throw error;
+
+      return UserRole;
+    } catch (error) {
+      toast.error(
+        error?.message || "Terjadi Kesealahan Saat Mendapatakan User"
+      );
+    }
+  };
+
+  const handleDashboardRoute = async () => {
+    const { role } = await checkUserLogin();
+
+    switch (role) {
+      case "musyrif":
+        navigate("/musyrif/dashboard");
+        break;
+      case "keamanan":
+        navigate("/keamanan/dashboard");
+        break;
+      case "orangtua":
+        navigate("/orangtua");
+        break;
+      default:
+        navigate("/orangtua");
+        break;
+    }
+  };
+
+  useEffect(() => {
+    const getUser = async () => {
+      await checkUserLogin();
+
+      SetIsLoading(false);
+    };
+
+    getUser();
+  }, []);
 
   useEffect(() => {
     const lenisInstance = new Lenis({
@@ -88,13 +151,25 @@ const Navbar = ({ scrollToSection }) => {
                 </button>
               ))}
             </div>
-
-            <Link
-              to={"/auth/login"}
-              className="hidden md:inline-block px-6 py-2 rounded-lg transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 transform hover:scale-105"
-            >
-              Login
-            </Link>
+            {IsLoading ? (
+              <div className="hidden md:inline-block px-6 py-2 rounded-lg transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 transform hover:scale-105 cursor-pointer">
+                <Loader2 className="animate-spin mx-6" />
+              </div>
+            ) : IsLogin ? (
+              <button
+                onClick={handleDashboardRoute}
+                className="hidden md:inline-block px-6 py-2 rounded-lg transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 transform hover:scale-105 cursor-pointer"
+              >
+                Dashboard
+              </button>
+            ) : (
+              <Link
+                to="/auth/login"
+                className="hidden md:inline-block px-6 py-2 rounded-lg transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 transform hover:scale-105 cursor-pointer"
+              >
+                Login
+              </Link>
+            )}
 
             <button
               className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
@@ -180,7 +255,7 @@ const Navbar = ({ scrollToSection }) => {
                   to={"/auth/login"}
                   className="block w-full text-center px-6 py-3 rounded-full transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-medium shadow-md shadow-emerald-100"
                 >
-                  Login
+                  {}
                 </Link>
               </div>
             </motion.div>

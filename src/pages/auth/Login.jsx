@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Mail, Lock, Eye, EyeOff, BookOpenText } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, BookOpenText, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPages = () => {
   const [visiBility, setVisibility] = useState(true);
+  const [IsLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -46,7 +47,7 @@ const LoginPages = () => {
             navigate("/keamanan/dashboard", { replace: true });
             break;
           default:
-            navigate("/", { replace: true });
+            navigate("/auth/login", { replace: true });
         }
       }
     };
@@ -58,6 +59,8 @@ const LoginPages = () => {
     const toastId = toast.loading("Mohon Tunggu Sebentar...");
 
     try {
+      setIsLoading(true);
+
       if (!email || !password) {
         toast.error("Harap isi semua field", { id: toastId });
         return;
@@ -83,17 +86,18 @@ const LoginPages = () => {
       if (profileError) throw profileError;
 
       toast.success("Berhasil Login", { id: toastId });
-
+      setIsLoading(false);
       const role = profile.role;
       if (role === "musyrif") {
         navigate("/musyrif/dashboard", { replace: true });
-      } else if (role === "orangtua" || role === "santri") {
+      } else if (role === "orang_tua" || role === "santri") {
         navigate("/orangtua", { replace: true });
       } else {
-        toast.error("Role tidak dikenali", { id: toastId });
+        toast.error("Anda belum memiliki role", { id: toastId });
       }
     } catch (error) {
       toast.error(error?.message || "Login Gagal coba lagi", { id: toastId });
+      setIsLoading(false);
     }
   };
 
@@ -176,9 +180,16 @@ const LoginPages = () => {
             <Button
               type="submit"
               onClick={handleLogin}
-              className="w-full h-[2.5rem] bg-green-700 hover:bg-green-800"
+              className="w-full h-[2.5rem] bg-green-700 hover:bg-green-800 cursor-pointer"
             >
-              Login
+              {IsLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Memuat...
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
           </CardFooter>
         </Card>

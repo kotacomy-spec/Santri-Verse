@@ -40,7 +40,7 @@ const AuthRole = ({ children, allowedRoles }) => {
 
   if (!isLoggedIn) return <Navigate to="/auth/login" replace />;
 
-  if (!hasAccess) return <Navigate to="/" replace />;
+  if (!hasAccess) return <Navigate to="/auth/login" replace />;
 
   return children;
 };
