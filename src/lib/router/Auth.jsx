@@ -3,18 +3,22 @@ import { Navigate } from "react-router-dom";
 import { supabase } from "../supabase/supabaseClient";
 
 const AuthRole = ({ children, allowedRoles }) => {
-  const [isAllowed, setIsAllowed] = useState(null);
+  const [checking, setChecking] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasAccess, setHasAccess] = useState(false);
 
   useEffect(() => {
-    const checkRole = async () => {
+    const checkAuth = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-
       if (!user) {
-        setIsAllowed(false);
+        setIsLoggedIn(false);
+        setChecking(false);
         return;
       }
+
+      setIsLoggedIn(true);
 
       const { data: profile, error } = await supabase
         .from("profiles")
@@ -22,18 +26,21 @@ const AuthRole = ({ children, allowedRoles }) => {
         .eq("id", user.id)
         .single();
 
-      if (error || !allowedRoles.includes(profile.role)) {
-        setIsAllowed(false);
-      } else {
-        setIsAllowed(true);
+      if (!error && profile && allowedRoles.includes(profile.role)) {
+        setHasAccess(true);
       }
+
+      setChecking(false);
     };
 
-    checkRole();
+    checkAuth();
   }, [allowedRoles]);
 
-  if (isAllowed === null) return <Navigate to="/auth/login" replace />;
-  if (isAllowed === false) return <Navigate to="/auth/login" replace />;
+  if (checking) return null;
+
+  if (!isLoggedIn) return <Navigate to="/auth/login" replace />;
+
+  if (!hasAccess) return <Navigate to="/" replace />;
 
   return children;
 };

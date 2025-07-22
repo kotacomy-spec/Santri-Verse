@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import AuthRole from "./Auth";
 import HalamanUtama from "@/components/views/HalamanUtama";
 import LoginPages from "@/pages/auth/Login";
-// import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
 import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
 import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
@@ -31,9 +30,10 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/musyrif/dashboard",
+
     element: (
       <AuthRole allowedRoles={["musyrif"]}>
-        <MusyrifPage />
+        <MusyrifPage />,
       </AuthRole>
     ),
   },
@@ -65,7 +65,7 @@ export const routes = createBrowserRouter([
     path: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
     element: (
       <AuthRole allowedRoles={["musyrif"]}>
-        <KategoriPelanggaranPages />
+        <KategoriPelanggaranPages />,
       </AuthRole>
     ),
   },
@@ -108,7 +108,7 @@ export const routes = createBrowserRouter([
     path: "/musyrif/perizinan",
     element: (
       <AuthRole allowedRoles={["musyrif"]}>
-        <PerizinanPages />,
+        <PerizinanPages />
       </AuthRole>
     ),
   },
@@ -125,12 +125,12 @@ export const routes = createBrowserRouter([
     element: <ProfilePages />,
   },
   {
-    path:"/orangtua/editprofil",
-    element:<EditProfil/>
+    path: "/orangtua/editprofil",
+    element: <EditProfil />,
   },
   {
-    path:"/orangtua/ubahkatasandi",
-    element:<UbahPassword/>
+    path: "/orangtua/ubahkatasandi",
+    element: <UbahPassword />,
   },
   {
     path: "*",

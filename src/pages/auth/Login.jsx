@@ -11,9 +11,8 @@ import { toast } from "sonner";
 import { Mail, Lock, Eye, EyeOff, BookOpenText } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase/supabaseClient";
-
 import { useNavigate } from "react-router-dom";
 
 const LoginPages = () => {
@@ -23,34 +22,78 @@ const LoginPages = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        switch (profile?.role) {
+          case "musyrif":
+            navigate("/musyrif/dashboard", { replace: true });
+            break;
+          case "orangtua":
+          case "santri":
+            navigate("/orangtua", { replace: true });
+            break;
+          case "keamanan":
+            navigate("/keamanan/dashboard", { replace: true });
+            break;
+          default:
+            navigate("/", { replace: true });
+        }
+      }
+    };
+
+    checkUser();
+  }, [navigate]);
+
   const handleLogin = async () => {
     const toastId = toast.loading("Mohon Tunggu Sebentar...");
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
       if (!email || !password) {
-        toast.error("Harap isi semua field", {
-          id: toastId,
-        });
+        toast.error("Harap isi semua field", { id: toastId });
         return;
       }
 
+      const { data: loginData, error } = await supabase.auth.signInWithPassword(
+        {
+          email,
+          password,
+        }
+      );
+
       if (error) throw error;
 
-      toast.success("Berhasil Login", {
-        id: toastId,
-      });
+      const userId = loginData.user.id;
 
-      navigate("/musyrif/dashboard");
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      if (profileError) throw profileError;
+
+      toast.success("Berhasil Login", { id: toastId });
+
+      const role = profile.role;
+      if (role === "musyrif") {
+        navigate("/musyrif/dashboard", { replace: true });
+      } else if (role === "orangtua" || role === "santri") {
+        navigate("/orangtua", { replace: true });
+      } else {
+        toast.error("Role tidak dikenali", { id: toastId });
+      }
     } catch (error) {
-      toast.error(error?.message || "Login Gagal coba lagi", {
-        id: toastId,
-      });
-      return;
+      toast.error(error?.message || "Login Gagal coba lagi", { id: toastId });
     }
   };
 
