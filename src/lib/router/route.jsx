@@ -18,6 +18,8 @@ import PerizinanPages from "@/pages/Muysrif/Perizinan/PerizinanPages";
 import NotFoundPage from "@/notfound";
 import EditProfil from "@/pages/Orang Tua/SettingsAccount/EditProfil";
 import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
+import ResetPassword from "@/pages/auth/ResetPassword";
+import UpdatePassword from "@/pages/auth/UpdatePassword";
 
 export const routes = createBrowserRouter([
   {
@@ -131,6 +133,14 @@ export const routes = createBrowserRouter([
   {
     path: "/orangtua/ubahkatasandi",
     element: <UbahPassword />,
+  },
+  {
+    path: "/auth/forgot-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/auth/update-password",
+    element: <UpdatePassword />,
   },
   {
     path: "*",

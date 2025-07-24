@@ -251,12 +251,25 @@ const Navbar = ({ scrollToSection }) => {
                 ))}
               </motion.div>
               <div className="p-5 border-t border-gray-100">
-                <Link
-                  to={"/auth/login"}
-                  className="block w-full text-center px-6 py-3 rounded-full transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-medium shadow-md shadow-emerald-100"
-                >
-                  {}
-                </Link>
+                {IsLoading ? (
+                  <div className="block w-full text-center px-6 py-3 rounded-full transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-medium shadow-md shadow-emerald-100">
+                    <Loader2 className="animate-spin mx-6" />
+                  </div>
+                ) : IsLogin ? (
+                  <button
+                    onClick={handleDashboardRoute}
+                    className="block w-full text-center px-6 py-3 rounded-full transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-medium shadow-md shadow-emerald-100 cursor-pointer"
+                  >
+                    Dashboard
+                  </button>
+                ) : (
+                  <Link
+                    to={"/auth/login"}
+                    className="block w-full text-center px-6 py-3 rounded-full transition-all text-white bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 font-medium shadow-md shadow-emerald-100 cursor-pointer"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             </motion.div>
           </>

@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase/supabaseClient";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPages = () => {
   const [visiBility, setVisibility] = useState(true);
@@ -63,6 +63,7 @@ const LoginPages = () => {
 
       if (!email || !password) {
         toast.error("Harap isi semua field", { id: toastId });
+        setIsLoading(false);
         return;
       }
 
@@ -109,9 +110,9 @@ const LoginPages = () => {
             <CardTitle className={"text-center text-2xl mb-2 font-bold"}>
               Login
             </CardTitle>
-            <CardDescription>
-              <div className="w-ful flex justify-center mb-2">
-                <BookOpenText className="w-20 h-20 text-green-600 " />
+            <CardDescription className="flex justify-center">
+              <div className="w-25 h-25 mb-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
+                <BookOpenText className="w-13 h-13 text-white" />
               </div>
             </CardDescription>
           </CardHeader>
@@ -143,12 +144,12 @@ const LoginPages = () => {
                   <Label className={"text-[1rem]"} htmlFor="password">
                     Password
                   </Label>
-                  <a
+                  <Link
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    href="#"
+                    to={"/auth/forgot-password"}
                   >
                     Lupa password ?
-                  </a>
+                  </Link>
                 </div>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
