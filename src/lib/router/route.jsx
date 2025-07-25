@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
+import AuthRole from "./Auth";
 import HalamanUtama from "@/components/views/HalamanUtama";
 import LoginPages from "@/pages/auth/Login";
-// import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
 import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
 import OrangtuaPage from "@/pages/Orang Tua/Beranda";
@@ -18,6 +18,8 @@ import PerizinanPages from "@/pages/Muysrif/Perizinan/PerizinanPages";
 import NotFoundPage from "@/notfound";
 import EditProfil from "@/pages/Orang Tua/SettingsAccount/EditProfil";
 import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
+import ResetPassword from "@/pages/auth/ResetPassword";
+import UpdatePassword from "@/pages/auth/UpdatePassword";
 
 export const routes = createBrowserRouter([
   {
@@ -30,48 +32,91 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/musyrif/dashboard",
-    element: <MusyrifPage />,
+
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <MusyrifPage />
+      </AuthRole>
+    ),
   },
-  // {
-  //   path: "/musyrif/dashboard/slicing",
-  //   element: <DashboardSlicing />,
-  // },
   {
     path: "/musyrif/kesehatan",
-    element: <Kesehatan />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <Kesehatan />
+      </AuthRole>
+    ),
   },
   {
     path: "/musyrif/kesehatan/detail/:id",
-    element: <DetailKesehatanPage />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <DetailKesehatanPage />
+      </AuthRole>
+    ),
   },
   {
     path: "/musyrif/master-data/pelanggaran/jenis-pelanggaran",
-    element: <JenisPelanggaranPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <JenisPelanggaranPages />
+      </AuthRole>
+    ),
   },
-  
   {
     path: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
-    element: <KategoriPelanggaranPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <KategoriPelanggaranPages />,
+      </AuthRole>
+    ),
   },
   {
     path: "/musyrif/master-data/perizinan/keterangan-izin",
-    element: <KeteranganIzinPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <KeteranganIzinPages />
+      </AuthRole>
+    ),
   },
   {
     path: "/musyrif/pelanggaran",
-    element: <PelanggaranPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PelanggaranPages />
+      </AuthRole>
+    ),
   },
+
   {
     path: "/musyrif/pelanggaran/create",
-    element: <PelanggaranCreatePages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PelanggaranCreatePages />
+      </AuthRole>
+    ),
   },
+
   {
     path: "/musyrif/pelanggaran/edit/:id",
-    element: <EditPelanggaranPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <EditPelanggaranPages />
+      </AuthRole>
+    ),
   },
+
   {
     path: "/musyrif/perizinan",
-    element: <PerizinanPages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PerizinanPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/orangtua",
+    element: <OrangtuaPage />,
   },
   {
     path: "/profile/:id",
@@ -90,8 +135,17 @@ export const routes = createBrowserRouter([
     element:<EditProfil/>
   },
   {
-    path:"/orangtua/ubahkatasandi",
-    element:<UbahPassword/>
+    path: "/orangtua/ubahkatasandi",
+    element: <UbahPassword />,
+  },
+  {
+    path: "/auth/forgot-password",
+    element: <ResetPassword />,
+
+  },
+  {
+    path: "/auth/update-password",
+    element: <UpdatePassword />,
   },
   {
     path: "*",

@@ -8,49 +8,97 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Mail, Lock, Eye, EyeOff, BookOpenText } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, BookOpenText, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase/supabaseClient";
-
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPages = () => {
   const [visiBility, setVisibility] = useState(true);
+  const [IsLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        switch (profile?.role) {
+          case "musyrif":
+            navigate("/musyrif/dashboard", { replace: true });
+            break;
+          case "orangtua":
+          case "santri":
+            navigate("/orangtua", { replace: true });
+            break;
+          case "keamanan":
+            navigate("/keamanan/dashboard", { replace: true });
+            break;
+          default:
+            navigate("/auth/login", { replace: true });
+        }
+      }
+    };
+
+    checkUser();
+  }, [navigate]);
+
   const handleLogin = async () => {
     const toastId = toast.loading("Mohon Tunggu Sebentar...");
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      setIsLoading(true);
 
       if (!email || !password) {
-        toast.error("Harap isi semua field", {
-          id: toastId,
-        });
+        toast.error("Harap isi semua field", { id: toastId });
+        setIsLoading(false);
         return;
       }
 
+      const { data: loginData, error } = await supabase.auth.signInWithPassword(
+        {
+          email,
+          password,
+        }
+      );
+
       if (error) throw error;
 
-      toast.success("Berhasil Login", {
-        id: toastId,
-      });
+      const userId = loginData.user.id;
 
-      navigate("/musyrif/dashboard");
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      if (profileError) throw profileError;
+
+      toast.success("Berhasil Login", { id: toastId });
+      setIsLoading(false);
+      const role = profile.role;
+      if (role === "musyrif") {
+        navigate("/musyrif/dashboard", { replace: true });
+      } else if (role === "orang_tua" || role === "santri") {
+        navigate("/orangtua", { replace: true });
+      } else {
+        toast.error("Anda belum memiliki role", { id: toastId });
+      }
     } catch (error) {
-      toast.error(error?.message || "Login Gagal coba lagi", {
-        id: toastId,
-      });
-      return;
+      toast.error(error?.message || "Login Gagal coba lagi", { id: toastId });
+      setIsLoading(false);
     }
   };
 
@@ -62,9 +110,9 @@ const LoginPages = () => {
             <CardTitle className={"text-center text-2xl mb-2 font-bold"}>
               Login
             </CardTitle>
-            <CardDescription>
-              <div className="w-ful flex justify-center mb-2">
-                <BookOpenText className="w-20 h-20 text-green-600 " />
+            <CardDescription className="flex justify-center">
+              <div className="w-25 h-25 mb-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
+                <BookOpenText className="w-13 h-13 text-white" />
               </div>
             </CardDescription>
           </CardHeader>
@@ -96,12 +144,12 @@ const LoginPages = () => {
                   <Label className={"text-[1rem]"} htmlFor="password">
                     Password
                   </Label>
-                  <a
+                  <Link
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    href="#"
+                    to={"/auth/forgot-password"}
                   >
                     Lupa password ?
-                  </a>
+                  </Link>
                 </div>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -133,9 +181,16 @@ const LoginPages = () => {
             <Button
               type="submit"
               onClick={handleLogin}
-              className="w-full h-[2.5rem] bg-green-700 hover:bg-green-800"
+              className="w-full h-[2.5rem] bg-green-700 hover:bg-green-800 cursor-pointer"
             >
-              Login
+              {IsLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Memuat...
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
           </CardFooter>
         </Card>
