@@ -4,8 +4,8 @@ import HalamanUtama from "@/components/views/HalamanUtama";
 import LoginPages from "@/pages/auth/Login";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
 import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
-import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
-import SantriPage from "@/pages/Santri/Santri";
+import OrangtuaPage from "@/pages/Orang Tua/Beranda";
+import SantriPage from "@/pages/Orang Tua/Santri/Santri";
 import JenisPelanggaranPages from "@/pages/Muysrif/MasterData/Pelanggaran/JenisPelanggaranPages";
 import KategoriPelanggaranPages from "@/pages/Muysrif/MasterData/Pelanggaran/KategoriPelanggaran";
 import KeteranganIzinPages from "@/pages/Muysrif/MasterData/Perizinan/KeteranganIzin";
@@ -35,7 +35,7 @@ export const routes = createBrowserRouter([
 
     element: (
       <AuthRole allowedRoles={["musyrif"]}>
-        <MusyrifPage />,
+        <MusyrifPage />
       </AuthRole>
     ),
   },
@@ -119,16 +119,20 @@ export const routes = createBrowserRouter([
     element: <OrangtuaPage />,
   },
   {
-    path: "/santri",
-    element: <SantriPage />,
-  },
-  {
     path: "/profile/:id",
     element: <ProfilePages />,
   },
   {
-    path: "/orangtua/editprofil",
-    element: <EditProfil />,
+    path: "/orangtua/dashboard",
+    element: <OrangtuaPage />,
+  },
+  {
+    path: "/orangtua/santri",
+    element: <SantriPage />,
+  },
+  {
+    path:"/orangtua/editprofil",
+    element:<EditProfil/>
   },
   {
     path: "/orangtua/ubahkatasandi",
@@ -137,6 +141,7 @@ export const routes = createBrowserRouter([
   {
     path: "/auth/forgot-password",
     element: <ResetPassword />,
+
   },
   {
     path: "/auth/update-password",

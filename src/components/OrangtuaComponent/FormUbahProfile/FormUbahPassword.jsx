@@ -42,7 +42,7 @@ export default function FormUbahPassword() {
     let alertMessage = "";
     if (passwordLama === passwordBaru) {
       alertMessage = "Kata sandi baru tidak boleh sama dengan kata sandi lama";
-      setAlertColor("orange");
+      setAlertColor("red");
       setAlertIcon(<CircleAlert />);
       setAlert(true);
       setTimeout(() => {
@@ -50,7 +50,7 @@ export default function FormUbahPassword() {
       }, 3000);
     } else if (passwordBaru !== passwordSama) {
       alertMessage = "Mohon konfirmasi kata sandi dengan benar";
-      setAlertColor("orange");
+      setAlertColor("red");
       setAlertIcon(<CircleAlert />);
       setAlert(true);
       setTimeout(() => {
@@ -62,7 +62,7 @@ export default function FormUbahPassword() {
       passwordSama.length <= 7
     ) {
       alertMessage = "Kata sandi tidak boleh kurang dari 8 karakter";
-      setAlertColor("orange");
+      setAlertColor("red");
       setAlertIcon(<CircleAlert />);
       setAlert(true);
       setTimeout(() => {
@@ -105,7 +105,7 @@ export default function FormUbahPassword() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ ease: "linear" }}
-                className={`absolute bg-${alertColor}-100 text-${alertColor}-500 z-10 md:w-xl md:top-10 left-0 right-0 md:mx-auto mx-4 flex  px-4 py-4 justify-between items-center rounded-xl`}
+                className={`absolute bg-${alertColor}-100 text-${alertColor}-600 z-10 md:w-xl md:top-10 left-0 right-0 md:mx-auto mx-4 flex  px-4 py-4 justify-between items-center rounded-xl`}
               >
                 <div className="flex gap-4">
                   {alertIcon}
