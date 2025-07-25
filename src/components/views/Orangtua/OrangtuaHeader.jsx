@@ -54,17 +54,14 @@ export default function OrangtuaHeader({ title }) {
             <motion.div
               initial={{
                 opacity: 0,
-                scale: 0,
-                x:300,
                 y:-300
               }}
               animate={{
                 opacity: 1,
-                scale: 1,
                 x:0,
                 y:0
               }}
-              exit={{ opacity: 0,x:300,y:-300, scale: 0 }}
+              exit={{ opacity: 0,y:-300 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className={`
             absolute top-20  right-0  z-10`}

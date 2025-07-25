@@ -15,38 +15,38 @@ const menu = [
   {
     id: 1,
     icon: <LayoutGrid size={22} />,
-    title: "Orangtua",
-    link: "/orangtua",
+    title: "Beranda",
+    link: "/orangtua/dashboard",
   },
   {
     id: 2,
     icon: <CircleUserRound size={22} />,
     title: "Santri",
-    link: "/santri",
+    link: "/orangtua/santri",
   },
   {
     id: 3,
     icon: <CalendarCheck size={22} />,
     title: "Ajukan Izin",
-    link: "/ajukanizin",
+    link: "/orangtua/ajukanizin",
   },
   {
     id: 4,
     icon: <MessageSquareDot size={22} />,
     title: "Berita",
-    link: "/berita",
+    link: "/orangtua/berita",
   },
   {
     id: 5,
     icon: <Stethoscope size={22} />,
     title: "Kesehatan",
-    link: "/kesehatan",
+    link: "/orangtua/kesehatan",
   },
   {
     id: 6,
     icon: <ShieldAlert size={22} />,
     title: "Pelanggaran",
-    link: "/pelanggaran",
+    link: "/orangtua/pelanggaran",
   },
 ];
 
@@ -84,11 +84,11 @@ export default function MenuOrangtua() {
           {menu.map((item) => (
             <motion.div
               variants={itemVariants}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.9 }}
               to={item.link}
               key={item.id}
-              className={`flex justify-center items-center gap-2 md:bg-green-700 rounded-2xl md:py-4 py-2 md:h-full  w-28  md:text-sm text-sm   text-green-100  md:hover:bg-green-600 md:hover:text-green-200 md:duration-200 md:ease-linear md:hover:rounded-lg ${
+              className={`flex justify-center items-center gap-2 md:bg-green-700 rounded-2xl md:py-4 py-2 md:h-full  w-28  md:text-sm text-sm   text-green-100  md:hover:bg-green-600 md:hover:text-green-200 md:duration-200 md:ease-linear md:hover:rounded-lg cursor-pointer ${
                 window.location.pathname === item.link
                   ? " md:hidden font-bold text-green-700"
                   : "md:text-gray-100 text-green-700 font-medium"

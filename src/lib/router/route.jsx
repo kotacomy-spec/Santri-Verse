@@ -4,8 +4,8 @@ import LoginPages from "@/pages/auth/Login";
 // import MusyrifPage from "@/pages/Muysrif/Musyrif";
 import Kesehatan from "@/pages/Muysrif/Kesehatan/Kesehatan";
 import DetailKesehatanPage from "@/pages/Muysrif/Kesehatan/DetailKesehatan";
-import OrangtuaPage from "@/pages/Orang Tua/Orangtua";
-import SantriPage from "@/pages/Santri/Santri";
+import OrangtuaPage from "@/pages/Orang Tua/Beranda";
+import SantriPage from "@/pages/Orang Tua/Santri/Santri";
 import JenisPelanggaranPages from "@/pages/Muysrif/MasterData/Pelanggaran/JenisPelanggaranPages";
 import KategoriPelanggaranPages from "@/pages/Muysrif/MasterData/Pelanggaran/KategoriPelanggaran";
 import KeteranganIzinPages from "@/pages/Muysrif/MasterData/Perizinan/KeteranganIzin";
@@ -48,10 +48,7 @@ export const routes = createBrowserRouter([
     path: "/musyrif/master-data/pelanggaran/jenis-pelanggaran",
     element: <JenisPelanggaranPages />,
   },
-  {
-    path: "/orangtua",
-    element: <OrangtuaPage />,
-  },
+  
   {
     path: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
     element: <KategoriPelanggaranPages />,
@@ -77,12 +74,16 @@ export const routes = createBrowserRouter([
     element: <PerizinanPages />,
   },
   {
-    path: "/santri",
-    element: <SantriPage />,
-  },
-  {
     path: "/profile/:id",
     element: <ProfilePages />,
+  },
+  {
+    path: "/orangtua/dashboard",
+    element: <OrangtuaPage />,
+  },
+  {
+    path: "/orangtua/santri",
+    element: <SantriPage />,
   },
   {
     path:"/orangtua/editprofil",
