@@ -57,7 +57,9 @@ const DashboardSidebar = (props) => {
       >
         <div>
           <div className="flex justify-center mb-5">
-            <BookOpenText className="w-20 h-20 text-green-600 " />
+            <div className="w-25 h-25 mb-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
+              <BookOpenText className="w-14 h-14 text-white" />
+            </div>
           </div>
           <div className="space-y-1">
             {sidebarItems.map((item) => (
