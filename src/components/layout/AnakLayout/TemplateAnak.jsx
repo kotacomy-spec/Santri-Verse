@@ -1,96 +1,16 @@
 /* eslint-disable */
-import { ChevronDown, Star, TriangleAlert } from "lucide-react";
+
 import { dataSementara } from "./dataSementaraAnak";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@radix-ui/react-collapsible";
-import { PelanggaranAnakBanyak } from "@/components/OrangtuaComponent/PelanggaranTerbaru";
-import { useState, useRef, useEffect } from "react";
-import { AnimatePresence, motion, useInView } from "framer-motion";
-import { supabase } from "@/lib/supabase/supabaseClient";
+
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { ChevronDown, Star, TriangleAlert } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import { PelanggaranAnakBanyak } from "@/components/OrangtuaComponent/PelanggaranTerbaru";
 
-export function Anak() {
-  const ref = useRef(null);
-  const isInView = useInView(ref);
-
-  const [anak, setAnak] = useState([]);
-  useEffect(() => {
-    const getAnak = async () => {
-      const { data, error } = await supabase.from("santri").select("*");
-      if (error) {
-        console.log(error);
-      } else {
-        setAnak(data);
-      }
-    };
-    getAnak();
-  }, []);
-
-  return (
-    <>
-      {anak.map(function (data) {
-        return (
-          <>
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <Link
-                to={"/orangtua/santri"}
-                className={`flex justify-between items-center px-6  md:mx-16 rounded-2xl bg-linear-to-r from-green-100 to-green-300 text-green-700 h-[100px]`}
-              >
-                <div className="flex w-fit">
-                  <div
-                    className=" mr-4 p-4 rounded-full border-[1.5px] border-green-700 bg-cover bg-center w-14 h-14"
-                    style={{ backgroundImage: `url(${data.img})` }}
-                  ></div>
-                  <div className="flex flex-col justify-center">
-                    <h1 className="font-bold">{data.nama}</h1>
-                    <p className="text-sm">{data.surat}</p>
-                    <p className="text-xs">{data.pembimbing}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center gap-2 ">
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.7, ease: "easeInOut" }}
-                  >
-                    <Star size={18} />
-                  </motion.div>
-                  <p>Aktif</p>
-                </div>
-              </Link>
-            </motion.div>
-          </>
-        );
-      })}
-    </>
-  );
-}
-
-export function AnakLebih() {
+export default function TemplateAnak() {
   const [isOpen, setIsOpen] = useState(null);
-
-  const [anak, setAnak] = useState([]);
-  useEffect(() => {
-    const getAnak = async () => {
-      const { data, error } = await supabase
-        .from("santri")
-        .select(`*,musyrif(id,profile:profiles(id,username))`);
-      if (error) {
-        console.log(error);
-      } else {
-        setAnak(data);
-      }
-    };
-    getAnak();
-  }, []);
-
   const toggleDown = (id) => {
     setIsOpen(isOpen === id ? null : id);
   };
@@ -113,7 +33,6 @@ export function AnakLebih() {
       transition: { duration: 0.8, ease: "easeInOut" },
     },
   };
-
   return (
     <>
       <motion.div
@@ -123,7 +42,7 @@ export function AnakLebih() {
         animate={isInView ? "visible" : "hidden"}
         className={`grid grid-col-3  gap-8 md:w-[70%] w-full mx-auto`}
       >
-        {anak.slice(0, 2).map(function (item) {
+        {dataSementara.map(function (item) {
           return (
             <>
               <AnimatePresence>
@@ -136,15 +55,15 @@ export function AnakLebih() {
                     <div className="flex w-fit items-center">
                       <div
                         className=" mr-4 p-4 rounded-full border-[1.5px] border-green-700 bg-cover bg-center w-14 h-14"
-                        // style={{ backgroundImage: `url(${item.img})` }}
-                        style={{ backgroundImage: `url(/profile-default.png)` }}
+                        style={{ backgroundImage: `url(${item.img})` }}
+                        // style={{ backgroundImage: `url(/profile-default.png)` }}
                       ></div>
                       <div className="flex flex-col justify-center gap-1 ">
                         <h1 className="font-bold">{item.nama}</h1>
                         <p className="text-sm">{item.surat}</p>
-                        <p className="text-sm">{item.nis}</p>
+                        {/* <p className="text-sm">{item.nis}</p> */}
                         <p className="text-xs">
-                          {item.musyrif.profile.username}
+                          {item.pembimbing}
                         </p>
                       </div>
                     </div>
@@ -193,35 +112,4 @@ export function AnakLebih() {
       </motion.div>
     </>
   );
-}
-
-export function AnakKosong() {
-  return (
-    <>
-      <h1>anak e kosong le</h1>
-    </>
-  );
-}
-
-export default function ThumbnailAnak() {
-  const [anak, setAnak] = useState([]);
-  useEffect(() => {
-    const getAnak = async () => {
-      const { data, error } = await supabase.from("santri").select("*");
-      if (error) {
-        console.log(error);
-      } else {
-        setAnak(data);
-      }
-    };
-    getAnak();
-  }, []);
-
-  if (anak.length === 1) {
-    return <Anak />;
-  } else if (anak.length > 1) {
-    return <AnakLebih />;
-  } else if (anak.length === 0) {
-    return <AnakKosong />;
-  }
 }

@@ -1,5 +1,6 @@
-import Anak, { AnakLebih } from "@/components/layout/AnakLayout/Anak";
-import { dataSementara } from "@/components/layout/AnakLayout/dataSementaraAnak";
+
+import ThumbnailAnak from "@/components/layout/AnakLayout/Anak";
+import TemplateAnak from "@/components/layout/AnakLayout/TemplateAnak";
 import MenuOrangtua from "@/components/MenuOrangtua/MenuOrangtua";
 import Berita from "@/components/OrangtuaComponent/Berita";
 import PelanggaranTerbaru from "@/components/OrangtuaComponent/PelanggaranTerbaru";
@@ -7,10 +8,15 @@ import PelanggaranTerbaru from "@/components/OrangtuaComponent/PelanggaranTerbar
 export default function OrangtuaHome() {
   return (
     <>
-      <div className="mx-8 my-4 gap-6 grid">
+      <div className="mx-8 my-4 gap-6 grid ">
         <Berita />
         <MenuOrangtua />
-        {dataSementara.length > 1 ? <AnakLebih /> : <Anak />}
+        <ThumbnailAnak/>
+        <TemplateAnak/>
+        {/* {dataSementara.length > 1 ? <AnakLebih /> : <Anak />} */}
+        {/* <Anak/> */}
+        {/* <DataAnak/> */}
+        {/* <DataCobaLagi/> */}
         <PelanggaranTerbaru />
       </div>
     </>
