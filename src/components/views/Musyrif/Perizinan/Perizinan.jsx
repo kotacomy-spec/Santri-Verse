@@ -32,13 +32,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase/supabaseClient";
-// import DeletePelanggaranRecordDialog from "./DeleteDialog/Delete";
+import DeletePerizinanRecordDialog from "./DeleteDialog/Delete";
 import { Link } from "react-router-dom";
 
 const Perizinan = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [PelanggaranSantri, SetPelanggaranSantri] = useState([]);
+  const [PerizinanSantri, SetPerizinanSantri] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
   const [filteredData, setFilteredData] = useState("all");
@@ -47,14 +47,12 @@ const Perizinan = () => {
 
   const getKesehatanSantri = async () => {
     setLoading(true);
-    const { data: PelanggaranData } = await supabase
-      .from("pelanggaran_santri")
-      .select(
-        `*, santri:santri_id(id, nama), pelanggaran:data_pelanggaran_id(id, nama, kategori, poin)`
-      )
+    const { data: PerizinanSantriData } = await supabase
+      .from("perizinan_santri")
+      .select(`*, santri:santri_id(id,nama)`)
       .order("created_at", { ascending: false });
 
-    SetPelanggaranSantri(PelanggaranData);
+    SetPerizinanSantri(PerizinanSantriData);
     setLoading(false);
   };
 
@@ -62,43 +60,39 @@ const Perizinan = () => {
     getKesehatanSantri();
 
     const channel = supabase
-      .channel("pelanggaran_data_changes")
+      .channel("perizinan_santri_changes")
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
-          table: "pelanggaran_santri",
+          table: "perizinan_santri",
         },
         async (payload) => {
           if (payload.eventType === "INSERT") {
             const { data: NewRecord } = await supabase
-              .from("pelanggaran_santri")
-              .select(
-                `*, santri:santri_id(id, nama), pelanggaran:data_pelanggaran_id(id, nama)`
-              )
+              .from("perizinan_santri")
+              .select(`*`)
               .eq("id", payload.new.id)
               .single();
 
             if (NewRecord) {
-              // SetPelanggaranSantri((prev) => [...prev, NewRecord]);
-              SetPelanggaranSantri((prev) => [NewRecord, ...prev]);
+              // SetPerizinanSantri((prev) => [...prev, NewRecord]);
+              SetPerizinanSantri((prev) => [NewRecord, ...prev]);
             }
           } else if (payload.eventType === "UPDATE") {
             const { data: updatedRecord } = await supabase
-              .from("pelanggaran_santri")
-              .select(
-                `*, santri:santri_id(id, nama), pelanggaran:data_pelanggaran_id(id, nama, kategori, poin)`
-              )
+              .from("perizinan_santri")
+              .select(`*`)
               .eq("id", payload.new.id)
               .single();
             if (updatedRecord) {
-              // SetPelanggaranSantri((prev) =>
+              // SetPerizinanSantri((prev) =>
               //   prev.map((item) =>
               //     item.id === payload.new.id ? updatedRecord : item
               //   )
               // );
-              SetPelanggaranSantri((prev) => {
+              SetPerizinanSantri((prev) => {
                 const filtered = prev.filter(
                   (item) => item.id !== payload.new.id
                 );
@@ -106,7 +100,7 @@ const Perizinan = () => {
               });
             }
           } else if (payload.eventType === "DELETE") {
-            SetPelanggaranSantri((prev) =>
+            SetPerizinanSantri((prev) =>
               prev.filter((item) => item.id !== payload.old.id)
             );
           }
@@ -120,7 +114,7 @@ const Perizinan = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = PelanggaranSantri.filter((item) => {
+    const filtered = PerizinanSantri.filter((item) => {
       const statusMatch =
         statusFilter === "all" || item.status === statusFilter;
 
@@ -131,7 +125,7 @@ const Perizinan = () => {
       return searchMatch && statusMatch;
     });
     setFilteredData(filtered);
-  }, [searchTerm, statusFilter, PelanggaranSantri]);
+  }, [searchTerm, statusFilter, PerizinanSantri]);
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   const paginatedData = filteredData.slice(
@@ -139,23 +133,14 @@ const Perizinan = () => {
     currentPage * rowsPerPage
   );
 
-  const getPointBadgeVariant = (poin) => {
-    if (poin >= 400) return "bg-red-600 text-white";
-    if (poin >= 250) return "bg-orange-500 text-white";
-    if (poin >= 100) return "bg-yellow-400 text-black";
-    return "bg-gray-200 text-black";
-  };
-
-  const getKategoriBadgeVariant = (kategori) => {
+  const getStatusVariant = (kategori) => {
     switch (kategori) {
-      case "Sangat Berat":
-        return "bg-red-700 text-white";
-      case "Berat":
+      case "Masuk":
+        return "bg-green-700 text-white";
+      case "Keluar":
         return "bg-red-500 text-white";
-      case "Sedang":
-        return "bg-orange-400 text-white";
-      case "Ringan":
-        return "bg-yellow-300 text-black";
+      case "Draft":
+        return "bg-gray-200 text-black";
       default:
         return "bg-gray-200 text-black";
     }
@@ -163,10 +148,10 @@ const Perizinan = () => {
 
   return (
     <>
-      {/* <DeletePelanggaranRecordDialog
+      <DeletePerizinanRecordDialog
         deleteId={deleteId}
         setDialogState={setDeleteId}
-      /> */}
+      />
       <div className="bg-background text-foreground">
         <Card>
           <div className="container mx-auto p-6">
@@ -200,10 +185,9 @@ const Perizinan = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Semua Status</SelectItem>
-                    <SelectItem value="Ringan">Ringan</SelectItem>
-                    <SelectItem value="Sedang">Sedang</SelectItem>
-                    <SelectItem value="Berat">Berat</SelectItem>
-                    <SelectItem value="Sangat Berat">Sangat Berat</SelectItem>
+                    <SelectItem value="Draft">Draft</SelectItem>
+                    <SelectItem value="Keluar">Keluar</SelectItem>
+                    <SelectItem value="Masuk">Masuk</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -212,7 +196,7 @@ const Perizinan = () => {
                 <Button
                   className={`bg-green-700 hover:bg-green-800 cursor-pointer`}
                 >
-                  <Link to={"/musyrif/pelanggaran/create"}>Tambah Data</Link>
+                  <Link to={"/musyrif/perizinan/create"}>Tambah Data</Link>
                 </Button>
               </div>
             </div>
@@ -223,10 +207,9 @@ const Perizinan = () => {
                   <TableRow>
                     <TableHead>No Refrensi</TableHead>
                     <TableHead>Nama Santri</TableHead>
-                    <TableHead>Pelanggaran</TableHead>
-                    <TableHead>Poin</TableHead>
+                    <TableHead>Keperluan</TableHead>
+                    <TableHead>Penjemput</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead>Tanggal Pelanggaran</TableHead>
                     <TableHead className="w-[50px]"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -270,39 +253,15 @@ const Perizinan = () => {
                     paginatedData.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell className="font-medium">
-                          PL-{item.id}
+                          IZ-{item.id}
                         </TableCell>
                         <TableCell>{item.santri.nama}</TableCell>
-                        <TableCell>{item.pelanggaran.nama}</TableCell>
+                        <TableCell>{item.keperluan}</TableCell>
+                        <TableCell>{item.penjemput}</TableCell>
                         <TableCell className="max-w-[300px]">
-                          <Badge
-                            className={getPointBadgeVariant(
-                              item.pelanggaran.poin
-                            )}
-                          >
-                            <div className=" truncate">
-                              {item.pelanggaran.poin}
-                            </div>
+                          <Badge className={getStatusVariant(item.status)}>
+                            <div className=" truncate">{item.status}</div>
                           </Badge>
-                        </TableCell>
-                        <TableCell className="max-w-[300px]">
-                          <Badge
-                            className={getKategoriBadgeVariant(
-                              item.pelanggaran.kategori
-                            )}
-                          >
-                            <div className=" truncate">
-                              {item.pelanggaran.kategori}
-                            </div>
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          {new Date(item.tanggal).toLocaleDateString("id-ID", {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
                         </TableCell>
                         <TableCell>
                           <DropdownMenu>
@@ -313,9 +272,7 @@ const Perizinan = () => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem asChild>
-                                <Link
-                                  to={`/musyrif/pelanggaran/edit/${item.id}`}
-                                >
+                                <Link to={`/musyrif/perizinan/edit/${item.id}`}>
                                   Detail
                                 </Link>
                               </DropdownMenuItem>
