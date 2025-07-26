@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "postinstall": "npm install --include=optional",
-    "build": "vite build",
+    "build": "--include=optional && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
