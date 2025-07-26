@@ -44,7 +44,6 @@ export default function TemplateAnak() {
       >
         {dataSementara.map(function (item) {
           return (
-            <>
               <AnimatePresence>
                 <motion.div
                   key={item.id}
@@ -106,7 +105,6 @@ export default function TemplateAnak() {
                   </Collapsible>
                 </motion.div>
               </AnimatePresence>
-            </>
           );
         })}
       </motion.div>

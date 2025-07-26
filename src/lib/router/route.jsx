@@ -115,10 +115,6 @@ export const routes = createBrowserRouter([
     ),
   },
   {
-    path: "/orangtua",
-    element: <OrangtuaPage />,
-  },
-  {
     path: "/profile/:id",
     element: <ProfilePages />,
   },
@@ -131,8 +127,8 @@ export const routes = createBrowserRouter([
     element: <SantriPage />,
   },
   {
-    path:"/orangtua/editprofil",
-    element:<EditProfil/>
+    path: "/orangtua/editprofil",
+    element: <EditProfil />,
   },
   {
     path: "/orangtua/ubahkatasandi",
@@ -141,7 +137,6 @@ export const routes = createBrowserRouter([
   {
     path: "/auth/forgot-password",
     element: <ResetPassword />,
-
   },
   {
     path: "/auth/update-password",

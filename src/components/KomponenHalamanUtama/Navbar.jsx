@@ -74,10 +74,10 @@ const Navbar = ({ scrollToSection }) => {
         navigate("/keamanan/dashboard");
         break;
       case "orangtua":
-        navigate("/orangtua");
+        navigate("/orangtua/dashboard");
         break;
       default:
-        navigate("/orangtua");
+        navigate("/orangtua/dashboard");
         break;
     }
   };
