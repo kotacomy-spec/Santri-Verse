@@ -41,7 +41,9 @@ const DeletePerizinanRecordDialog = (props) => {
 
       if (data.foto_bukti) {
         const url = data.foto_bukti;
-        const filePath = url.split("/storage/v1/object/public/pesantren/")[1];
+        const filePath = decodeURIComponent(
+          url.split("/storage/v1/object/public/pesantren/")[1]
+        );
         const { error: errorDeleteFile } = await supabase.storage
           .from("pesantren")
           .remove([filePath]);

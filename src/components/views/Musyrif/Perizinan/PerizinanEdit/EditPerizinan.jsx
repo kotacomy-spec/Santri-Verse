@@ -151,8 +151,11 @@ const PerizinanEdit = () => {
         .getPublicUrl(filePath);
 
       if (OldImage) {
+        console.log("ada old image", OldImage);
         const url = OldImage;
-        const filePath = url.split("/storage/v1/object/public/perizinan/")[1];
+        const filePath = decodeURIComponent(
+          url.split("/storage/v1/object/public/pesantren/")[1]
+        );
         const { error } = await supabase.storage
           .from("pesantren")
           .remove([filePath]);
