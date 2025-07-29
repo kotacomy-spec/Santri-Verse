@@ -22,6 +22,7 @@ import PerizinanEditPages from "@/pages/Muysrif/Perizinan/EditPerizinanPages";
 import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import UpdatePassword from "@/pages/auth/UpdatePassword";
+import AjukanIzinPage from "@/pages/Orang Tua/AjukanIzin/AjukanIzin";
 
 export const routes = createBrowserRouter([
   {
@@ -147,6 +148,10 @@ export const routes = createBrowserRouter([
   {
     path: "/orangtua/santri",
     element: <SantriPage />,
+  },
+  {
+    path: "/orangtua/ajukanizin",
+    element: <AjukanIzinPage />,
   },
   {
     path: "/orangtua/editprofil",

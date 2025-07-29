@@ -48,7 +48,7 @@ export function TitlePage({ title, icon, className }) {
         className="flex items-center w-full"
       >
         <Link
-          to={"/orangtua"}
+          to={"/orangtua/dashboard"}
           className="text-green-100 ml-6 mr-3 my-2 bg-green-700 rounded-full p-2"
         >
           <House />

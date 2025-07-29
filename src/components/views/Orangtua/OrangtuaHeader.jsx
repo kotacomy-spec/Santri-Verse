@@ -9,10 +9,13 @@ import {
   UserPen,
   X,
 } from "lucide-react";
-import { useRef, useState } from "react";
-import { AnimatePresence,  motion, useInView } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import Notification from "@/components/OrangtuaComponent/NotificationHeader";
+import { supabase } from "@/lib/supabase/supabaseClient";
+import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const dataSementaraAkunOrtu = "url('/profile-default.png')";
 
@@ -40,6 +43,58 @@ export default function OrangtuaHeader({ title }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
+  // Mengambil Data User Orangtua
+  const [profilUser, setProfilUser] = useState({});
+  const getAkunOrangtua = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const emailUser = user.email;
+    const { data, error } = await supabase
+      .from("profiles")
+      .select(`*`)
+      .eq("id", user.id)
+      .single();
+    if (error) {
+      console.log(error);
+    } else {
+      setProfilUser({
+        id: data.id,
+        nama: data.full_name,
+        email: emailUser,
+      });
+    }
+  };
+  const namaDepan = profilUser?.nama?.split(" ")[0] || "";
+  useEffect(() => {
+    getAkunOrangtua();
+  }, []);
+  // Mengambil Data User Orangtua
+
+  // Logout
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const toastId = toast.loading("Mohon tunggu sebentar...");
+
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+
+      toast.success("Berhasil Logout", {
+        id: toastId,
+      });
+      navigate("/auth/login");
+    } catch (error) {
+      console.log("error :", error);
+      toast.error(error?.message || "Terjadi Kesalahan", {
+        id: toastId,
+      });
+    }
+  };
+  // Logout
+
   return (
     <>
       <motion.div
@@ -54,26 +109,26 @@ export default function OrangtuaHeader({ title }) {
             <motion.div
               initial={{
                 opacity: 0,
-                y:-300
+                y: -300,
               }}
               animate={{
                 opacity: 1,
-                x:0,
-                y:0
+                x: 0,
+                y: 0,
               }}
-              exit={{ opacity: 0,y:-300 }}
+              exit={{ opacity: 0, y: -300 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className={`
             absolute top-20  right-0  z-10`}
             >
-              <Notification/>
+              <Notification />
             </motion.div>
           ) : null}
         </AnimatePresence>
 
         <div className="flex justify-between gap-2 items-center">
           <Link
-            to="/orangtua"
+            to="/orangtua/dashboard"
             className="bg-green-100 text-green-700 w-fit h-fit p-1.5 rounded-[8px]"
           >
             <div className="rounded-full border-2 border-green-700 p-1.5">
@@ -117,7 +172,7 @@ export default function OrangtuaHeader({ title }) {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.4,ease:"easeInOut" }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
               className={`fixed top-0 bg-white/70 backdrop-blur-sm right-0 h-dvh lg:w-[20%] md:w-[40%] w-[60%] z-20 ${
                 tampil ? "translate-x-0" : "translate-x-full"
               }`}
@@ -142,9 +197,9 @@ export default function OrangtuaHeader({ title }) {
                     className="rounded-full w-20 h-20 bg-cover bg-center mb-2"
                     style={{ backgroundImage: `${dataSementaraAkunOrtu}` }}
                   ></div>
-                  <h1>Orangtua</h1>
+                  <h1>{namaDepan}</h1>
                   <p className="text-xs font-medium text-gray-600">
-                    example@gmail.com
+                    {profilUser.email}
                   </p>
                 </div>
                 <ul className=" h-fit   border-green-700 py-4">
@@ -164,13 +219,13 @@ export default function OrangtuaHeader({ title }) {
                     );
                   })}
                 </ul>
-                <Link
-                  to={"/"}
-                  className="flex justify-center items-center gap-2 text-sm absolute bottom-5 ml-4 text-red-600 font-semibold hover:gap-3 duration-300 ease-in-out"
+                <button
+                  onClick={handleLogout}
+                  className="flex justify-center items-center gap-2 text-sm absolute bottom-5 ml-4 text-red-600 font-semibold hover:gap-3 duration-300 ease-in-out cursor-pointer"
                 >
                   <LogOut size={20} />
                   <h1>Logout</h1>
-                </Link>
+                </button>
               </div>
             </motion.aside>
           </>
