@@ -13,10 +13,12 @@ import PelanggaranPages from "@/pages/Muysrif/Pelanggaran/PelanggaranPages";
 import PelanggaranCreatePages from "@/pages/Muysrif/Pelanggaran/CreatePelanggaranPages";
 import ProfilePages from "@/pages/Profile";
 import MusyrifPage from "@/pages/Muysrif/Musyrif";
-import EditPelanggaranPages from "@/pages/Muysrif/Pelanggaran/EditPelanggaranPages";
 import PerizinanPages from "@/pages/Muysrif/Perizinan/PerizinanPages";
+import EditPelanggaranPages from "@/pages/Muysrif/Pelanggaran/EditPelanggaranPages";
+import CreatePerizinanPages from "@/pages/Muysrif/Perizinan/CreatePerizinanPages";
 import NotFoundPage from "@/notfound";
 import EditProfil from "@/pages/Orang Tua/SettingsAccount/EditProfil";
+import PerizinanEditPages from "@/pages/Muysrif/Perizinan/EditPerizinanPages";
 import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import UpdatePassword from "@/pages/auth/UpdatePassword";
@@ -114,6 +116,26 @@ export const routes = createBrowserRouter([
         <PerizinanPages />
       </AuthRole>
     ),
+  },
+  {
+    path: "/musyrif/perizinan/create",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <CreatePerizinanPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/musyrif/perizinan/edit/:id",
+    element: (
+      <AuthRole allowedRoles={["musyrif"]}>
+        <PerizinanEditPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/orangtua",
+    element: <OrangtuaPage />,
   },
   {
     path: "/profile/:id",

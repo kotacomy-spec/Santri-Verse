@@ -32,6 +32,7 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import SkeletonLoading from "@/components/AdminKomponen/SkeletonLoading";
 
 const EditPelanggaran = () => {
   const [openSantriCombo, setOpenSantriCombo] = useState(false);
@@ -165,108 +166,225 @@ const EditPelanggaran = () => {
 
   return (
     <>
-      <div className="bg-background text-foreground">
-        <Card>
-          <div className="container mx-auto p-6">
-            <div className="flex justify-between items-center mb-12">
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">
-                  Edit Data Pelanggaran Santri
-                </h1>
-                <p className="text-mu text-foreground mt-1">
-                  Edit informasi pelanggaran yang dilakukan santri untuk
-                  keperluan pencatatan dan penanganan lebih lanjut.
-                </p>
-              </div>
-            </div>
-            <form onSubmit={handleSumbit}>
-              <div className="flex flex-col gap-16">
+      {isLoading ? (
+        <SkeletonLoading />
+      ) : (
+        <div className="bg-background text-foreground">
+          <Card>
+            <div className="container mx-auto p-6">
+              <div className="flex justify-between items-center mb-12">
                 <div>
-                  <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
-                    <User />
-                    <h2 className="font-semibold">Informasi Santri</h2>
-                  </div>
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-                    <div className="grid gap-3">
-                      <Label htmlFor="santri">Santri</Label>
-                      <Popover
-                        open={openSantriCombo}
-                        onOpenChange={setOpenSantriCombo}
-                      >
-                        <PopoverTrigger asChild>
-                          <Button
-                            id="santri"
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={openSantriCombo}
-                            className="justify-between"
-                            disabled={isLoading}
-                          >
-                            {isLoading ? (
-                              <div className="flex items-center">
-                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2"></div>
-                                Memuat...
-                              </div>
-                            ) : value ? (
-                              santriData.find(
-                                (santri) => santri.value === value
-                              )?.label
-                            ) : (
-                              "Pilih Santri"
-                            )}
-                            <ChevronsUpDown className="opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-
-                        <PopoverContent align="start" className="w-[300px] p-0">
-                          <Command>
-                            <CommandInput
-                              placeholder="Cari Santri..."
-                              className="h-9"
+                  <h1 className="text-3xl font-bold tracking-tight">
+                    Edit Data Pelanggaran Santri
+                  </h1>
+                  <p className="text-mu text-foreground mt-1">
+                    Edit informasi pelanggaran yang dilakukan santri untuk
+                    keperluan pencatatan dan penanganan lebih lanjut.
+                  </p>
+                </div>
+              </div>
+              <form onSubmit={handleSumbit}>
+                <div className="flex flex-col gap-16">
+                  <div>
+                    <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
+                      <User />
+                      <h2 className="font-semibold">Informasi Santri</h2>
+                    </div>
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
+                      <div className="grid gap-3">
+                        <Label htmlFor="santri">Santri</Label>
+                        <Popover
+                          open={openSantriCombo}
+                          onOpenChange={setOpenSantriCombo}
+                        >
+                          <PopoverTrigger asChild>
+                            <Button
+                              id="santri"
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={openSantriCombo}
+                              className="justify-between"
                               disabled={isLoading}
-                            />
-                            <CommandList>
+                            >
                               {isLoading ? (
-                                <div className="p-4">
-                                  <div className="space-y-2">
-                                    {[...Array(5)].map((_, index) => (
-                                      <div
-                                        key={index}
-                                        className="flex items-center space-x-2"
-                                      >
-                                        <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
-                                        <div className="h-4 bg-gray-200 rounded animate-pulse flex-1"></div>
-                                      </div>
-                                    ))}
-                                  </div>
+                                <div className="flex items-center">
+                                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2"></div>
+                                  Memuat...
                                 </div>
+                              ) : value ? (
+                                santriData.find(
+                                  (santri) => santri.value === value
+                                )?.label
                               ) : (
-                                <>
-                                  <CommandEmpty>
-                                    Tidak bisa menemukan santri
-                                  </CommandEmpty>
+                                "Pilih Santri"
+                              )}
+                              <ChevronsUpDown className="opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            align="start"
+                            className="w-[300px] p-0"
+                          >
+                            <Command>
+                              <CommandInput
+                                placeholder="Cari Santri..."
+                                className="h-9"
+                                disabled={isLoading}
+                              />
+                              <CommandList>
+                                {isLoading ? (
+                                  <div className="p-4">
+                                    <div className="space-y-2">
+                                      {[...Array(5)].map((_, index) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center space-x-2"
+                                        >
+                                          <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
+                                          <div className="h-4 bg-gray-200 rounded animate-pulse flex-1"></div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <CommandEmpty>
+                                      Tidak bisa menemukan santri
+                                    </CommandEmpty>
+                                    <CommandGroup>
+                                      {santriData.map((santri) => (
+                                        <CommandItem
+                                          key={santri.value}
+                                          value={santri.label}
+                                          onSelect={(currentLabel) => {
+                                            const selectedSantri =
+                                              santriData.find(
+                                                (item) =>
+                                                  item.label === currentLabel
+                                              );
+                                            if (selectedSantri) {
+                                              setValue(selectedSantri.value);
+                                            }
+                                            setOpenSantriCombo(false);
+                                          }}
+                                        >
+                                          {santri.label}
+                                          <Check
+                                            className={cn(
+                                              "ml-auto",
+                                              value === santri.value
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                            )}
+                                          />
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </>
+                                )}
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <div className="grid gap-3">
+                        <Label htmlFor="musyrif">Musyrif</Label>
+                        {isLoading ? (
+                          <div className="relative">
+                            <Input
+                              placeholder="Memuat..."
+                              disabled
+                              className="pl-10"
+                            />
+                            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
+                            </div>
+                          </div>
+                        ) : (
+                          <Input
+                            id="musyrif"
+                            name="musyrif"
+                            defaultValue={musyrif?.profile.username}
+                            placeholder="Nama musyrif"
+                            disabled
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
+                      <AlertCircle />
+                      <h2 className="font-semibold">Informasi Pelanggaran</h2>
+                    </div>
+                    <div className="flex flex-col gap-6">
+                      <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+                        <div className="grid gap-3">
+                          <Label htmlFor="pelanggaran">Pelanggaran</Label>
+                          <Popover
+                            open={openPelanggaranCombo}
+                            onOpenChange={setOpenPelanggaranCombo}
+                          >
+                            <PopoverTrigger asChild>
+                              <Button
+                                id="pelanggaran"
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={openPelanggaranCombo}
+                                className="justify-between"
+                                disabled={isLoading}
+                              >
+                                {isLoading ? (
+                                  <div className="flex items-center">
+                                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2"></div>
+                                    Memuat
+                                  </div>
+                                ) : selectedPelanggaranId ? (
+                                  pelanggaranList.find(
+                                    (p) => p.id === selectedPelanggaranId
+                                  )?.nama
+                                ) : (
+                                  "Pilih Pelanggaran"
+                                )}
+                                <ChevronsUpDown className="opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              align="start"
+                              className="w-[300px] p-0"
+                            >
+                              <Command>
+                                <CommandInput
+                                  placeholder="Cari Pelanggaran..."
+                                  className="h-9"
+                                  disabled={isLoading}
+                                />
+                                <CommandList>
+                                  <CommandEmpty>Tidak ada data</CommandEmpty>
                                   <CommandGroup>
-                                    {santriData.map((santri) => (
+                                    {pelanggaranList.map((pelanggaran) => (
                                       <CommandItem
-                                        key={santri.value}
-                                        value={santri.label}
-                                        onSelect={(currentLabel) => {
-                                          const selectedSantri =
-                                            santriData.find(
-                                              (item) =>
-                                                item.label === currentLabel
-                                            );
-                                          if (selectedSantri) {
-                                            setValue(selectedSantri.value);
-                                          }
-                                          setOpenSantriCombo(false);
+                                        key={pelanggaran.id}
+                                        value={pelanggaran.nama}
+                                        onSelect={() => {
+                                          setSelectedPelanggaranId(
+                                            pelanggaran.id
+                                          );
+                                          setJenisPelanggaran(
+                                            pelanggaran.jenis.nama
+                                          );
+                                          setPoin(pelanggaran.poin);
+                                          setKategori(pelanggaran.kategori);
+                                          setOpenPelanggaranCombo(false);
                                         }}
                                       >
-                                        {santri.label}
+                                        {pelanggaran.nama}
                                         <Check
                                           className={cn(
                                             "ml-auto",
-                                            value === santri.value
+                                            selectedPelanggaranId ===
+                                              pelanggaran.id
                                               ? "opacity-100"
                                               : "opacity-0"
                                           )}
@@ -274,254 +392,144 @@ const EditPelanggaran = () => {
                                       </CommandItem>
                                     ))}
                                   </CommandGroup>
-                                </>
-                              )}
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="musyrif">Musyrif</Label>
-                      {isLoading ? (
-                        <div className="relative">
-                          <Input
-                            placeholder="Memuat..."
-                            disabled
-                            className="pl-10"
-                          />
-                          <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
-                          </div>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
                         </div>
-                      ) : (
+
+                        <div className="grid gap-3">
+                          <Label htmlFor="tgl_pelanggaran">
+                            Tanggal Pelanggaran
+                          </Label>
+                          <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                id="date"
+                                className="justify-between font-normal"
+                              >
+                                {date
+                                  ? date.toLocaleDateString("id-ID", {
+                                      weekday: "long",
+                                      year: "numeric",
+                                      month: "long",
+                                      day: "numeric",
+                                    })
+                                  : "Pilih Tanggal"}
+                                <ChevronDownIcon />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto overflow-hidden p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={date}
+                                captionLayout="dropdown"
+                                onSelect={(date) => {
+                                  setDate(date);
+                                  setOpen(false);
+                                }}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-3">
+                        <Label htmlFor="deskripsi">Deskripsi Pelanggaran</Label>
+                        <Textarea
+                          id="deskripsi"
+                          placeholder="Deskripsi Pelanggaran..."
+                          name="deskripsi"
+                          className="resize-none"
+                          value={deskripsi}
+                          onChange={(e) => setDeskripsi(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
+                      <FileText />
+                      <h2 className="font-semibold">Detail Pelanggaran</h2>
+                    </div>
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
+                      <div className="grid gap-3">
+                        <Label htmlFor="jenis">Jenis Pelanggaran</Label>
                         <Input
-                          id="musyrif"
-                          name="musyrif"
-                          defaultValue={musyrif?.profile.username}
-                          placeholder="Nama musyrif"
+                          id="jenis"
+                          value={jenisPelanggaran}
+                          placeholder="Jenis Pelanggaran"
+                          name="jenis_pelanggaran"
                           disabled
                         />
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
-                    <AlertCircle />
-                    <h2 className="font-semibold">Informasi Pelanggaran</h2>
-                  </div>
-                  <div className="flex flex-col gap-6">
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-                      <div className="grid gap-3">
-                        <Label htmlFor="pelanggaran">Pelanggaran</Label>
-                        <Popover
-                          open={openPelanggaranCombo}
-                          onOpenChange={setOpenPelanggaranCombo}
-                        >
-                          <PopoverTrigger asChild>
-                            <Button
-                              id="pelanggaran"
-                              variant="outline"
-                              role="combobox"
-                              aria-expanded={openPelanggaranCombo}
-                              className="justify-between"
-                              disabled={isLoading}
-                            >
-                              {isLoading ? (
-                                <div className="flex items-center">
-                                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2"></div>
-                                  Memuat
-                                </div>
-                              ) : selectedPelanggaranId ? (
-                                pelanggaranList.find(
-                                  (p) => p.id === selectedPelanggaranId
-                                )?.nama
-                              ) : (
-                                "Pilih Pelanggaran"
-                              )}
-                              <ChevronsUpDown className="opacity-50" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent
-                            align="start"
-                            className="w-[300px] p-0"
-                          >
-                            <Command>
-                              <CommandInput
-                                placeholder="Cari Pelanggaran..."
-                                className="h-9"
-                                disabled={isLoading}
-                              />
-                              <CommandList>
-                                <CommandEmpty>Tidak ada data</CommandEmpty>
-                                <CommandGroup>
-                                  {pelanggaranList.map((pelanggaran) => (
-                                    <CommandItem
-                                      key={pelanggaran.id}
-                                      value={pelanggaran.nama}
-                                      onSelect={() => {
-                                        setSelectedPelanggaranId(
-                                          pelanggaran.id
-                                        );
-                                        setJenisPelanggaran(
-                                          pelanggaran.jenis.nama
-                                        );
-                                        setPoin(pelanggaran.poin);
-                                        setKategori(pelanggaran.kategori);
-                                        setOpenPelanggaranCombo(false);
-                                      }}
-                                    >
-                                      {pelanggaran.nama}
-                                      <Check
-                                        className={cn(
-                                          "ml-auto",
-                                          selectedPelanggaranId ===
-                                            pelanggaran.id
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
                       </div>
-
                       <div className="grid gap-3">
-                        <Label htmlFor="tgl_pelanggaran">
-                          Tanggal Pelanggaran
-                        </Label>
-                        <Popover open={open} onOpenChange={setOpen}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              id="date"
-                              className="justify-between font-normal"
-                            >
-                              {date
-                                ? date.toLocaleDateString("id-ID", {
-                                    weekday: "long",
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  })
-                                : "Pilih Tanggal"}
-                              <ChevronDownIcon />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent
-                            className="w-auto overflow-hidden p-0"
-                            align="start"
-                          >
-                            <Calendar
-                              mode="single"
-                              selected={date}
-                              captionLayout="dropdown"
-                              onSelect={(date) => {
-                                setDate(date);
-                                setOpen(false);
-                              }}
-                            />
-                          </PopoverContent>
-                        </Popover>
+                        <Label htmlFor="poin">Poin</Label>
+                        <Input
+                          id="poin"
+                          value={poin}
+                          placeholder="Poin"
+                          name="poin"
+                          disabled
+                        />
+                      </div>
+                      <div className="grid gap-3">
+                        <Label htmlFor="kategori">Kategori</Label>
+                        <Input
+                          id="kategori"
+                          value={kategori}
+                          placeholder="Kategori"
+                          disabled
+                        />
+                      </div>
+                      <div className="grid gap-3">
+                        <Label htmlFor="tindakan">Tindakan</Label>
+                        <Input
+                          id="tindakan"
+                          name="tindakan"
+                          placeholder="Tindakan"
+                          value={tindakan}
+                          onChange={(e) => setTindakan(e.target.value)}
+                        />
                       </div>
                     </div>
-
-                    <div className="grid gap-3">
-                      <Label htmlFor="deskripsi">Deskripsi Pelanggaran</Label>
-                      <Textarea
-                        id="deskripsi"
-                        placeholder="Deskripsi Pelanggaran..."
-                        name="deskripsi"
-                        className="resize-none"
-                        value={deskripsi}
-                        onChange={(e) => setDeskripsi(e.target.value)}
-                      />
+                  </div>
+                  <div className="w-full">
+                    <div className="w-full flex flex-col gap-2 md:justify-end md:flex-row">
+                      <Button
+                        type="button"
+                        disabled={IsSubmit}
+                        className={`md:w-1/6 w-full bg-red-700 hover:bg-red-800 cursor-pointer`}
+                        onClick={() => navigate("/musyrif/pelanggaran")}
+                      >
+                        Batal
+                      </Button>
+                      <Button
+                        type="submit"
+                        disabled={IsSubmit}
+                        className={`bg-green-700 cursor-pointer hover:bg-green-800 md:w-1/6 w-full`}
+                      >
+                        {IsSubmit ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Menyimpan...
+                          </>
+                        ) : (
+                          "Simpan"
+                        )}
+                      </Button>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
-                    <FileText />
-                    <h2 className="font-semibold">Detail Pelanggaran</h2>
-                  </div>
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-                    <div className="grid gap-3">
-                      <Label htmlFor="jenis">Jenis Pelanggaran</Label>
-                      <Input
-                        id="jenis"
-                        value={jenisPelanggaran}
-                        placeholder="Jenis Pelanggaran"
-                        name="jenis_pelanggaran"
-                        disabled
-                      />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="poin">Poin</Label>
-                      <Input
-                        id="poin"
-                        value={poin}
-                        placeholder="Poin"
-                        name="poin"
-                        disabled
-                      />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="kategori">Kategori</Label>
-                      <Input
-                        id="kategori"
-                        value={kategori}
-                        placeholder="Kategori"
-                        disabled
-                      />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="tindakan">Tindakan</Label>
-                      <Input
-                        id="tindakan"
-                        name="tindakan"
-                        placeholder="Tindakan"
-                        value={tindakan}
-                        onChange={(e) => setTindakan(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full">
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      type="button"
-                      disabled={IsSubmit}
-                      className={`md:w-1/6 w-full bg-red-700 hover:bg-red-800 cursor-pointer`}
-                      onClick={() => navigate("/musyrif/pelanggaran")}
-                    >
-                      Batal
-                    </Button>
-                    <Button
-                      type="submit"
-                      disabled={IsSubmit}
-                      className={`bg-green-700 cursor-pointer hover:bg-green-800 md:w-1/6 w-full`}
-                    >
-                      {IsSubmit ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Menyimpan...
-                        </>
-                      ) : (
-                        "Simpan"
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </Card>
-      </div>
+              </form>
+            </div>
+          </Card>
+        </div>
+      )}
     </>
   );
 };
