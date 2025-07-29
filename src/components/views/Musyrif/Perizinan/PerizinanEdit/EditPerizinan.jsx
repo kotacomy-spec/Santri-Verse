@@ -669,7 +669,7 @@ const PerizinanEdit = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-full flex justify-end gap-2">
+                <div className="w-full flex flex-col gap-2 md:justify-end md:flex-row">
                   <Button
                     type="button"
                     onClick={() => navigate("/musyrif/perizinan")}

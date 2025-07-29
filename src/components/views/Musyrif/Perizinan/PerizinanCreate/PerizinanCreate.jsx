@@ -45,6 +45,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import SkeletonLoading from "@/components/AdminKomponen/SkeletonLoading";
 
 const PerizinanCreate = () => {
   const [openSantriCombo, setOpenSantriCombo] = useState(false);
@@ -239,401 +240,414 @@ const PerizinanCreate = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className=" min-h-screen bg-background text-foreground">
-        <Card>
-          <div className="container mx-auto p-6">
-            <div className="flex justify-between items-center mb-12">
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">
-                  Tambah Data Perizinan Santri
-                </h1>
-                <p className="text-mu ted-foreground mt-1">
-                  Tambahkan informasi perizinan santri untuk keperluan
-                  pencatatan dan penanganan lebih lanjut.
-                </p>
-              </div>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-16">
+      {isLoading ? (
+        <SkeletonLoading />
+      ) : (
+        <div className=" min-h-screen bg-background text-foreground">
+          <Card>
+            <div className="container mx-auto p-6">
+              <div className="flex justify-between items-center mb-12">
                 <div>
-                  <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
-                    <User />
-                    <h2 className="font-semibold">Informasi Santri</h2>
-                  </div>
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
-                    <div className="grid gap-3">
-                      <Label htmlFor="santri">Santri</Label>
-                      <Popover
-                        open={openSantriCombo}
-                        onOpenChange={setOpenSantriCombo}
-                      >
-                        <PopoverTrigger asChild>
-                          <Button
-                            id="santri"
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={openSantriCombo}
-                            className="justify-between"
-                            disabled={isLoading}
-                          >
-                            {isLoading ? (
-                              <div className="flex items-center">
-                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2"></div>
-                                Memuat...
-                              </div>
-                            ) : value ? (
-                              santriData.find(
-                                (santri) => santri.value === value
-                              )?.label
-                            ) : (
-                              "Pilih Santri"
-                            )}
-                            <ChevronsUpDown className="opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-
-                        <PopoverContent align="start" className="w-[300px] p-0">
-                          <Command>
-                            <CommandInput
-                              placeholder="Cari Santri..."
-                              className="h-9"
-                              disabled={isLoading}
-                            />
-                            <CommandList>
-                              {isLoading ? (
-                                <div className="p-4">
-                                  <div className="space-y-2">
-                                    {[...Array(5)].map((_, index) => (
-                                      <div
-                                        key={index}
-                                        className="flex items-center space-x-2"
-                                      >
-                                        <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
-                                        <div className="h-4 bg-gray-200 rounded animate-pulse flex-1"></div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              ) : (
-                                <>
-                                  <CommandEmpty>
-                                    Tidak bisa menemukan santri
-                                  </CommandEmpty>
-                                  <CommandGroup>
-                                    {santriData.map((santri) => (
-                                      <CommandItem
-                                        key={santri.value}
-                                        value={santri.label}
-                                        onSelect={(currentLabel) => {
-                                          const selectedSantri =
-                                            santriData.find(
-                                              (item) =>
-                                                item.label === currentLabel
-                                            );
-                                          if (selectedSantri) {
-                                            setValue(selectedSantri.value);
-                                          }
-                                          setOpenSantriCombo(false);
-                                        }}
-                                      >
-                                        {santri.label}
-                                        <Check
-                                          className={cn(
-                                            "ml-auto",
-                                            value === santri.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                      </CommandItem>
-                                    ))}
-                                  </CommandGroup>
-                                </>
-                              )}
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="musyrif">Musyrif</Label>
-                      {isLoading ? (
-                        <div className="relative">
-                          <Input
-                            placeholder="Memuat..."
-                            disabled
-                            className="pl-10"
-                          />
-                          <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
-                          </div>
-                        </div>
-                      ) : (
-                        <Input
-                          id="musyrif"
-                          name="musyrif"
-                          defaultValue={musyrif?.profile.username}
-                          placeholder="Nama musyrif"
-                          disabled
-                        />
-                      )}
-                    </div>
-                  </div>
+                  <h1 className="text-3xl font-bold tracking-tight">
+                    Tambah Data Perizinan Santri
+                  </h1>
+                  <p className="text-mu ted-foreground mt-1">
+                    Tambahkan informasi perizinan santri untuk keperluan
+                    pencatatan dan penanganan lebih lanjut.
+                  </p>
                 </div>
-                <div>
-                  <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
-                    <NotebookPen />
-                    <h2 className="font-semibold">Informasi Perizinan</h2>
-                  </div>
-                  <div className="flex flex-col gap-6">
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col gap-16">
+                  <div>
+                    <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
+                      <User />
+                      <h2 className="font-semibold">Informasi Santri</h2>
+                    </div>
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
                       <div className="grid gap-3">
-                        <Label htmlFor="tgl_ijin">Tanggal Izin</Label>
-                        <Popover>
+                        <Label htmlFor="santri">Santri</Label>
+                        <Popover
+                          open={openSantriCombo}
+                          onOpenChange={setOpenSantriCombo}
+                        >
                           <PopoverTrigger asChild>
                             <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full justify-start text-left font-normal"
-                              )}
+                              id="santri"
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={openSantriCombo}
+                              className="justify-between"
+                              disabled={isLoading}
                             >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {tglIjin ? (
-                                format(tglIjin, "PPP")
+                              {isLoading ? (
+                                <div className="flex items-center">
+                                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 mr-2"></div>
+                                  Memuat...
+                                </div>
+                              ) : value ? (
+                                santriData.find(
+                                  (santri) => santri.value === value
+                                )?.label
                               ) : (
-                                <span>Pilih tanggal izin</span>
+                                "Pilih Santri"
                               )}
+                              <ChevronsUpDown className="opacity-50" />
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={tglIjin}
-                              onSelect={setTglIjin}
-                              initialFocus
-                            />
+
+                          <PopoverContent
+                            align="start"
+                            className="w-[300px] p-0"
+                          >
+                            <Command>
+                              <CommandInput
+                                placeholder="Cari Santri..."
+                                className="h-9"
+                                disabled={isLoading}
+                              />
+                              <CommandList>
+                                {isLoading ? (
+                                  <div className="p-4">
+                                    <div className="space-y-2">
+                                      {[...Array(5)].map((_, index) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center space-x-2"
+                                        >
+                                          <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
+                                          <div className="h-4 bg-gray-200 rounded animate-pulse flex-1"></div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <CommandEmpty>
+                                      Tidak bisa menemukan santri
+                                    </CommandEmpty>
+                                    <CommandGroup>
+                                      {santriData.map((santri) => (
+                                        <CommandItem
+                                          key={santri.value}
+                                          value={santri.label}
+                                          onSelect={(currentLabel) => {
+                                            const selectedSantri =
+                                              santriData.find(
+                                                (item) =>
+                                                  item.label === currentLabel
+                                              );
+                                            if (selectedSantri) {
+                                              setValue(selectedSantri.value);
+                                            }
+                                            setOpenSantriCombo(false);
+                                          }}
+                                        >
+                                          {santri.label}
+                                          <Check
+                                            className={cn(
+                                              "ml-auto",
+                                              value === santri.value
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                            )}
+                                          />
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </>
+                                )}
+                              </CommandList>
+                            </Command>
                           </PopoverContent>
                         </Popover>
                       </div>
                       <div className="grid gap-3">
-                        <Label htmlFor="tgl_kembali">Tanggal Kembali</Label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full justify-start text-left font-normal"
-                              )}
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {tglKembali ? (
-                                format(tglKembali, "PPP")
-                              ) : (
-                                <span>Pilih tanggal kembali</span>
-                              )}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={tglKembali}
-                              onSelect={setTglKembali}
-                              initialFocus
+                        <Label htmlFor="musyrif">Musyrif</Label>
+                        {isLoading ? (
+                          <div className="relative">
+                            <Input
+                              placeholder="Memuat..."
+                              disabled
+                              className="pl-10"
                             />
-                          </PopoverContent>
-                        </Popover>
+                            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
+                            </div>
+                          </div>
+                        ) : (
+                          <Input
+                            id="musyrif"
+                            name="musyrif"
+                            defaultValue={musyrif?.profile.username}
+                            placeholder="Nama musyrif"
+                            disabled
+                          />
+                        )}
                       </div>
                     </div>
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+                  </div>
+                  <div>
+                    <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
+                      <NotebookPen />
+                      <h2 className="font-semibold">Informasi Perizinan</h2>
+                    </div>
+                    <div className="flex flex-col gap-6">
+                      <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+                        <div className="grid gap-3">
+                          <Label htmlFor="tgl_ijin">Tanggal Izin</Label>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "w-full justify-start text-left font-normal"
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {tglIjin ? (
+                                  format(tglIjin, "PPP")
+                                ) : (
+                                  <span>Pilih tanggal izin</span>
+                                )}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={tglIjin}
+                                onSelect={setTglIjin}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                        <div className="grid gap-3">
+                          <Label htmlFor="tgl_kembali">Tanggal Kembali</Label>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "w-full justify-start text-left font-normal"
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {tglKembali ? (
+                                  format(tglKembali, "PPP")
+                                ) : (
+                                  <span>Pilih tanggal kembali</span>
+                                )}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={tglKembali}
+                                onSelect={setTglKembali}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                      </div>
+                      <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+                        <div className="grid gap-3">
+                          <Label htmlFor="penjemput">Penjemput</Label>
+                          <Input
+                            id="penjemput"
+                            name="penjemput"
+                            placeholder="Nama penjemput..."
+                          />
+                        </div>
+                        <div className="grid gap-3">
+                          <Label htmlFor="status">Status</Label>
+                          <Select value={kategori} onValueChange={setKategori}>
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Pilih status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {[
+                                "Draft",
+                                "Diperiksa",
+                                "Disetujui",
+                                "Ditolak",
+                                "Keluar",
+                                "Kembali",
+                              ].map((status) => (
+                                <SelectItem key={status} value={status}>
+                                  {status}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
                       <div className="grid gap-3">
-                        <Label htmlFor="penjemput">Penjemput</Label>
-                        <Input
-                          id="penjemput"
-                          name="penjemput"
-                          placeholder="Nama penjemput..."
+                        <Label htmlFor="keperluan">Keperluan</Label>
+                        <Textarea
+                          id="keperluan"
+                          name="keperluan"
+                          placeholder="Tulis keperluan perizinan di sini..."
+                          className="resize-none"
                         />
                       </div>
                       <div className="grid gap-3">
-                        <Label htmlFor="status">Status</Label>
-                        <Select value={kategori} onValueChange={setKategori}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Pilih status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {[
-                              "Draft",
-                              "Diperiksa",
-                              "Disetujui",
-                              "Ditolak",
-                              "Keluar",
-                              "Kembali",
-                            ].map((status) => (
-                              <SelectItem key={status} value={status}>
-                                {status}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <Label htmlFor="catatan">Catatan Tambahan</Label>
+                        <Textarea
+                          id="catatan"
+                          name="catatan"
+                          placeholder="Catatan dari musyrif (opsional)..."
+                          className="resize-none"
+                        />
                       </div>
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="keperluan">Keperluan</Label>
-                      <Textarea
-                        id="keperluan"
-                        name="keperluan"
-                        placeholder="Tulis keperluan perizinan di sini..."
-                        className="resize-none"
-                      />
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="catatan">Catatan Tambahan</Label>
-                      <Textarea
-                        id="catatan"
-                        name="catatan"
-                        placeholder="Catatan dari musyrif (opsional)..."
-                        className="resize-none"
-                      />
-                    </div>
-                    <div className="grid gap-3">
-                      <label>Upload Foto Bukti Perizinan (opsional)</label>
-                      <div
-                        onDragOver={handleDragOver}
-                        onDrop={handleDrop}
-                        onDragEnter={handleDragEnter}
-                        onDragLeave={handleDragLeave}
-                        onClick={handleClick}
-                        className={`flex flex-col items-center justify-center border-2 border-dashed p-6 rounded-xl cursor-pointer text-center transition-colors
+                      <div className="grid gap-3">
+                        <label>Upload Foto Bukti Perizinan (opsional)</label>
+                        <div
+                          onDragOver={handleDragOver}
+                          onDrop={handleDrop}
+                          onDragEnter={handleDragEnter}
+                          onDragLeave={handleDragLeave}
+                          onClick={handleClick}
+                          className={`flex flex-col items-center justify-center border-2 border-dashed p-6 rounded-xl cursor-pointer text-center transition-colors
                           ${
                             isDragging
                               ? "border-blue-400 bg-blue-50"
                               : "border-gray-300 hover:border-blue-400"
                           }
                         `}
-                      >
-                        <input
-                          type="file"
-                          accept="image/*"
-                          ref={inputRef}
-                          onChange={handleFileChange}
-                          className="hidden"
-                        />
+                        >
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref={inputRef}
+                            onChange={handleFileChange}
+                            className="hidden"
+                          />
 
-                        {previewUrl ? (
-                          <div className="relative">
-                            <img
-                              src={previewUrl}
-                              alt="Preview"
-                              className="max-h-64 rounded-md object-contain"
-                            />
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setShowImageModal(true);
-                              }}
-                              className="absolute top-1 right-10 bg-white p-1 rounded-full shadow"
-                            >
-                              <Eye className="w-6 h-6 text-blue-500" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setPreviewUrl(null);
-                                setFotoBukti(null);
-                              }}
-                              className="absolute top-1 right-1 bg-white p-1 rounded-full shadow"
-                            >
-                              <X className="w-6 h-6 text-red-500" />
-                            </button>
-                          </div>
-                        ) : (
-                          <>
-                            <ImageIcon className="h-10 w-10 text-gray-400 mb-2" />
-                            <p className="text-gray-600">
-                              Seret file ke sini atau klik untuk memilih
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              PNG, JPG, JPEG hingga 10MB
-                            </p>
-                            <button
-                              type="button"
-                              className="mt-4 bg-green-700 text-white py-2 px-6 rounded-md hover:bg-green-800 transition"
-                            >
-                              Pilih File
-                            </button>
-                          </>
-                        )}
+                          {previewUrl ? (
+                            <div className="relative">
+                              <img
+                                src={previewUrl}
+                                alt="Preview"
+                                className="max-h-64 rounded-md object-contain"
+                              />
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setShowImageModal(true);
+                                }}
+                                className="absolute top-1 right-10 bg-white p-1 rounded-full shadow"
+                              >
+                                <Eye className="w-6 h-6 text-blue-500" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setPreviewUrl(null);
+                                  setFotoBukti(null);
+                                }}
+                                className="absolute top-1 right-1 bg-white p-1 rounded-full shadow"
+                              >
+                                <X className="w-6 h-6 text-red-500" />
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <ImageIcon className="h-10 w-10 text-gray-400 mb-2" />
+                              <p className="text-gray-600">
+                                Seret file ke sini atau klik untuk memilih
+                              </p>
+                              <p className="text-sm text-gray-500">
+                                PNG, JPG, JPEG hingga 10MB
+                              </p>
+                              <button
+                                type="button"
+                                className="mt-4 bg-green-700 text-white py-2 px-6 rounded-md hover:bg-green-800 transition"
+                              >
+                                Pilih File
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
-                    <CalendarClock />
-                    <h2 className="font-semibold">
-                      Detail Waktu Keluar & Kembali
-                    </h2>
-                  </div>
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-                    <div className="grid gap-3">
-                      <Label htmlFor="waktu_keluar">Waktu Keluar</Label>
-                      <div className="flex items-center gap-2">
-                        <Input
-                          type="time"
-                          id="waktu_keluar"
-                          step="1"
-                          value={waktuKeluar}
-                          onChange={(e) => setWaktuKeluar(e.target.value)}
-                          className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                        />
-                      </div>
+                  <div>
+                    <div className="flex gap-2 border-b-1 border-gray-300 pb-3 mb-7">
+                      <CalendarClock />
+                      <h2 className="font-semibold">
+                        Detail Waktu Keluar & Kembali
+                      </h2>
                     </div>
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+                      <div className="grid gap-3">
+                        <Label htmlFor="waktu_keluar">Waktu Keluar</Label>
+                        <div className="flex items-center gap-2">
+                          <Input
+                            type="time"
+                            id="waktu_keluar"
+                            step="1"
+                            value={waktuKeluar}
+                            onChange={(e) => setWaktuKeluar(e.target.value)}
+                            className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                          />
+                        </div>
+                      </div>
 
-                    <div className="grid gap-3">
-                      <Label htmlFor="waktu_kembali">Waktu Kembali</Label>
-                      <div className="flex items-center gap-2">
-                        <Input
-                          type="time"
-                          id="waktu_kembali"
-                          step="1"
-                          value={waktuKembali}
-                          onChange={(e) => setWaktuKembali(e.target.value)}
-                          className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                        />
+                      <div className="grid gap-3">
+                        <Label htmlFor="waktu_kembali">Waktu Kembali</Label>
+                        <div className="flex items-center gap-2">
+                          <Input
+                            type="time"
+                            id="waktu_kembali"
+                            step="1"
+                            value={waktuKembali}
+                            onChange={(e) => setWaktuKembali(e.target.value)}
+                            className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div className="w-full flex flex-col gap-2 md:justify-end md:flex-row">
+                    <Button
+                      type="button"
+                      onClick={() => navigate("/musyrif/perizinan")}
+                      disabled={IsSubmit}
+                      className={`bg-red-700 cursor-pointer hover:bg-red-800 md:w-1/6 w-full`}
+                    >
+                      Batal
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={IsSubmit}
+                      className={`bg-green-700 cursor-pointer hover:bg-green-800 md:w-1/6 w-full`}
+                    >
+                      {IsSubmit ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Menyimpan...
+                        </>
+                      ) : (
+                        "Simpan"
+                      )}
+                    </Button>
+                  </div>
                 </div>
-                <div className="w-full flex justify-end gap-2">
-                  <Button
-                    type="button"
-                    onClick={() => navigate("/musyrif/perizinan")}
-                    disabled={IsSubmit}
-                    className={`bg-red-700 cursor-pointer hover:bg-red-800 md:w-1/6 w-full`}
-                  >
-                    Batal
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={IsSubmit}
-                    className={`bg-green-700 cursor-pointer hover:bg-green-800 md:w-1/6 w-full`}
-                  >
-                    {IsSubmit ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Menyimpan...
-                      </>
-                    ) : (
-                      "Simpan"
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </Card>
-      </div>
+              </form>
+            </div>
+          </Card>
+        </div>
+      )}
     </>
   );
 };

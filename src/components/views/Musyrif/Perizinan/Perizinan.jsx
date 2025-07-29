@@ -291,9 +291,9 @@ const Perizinan = () => {
                 </TableBody>
               </Table>
             </div>
-            <div className="flex items-center justify-between mt-6">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-6">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="text-sm text-muted-foreground whitespace-nowrap">
                   Baris per halaman
                 </span>
                 <Select
@@ -312,15 +312,19 @@ const Perizinan = () => {
                     <SelectItem value="50">50</SelectItem>
                   </SelectContent>
                 </Select>
-                <span className="text-sm text-muted-foreground mx-4">
+              </div>
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+                <span className="text-sm text-muted-foreground whitespace-nowrap order-2 sm:order-1">
                   Halaman {currentPage} dari {totalPages || 1}
                 </span>
-                <div className="flex gap-1">
+
+                <div className="flex gap-1 order-1 sm:order-2">
                   <Button
                     variant="outline"
                     size="sm"
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage((prev) => prev - 1)}
+                    className="h-8 w-8 p-0"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
@@ -330,6 +334,7 @@ const Perizinan = () => {
                     size="sm"
                     disabled={currentPage === totalPages || totalPages === 0}
                     onClick={() => setCurrentPage((prev) => prev + 1)}
+                    className="h-8 w-8 p-0"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
