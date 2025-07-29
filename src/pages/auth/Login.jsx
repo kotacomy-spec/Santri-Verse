@@ -39,8 +39,7 @@ const LoginPages = () => {
           case "musyrif":
             navigate("/musyrif/dashboard", { replace: true });
             break;
-          case "orangtua":
-          case "santri":
+          case "orang_tua":
             navigate("/orangtua/dashboard", { replace: true });
             break;
           case "keamanan":
@@ -91,9 +90,10 @@ const LoginPages = () => {
       const role = profile.role;
       if (role === "musyrif") {
         navigate("/musyrif/dashboard", { replace: true });
+
       } else if (role === "orang_tua" || role === "santri") {
         navigate("/orangtua/dashboard", { replace: true });
-      } else {
+       else {
         toast.error("Anda belum memiliki role", { id: toastId });
       }
     } catch (error) {
