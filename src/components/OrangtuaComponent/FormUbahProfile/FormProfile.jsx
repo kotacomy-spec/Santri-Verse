@@ -108,13 +108,13 @@ export default function FormProfile() {
                     accept=".jpg, .jpeg, .png"
                     type={"file"}
                     className={
-                      "mx-auto font-semibold text-green-700 border border-green-500 file:text-green-500 file:mr-4 rounded-full file:h-6.5  file:bg-green-200 file:px-2 px-1 file:rounded-2xl "
+                      "mx-auto font-semibold text-green-700 cursor-pointer border border-green-500 file:cursor-pointer file:text-green-500 file:mr-4 rounded-full file:h-6.5  file:bg-green-200 file:px-2 px-1 file:rounded-2xl "
                     }
                     onChange={handleChangeProfile}
                   ></Input>
                   <button
                     onClick={handleReset}
-                    className="text-red-500 font-semibold text-sm underline rounded-sm  w-full mt-1 text-right pr-4"
+                    className="text-red-500 font-semibold text-sm underline rounded-sm  w-full mt-1 text-right pr-4 cursor-pointer"
                   >
                     Hapus
                   </button>

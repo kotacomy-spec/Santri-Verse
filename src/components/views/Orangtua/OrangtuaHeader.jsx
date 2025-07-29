@@ -126,13 +126,13 @@ export default function OrangtuaHeader({ title }) {
           ) : null}
         </AnimatePresence>
 
-        <div className="flex justify-between gap-2 items-center">
+        <div className="flex justify-between gap-4 items-center">
           <Link
             to="/orangtua/dashboard"
-            className="bg-green-100 text-green-700 w-fit h-fit p-1.5 rounded-[8px]"
+            className=" text-white w-fit h-fit "
           >
-            <div className="rounded-full border-2 border-green-700 p-1.5">
-              <BookOpenText size={20} />
+            <div className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5">
+              <BookOpenText size={24} />
             </div>
           </Link>
           <div className="flex flex-col justify-center h-fit font-semibold">
@@ -140,18 +140,18 @@ export default function OrangtuaHeader({ title }) {
             <p className="text-sm text-gray-500">SantriVerse</p>
           </div>
         </div>
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex justify-between items-center gap-4 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 h-fit py-1.5 px-2">
           <button
             onClick={() => {
               setMuncul(!muncul);
             }}
-            className=" text-green-700 hover:cursor-pointer"
+            className=" text-green-100 hover:cursor-pointer p-1.5"
           >
             <Bell size={22} />
           </button>
           <button
             onClick={() => setTampil(!tampil)}
-            className=" text-green-700 hover:cursor-pointer"
+            className=" bg-green-100 rounded-full p-1.5 text-green-700 hover:cursor-pointer"
           >
             <User size={22} />
           </button>
@@ -182,14 +182,16 @@ export default function OrangtuaHeader({ title }) {
                   whileHover={{ scale: 1.1, rotate: 180 }}
                   transition={{ duration: 0.3, ease: "linear" }}
                   onClick={() => setTampil(!tampil)}
-                  className="flex  justify-center items-center  hover:cursor-pointer   text-green-700 px-4 py-3"
+                  className="flex  justify-center items-center cursor-pointer text-green-700 px-4 py-3"
                 >
                   <X />
                 </motion.button>
               </div>
               <div className="flex flex-col justify-start px-4 h-full">
                 <div className=" h-fit flex justify-center items-center gap-2 mb-4 text-green-700 font-bold  ">
-                  <BookOpenText size={40} />
+                  <div className="rounded-full p-3 bg-gradient-to-br from-emerald-500 to-teal-600 text-white">
+                  <BookOpenText size={30} />
+                  </div>
                   <h1>SantriVerse</h1>
                 </div>
                 <div className="h-fit flex flex-col  justify-center items-center w-full pb-4 pt-6 font-semibold text-green-700 border-t-2 border-green-700">
@@ -197,8 +199,8 @@ export default function OrangtuaHeader({ title }) {
                     className="rounded-full w-20 h-20 bg-cover bg-center mb-2"
                     style={{ backgroundImage: `${dataSementaraAkunOrtu}` }}
                   ></div>
-                  <h1>{namaDepan}</h1>
-                  <p className="text-xs font-medium text-gray-600">
+                  <h1 className="text-xl">{namaDepan}</h1>
+                  <p className="text-sm font-medium text-gray-600">
                     {profilUser.email}
                   </p>
                 </div>
