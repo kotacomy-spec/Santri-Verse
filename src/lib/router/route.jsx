@@ -143,23 +143,43 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/orangtua/dashboard",
-    element: <OrangtuaPage />,
+    element: (
+      <AuthRole allowedRoles={["orang_tua"]}>
+        <OrangtuaPage />,
+      </AuthRole>
+    ),
   },
   {
     path: "/orangtua/santri",
-    element: <SantriPage />,
+    element: (
+      <AuthRole allowedRoles={["orang_tua"]}>
+        <SantriPage />
+      </AuthRole>
+    ),
   },
   {
     path: "/orangtua/ajukanizin",
-    element: <AjukanIzinPage />,
+    element: (
+      <AuthRole allowedRoles={["orang_tua"]}>
+        <AjukanIzinPage />
+      </AuthRole>
+    ),
   },
   {
     path: "/orangtua/editprofil",
-    element: <EditProfil />,
+    element: (
+      <AuthRole allowedRoles={["orang_tua"]}>
+        <EditProfil />
+      </AuthRole>
+    ),
   },
   {
     path: "/orangtua/ubahkatasandi",
-    element: <UbahPassword />,
+    element: (
+      <AuthRole allowedRoles={["orang_tua"]}>
+        <UbahPassword />
+      </AuthRole>
+    ),
   },
   {
     path: "/auth/forgot-password",

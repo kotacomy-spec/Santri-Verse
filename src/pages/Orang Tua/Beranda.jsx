@@ -5,7 +5,7 @@ export default function OrangtuaPage() {
   return (
     <>
       <div className="font-manrope pb-12 overflow-x-hidden">
-        <OrangtuaHeader title={"Monitoring Santri"} />
+        <OrangtuaHeader title={"Dashboard"} />
         <OrangtuaHome />
       </div>
     </>

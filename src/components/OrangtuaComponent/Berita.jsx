@@ -69,15 +69,15 @@ export default function Berita() {
                   key={berita.id}
                   className={"md:h-[470px] h-[30vh] "}
                 >
-                  <div className="relative rounded-2xl  h-full  bg-cover group overflow-hidden bg-center bg-no-repeat flex  items-end justify-center ">
+                  <div className="relative rounded-2xl h-full bg-cover group overflow-hidden bg-center bg-no-repeat flex  items-end justify-center ">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                       style={{ backgroundImage: `${berita.image}` }}
                     ></div>
 
-                    <div className="relative z-10 flex justify-between items-center md:w-[88%] w-full md:h-fit h-[35%] bg-white/90    md:rounded-t-2xl py-5 md:px-16 px-4">
-                      <div className="flex flex-col md:w-3/4 w-3/5 gap-2 text-green-700 ">
-                        <h1 className="font-semibold md:text-xl text-[1rem] ">
+                    <div className="relative z-10 flex justify-between items-center md:w-[88%] w-full md:h-fit h-[40%] bg-white/90    md:rounded-t-2xl py-6 md:px-16 px-4">
+                      <div className="flex flex-col md:w-3/4 w-4/5 gap-2 text-green-700 ">
+                        <h1 className="font-semibold md:text-xl text-[0.9rem] ">
                           {berita.title}
                         </h1>
                         <p className="text-sm text-balance font-normal md:flex hidden">
@@ -89,12 +89,12 @@ export default function Berita() {
                       </div>
                       <a
                         href=""
-                        className="text-blue-500 md:w-fit flex items-center justify-center gap-2"
+                        className="text-blue-500 md:w-fit w-28 md:mx-0 mx-4 flex items-center md:justify-center md:gap-2 gap-0.5  "
                       >
-                        <p className="font-semibold underline md:text-[1rem] text-sm">
+                        <p className="font-semibold underline md:text-[1rem] text-xs">
                           Detail Berita
                         </p>
-                        <SquareArrowOutUpRight size={17} />
+                        <SquareArrowOutUpRight size={15} />
                       </a>
                     </div>
                   </div>
