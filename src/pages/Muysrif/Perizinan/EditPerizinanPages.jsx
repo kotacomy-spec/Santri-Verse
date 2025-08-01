@@ -4,7 +4,7 @@ import PerizinanEdit from "@/components/views/Musyrif/Perizinan/PerizinanEdit/Ed
 const PerizinanEditPages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <PerizinanEdit />
       </DashboardLayout>
     </>

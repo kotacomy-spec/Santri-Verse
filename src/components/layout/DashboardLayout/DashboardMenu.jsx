@@ -77,4 +77,19 @@ const sidebarMusyrif = [
   },
 ];
 
-export { sidebarMusyrif };
+const sidebarKeamanan = [
+  {
+    key: "Dashboard",
+    label: "Dashboard",
+    href: "/keamanan/dashboard",
+    icon: <LayoutDashboard size={18} />,
+  },
+  {
+    key: "Perizinan Santri",
+    label: "Perizinan Santri",
+    href: "/keamanan/perizinan",
+    icon: <CalendarCheck size={18} />,
+  },
+];
+
+export { sidebarKeamanan, sidebarMusyrif };

@@ -4,7 +4,7 @@ import JenisPelanggaran from "@/components/views/Musyrif/MasterData/Pelanggaran/
 const JenisPelanggaranPages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <JenisPelanggaran />
       </DashboardLayout>
     </>

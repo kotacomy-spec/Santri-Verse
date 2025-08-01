@@ -4,7 +4,7 @@ import PelanggaranCreate from "@/components/views/Musyrif/Pelanggaran/Pelanggara
 const PelanggaranCreatePages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <PelanggaranCreate />
       </DashboardLayout>
     </>

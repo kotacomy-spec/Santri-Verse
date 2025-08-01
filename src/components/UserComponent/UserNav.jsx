@@ -90,22 +90,22 @@ const UserNav = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center w-full gap-2 cursor-pointer px-2 py-1 rounded-md hover:bg-muted transition">
-            {userInfo?.picture ? (
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={userInfo.picture} alt={userInfo.username} />
-                <AvatarFallback>
-                  {userInfo?.username
-                    ? userInfo.username.charAt(0).toUpperCase()
-                    : "SC"}
-                </AvatarFallback>
-              </Avatar>
-            ) : (
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-muted animate-pulse">
-                  <div className="h-4 w-4 bg-gray-300 rounded animate-pulse"></div>
-                </AvatarFallback>
-              </Avatar>
-            )}
+            <Avatar className="h-8 w-8">
+              <AvatarImage
+                src={userInfo?.picture || "/profile-default.png"}
+                alt={userInfo?.username || "User"}
+              />
+              <AvatarFallback
+                className={!userInfo?.picture ? "bg-muted animate-pulse" : ""}
+              >
+                <img
+                  src="/profile-default.png"
+                  alt={userInfo?.username || "User"}
+                  className="h-full w-full object-cover"
+                />
+              </AvatarFallback>
+            </Avatar>
+
             <div className="grid text-left text-sm leading-tight">
               <span className="truncate font-medium">
                 {userInfo?.username ? (
@@ -130,22 +130,22 @@ const UserNav = () => {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex gap-2">
-              {userInfo?.picture ? (
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={userInfo.picture} alt={userInfo.username} />
-                  <AvatarFallback>
-                    {userInfo?.username
-                      ? userInfo.username.charAt(0).toUpperCase()
-                      : "SC"}
-                  </AvatarFallback>
-                </Avatar>
-              ) : (
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-muted animate-pulse">
-                    <div className="h-4 w-4 bg-gray-300 rounded animate-pulse"></div>
-                  </AvatarFallback>
-                </Avatar>
-              )}
+              <Avatar className="h-8 w-8">
+                <AvatarImage
+                  src={userInfo?.picture || "/profile-default.png"}
+                  alt={userInfo?.username || "User"}
+                />
+                <AvatarFallback
+                  className={!userInfo?.picture ? "bg-muted animate-pulse" : ""}
+                >
+                  <img
+                    src="/profile-default.png"
+                    alt={userInfo?.username || "User"}
+                    className="h-full w-full object-cover"
+                  />
+                </AvatarFallback>
+              </Avatar>
+
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">
                   {userInfo?.username ? (

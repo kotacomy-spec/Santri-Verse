@@ -4,7 +4,7 @@ import KategoriPelanggaran from "@/components/views/Musyrif/MasterData/Pelanggar
 const KategoriPelanggaranPages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <KategoriPelanggaran />
       </DashboardLayout>
     </>

@@ -23,6 +23,10 @@ import UbahPassword from "@/pages/Orang Tua/SettingsAccount/UbahPassword";
 import ResetPassword from "@/pages/auth/ResetPassword";
 import UpdatePassword from "@/pages/auth/UpdatePassword";
 import AjukanIzinPage from "@/pages/Orang Tua/AjukanIzin/AjukanIzin";
+import KeamananPages from "@/pages/Keamanan/Keamanan";
+import CreatePerizinanPagesKeamanan from "@/pages/Keamanan/Perizinan/CreatePerizinanPages";
+import PerizinanEditPagesKeamanan from "@/pages/Keamanan/Perizinan/EditPerizinanPages";
+import PerizinanPagesKeamanan from "@/pages/Keamanan/Perizinan/PerizinanPages";
 
 export const routes = createBrowserRouter([
   {
@@ -134,12 +138,48 @@ export const routes = createBrowserRouter([
     ),
   },
   {
+    path: "/keamanan/dashboard",
+    element: (
+      <AuthRole allowedRoles={["keamanan"]}>
+        <KeamananPages />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/keamanan/perizinan",
+    element: (
+      <AuthRole allowedRoles={["keamanan"]}>
+        <PerizinanPagesKeamanan />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/keamanan/perizinan/create",
+    element: (
+      <AuthRole allowedRoles={["keamanan"]}>
+        <CreatePerizinanPagesKeamanan />
+      </AuthRole>
+    ),
+  },
+  {
+    path: "/keamanan/perizinan/edit/:id",
+    element: (
+      <AuthRole allowedRoles={["keamanan"]}>
+        <PerizinanEditPagesKeamanan />
+      </AuthRole>
+    ),
+  },
+  {
     path: "/orangtua",
     element: <OrangtuaPage />,
   },
   {
     path: "/profile/:id",
-    element: <ProfilePages />,
+    element: (
+      <AuthRole allowedRoles={["musyrif", "keamanan"]}>
+        <ProfilePages />
+      </AuthRole>
+    ),
   },
   {
     path: "/orangtua/dashboard",

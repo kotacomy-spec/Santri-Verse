@@ -4,7 +4,7 @@ import KeteranganIzin from "@/components/views/Musyrif/MasterData/Perizinan/Kete
 const KeteranganIzinPages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <KeteranganIzin />
       </DashboardLayout>
     </>

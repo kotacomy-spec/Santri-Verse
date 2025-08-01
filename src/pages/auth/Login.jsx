@@ -61,6 +61,8 @@ const LoginPages = () => {
         navigate("/musyrif/dashboard", { replace: true });
       } else if (role === "orang_tua" || role === "santri") {
         navigate("/orangtua/dashboard", { replace: true });
+      } else if (role === "keamanan") {
+        navigate("/keamanan/dashboard", { replace: true });
       } else {
         toast.error("Anda belum memiliki role", { id: toastId });
       }

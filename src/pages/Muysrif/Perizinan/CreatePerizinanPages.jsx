@@ -4,7 +4,7 @@ import PerizinanCreate from "@/components/views/Musyrif/Perizinan/PerizinanCreat
 const CreatePerizinanPages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <PerizinanCreate />
       </DashboardLayout>
     </>

@@ -4,7 +4,7 @@ import EditPelanggaran from "@/components/views/Musyrif/Pelanggaran/PelanggaranE
 const EditPelanggaranPages = () => {
   return (
     <>
-      <DashboardLayout>
+      <DashboardLayout type="musyrif">
         <EditPelanggaran />
       </DashboardLayout>
     </>

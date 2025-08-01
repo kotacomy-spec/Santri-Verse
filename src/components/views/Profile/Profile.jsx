@@ -245,6 +245,7 @@ const Profile = () => {
                       onChange={(e) =>
                         setProfile({ ...profile, username: e.target.value })
                       }
+                      placeholder="Masukkan Username"
                       disabled={!isEditing}
                     />
                   </div>
@@ -258,6 +259,7 @@ const Profile = () => {
                       onChange={(e) =>
                         setProfile({ ...profile, full_name: e.target.value })
                       }
+                      placeholder="Masukkan Nama Lengkap"
                       disabled={!isEditing}
                     />
                   </div>
@@ -271,6 +273,7 @@ const Profile = () => {
                       onChange={(e) =>
                         setProfile({ ...profile, mobile_phone: e.target.value })
                       }
+                      placeholder="Masukkan no Telepon"
                       disabled={!isEditing}
                     />
                   </div>
@@ -284,6 +287,7 @@ const Profile = () => {
                       onChange={(e) =>
                         setProfile({ ...profile, addres: e.target.value })
                       }
+                      placeholder="Masukkan Alamat"
                       disabled={!isEditing}
                     />
                   </div>
@@ -301,6 +305,7 @@ const Profile = () => {
                     }
                     disabled={!isEditing}
                     rows={3}
+                    placeholder="Masukkan Bio"
                   />
                 </div>
 
