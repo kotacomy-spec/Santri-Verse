@@ -1,14 +1,5 @@
-import DashboardLayout from "@/components/layout/DashboardLayout/DashboardLayout";
 import PerizinanCreate from "@/components/views/Musyrif/Perizinan/PerizinanCreate/PerizinanCreate";
 
-const CreatePerizinanPages = () => {
-  return (
-    <>
-      <DashboardLayout type="musyrif">
-        <PerizinanCreate />
-      </DashboardLayout>
-    </>
-  );
-};
-
-export default CreatePerizinanPages;
+export default function CreatePerizinanPages() {
+  return <PerizinanCreate />;
+}

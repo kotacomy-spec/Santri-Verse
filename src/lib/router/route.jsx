@@ -27,6 +27,7 @@ import KeamananPages from "@/pages/Keamanan/Keamanan";
 import CreatePerizinanPagesKeamanan from "@/pages/Keamanan/Perizinan/CreatePerizinanPages";
 import PerizinanEditPagesKeamanan from "@/pages/Keamanan/Perizinan/EditPerizinanPages";
 import PerizinanPagesKeamanan from "@/pages/Keamanan/Perizinan/PerizinanPages";
+import RoleBasedLayout from "@/components/layout/AdminRoleLayout";
 
 export const routes = createBrowserRouter([
   {
@@ -38,137 +39,65 @@ export const routes = createBrowserRouter([
     element: <LoginPages />,
   },
   {
-    path: "/musyrif/dashboard",
-
+    path: "/musyrif",
     element: (
       <AuthRole allowedRoles={["musyrif"]}>
-        <MusyrifPage />
+        <RoleBasedLayout />
       </AuthRole>
     ),
+    children: [
+      { path: "dashboard", element: <MusyrifPage /> },
+      { path: "kesehatan", element: <Kesehatan /> },
+      { path: "kesehatan/detail/:id", element: <DetailKesehatanPage /> },
+      {
+        path: "master-data/pelanggaran/jenis-pelanggaran",
+        element: <JenisPelanggaranPages />,
+      },
+      {
+        path: "master-data/pelanggaran/kategori-pelanggaran",
+        element: <KategoriPelanggaranPages />,
+      },
+      {
+        path: "master-data/perizinan/keterangan-izin",
+        element: <KeteranganIzinPages />,
+      },
+      { path: "pelanggaran", element: <PelanggaranPages /> },
+      { path: "pelanggaran/create", element: <PelanggaranCreatePages /> },
+      { path: "pelanggaran/edit/:id", element: <EditPelanggaranPages /> },
+      { path: "perizinan", element: <PerizinanPages /> },
+      { path: "perizinan/create", element: <CreatePerizinanPages /> },
+      { path: "perizinan/edit/:id", element: <PerizinanEditPages /> },
+      { path: "profile/:id", element: <ProfilePages /> },
+    ],
   },
   {
-    path: "/musyrif/kesehatan",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <Kesehatan />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/kesehatan/detail/:id",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <DetailKesehatanPage />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/master-data/pelanggaran/jenis-pelanggaran",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <JenisPelanggaranPages />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/master-data/pelanggaran/kategori-pelanggaran",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <KategoriPelanggaranPages />,
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/master-data/perizinan/keterangan-izin",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <KeteranganIzinPages />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/pelanggaran",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <PelanggaranPages />
-      </AuthRole>
-    ),
-  },
-
-  {
-    path: "/musyrif/pelanggaran/create",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <PelanggaranCreatePages />
-      </AuthRole>
-    ),
-  },
-
-  {
-    path: "/musyrif/pelanggaran/edit/:id",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <EditPelanggaranPages />
-      </AuthRole>
-    ),
-  },
-
-  {
-    path: "/musyrif/perizinan",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <PerizinanPages />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/perizinan/create",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <CreatePerizinanPages />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/musyrif/perizinan/edit/:id",
-    element: (
-      <AuthRole allowedRoles={["musyrif"]}>
-        <PerizinanEditPages />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/keamanan/dashboard",
+    path: "/keamanan",
     element: (
       <AuthRole allowedRoles={["keamanan"]}>
-        <KeamananPages />
+        <RoleBasedLayout />
       </AuthRole>
     ),
+    children: [
+      {
+        path: "dashboard",
+        element: <KeamananPages />,
+      },
+      {
+        path: "perizinan",
+        element: <PerizinanPagesKeamanan />,
+      },
+      {
+        path: "perizinan/create",
+        element: <CreatePerizinanPagesKeamanan />,
+      },
+      {
+        path: "perizinan/edit/:id",
+        element: <PerizinanEditPagesKeamanan />,
+      },
+      { path: "profile/:id", element: <ProfilePages /> },
+    ],
   },
-  {
-    path: "/keamanan/perizinan",
-    element: (
-      <AuthRole allowedRoles={["keamanan"]}>
-        <PerizinanPagesKeamanan />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/keamanan/perizinan/create",
-    element: (
-      <AuthRole allowedRoles={["keamanan"]}>
-        <CreatePerizinanPagesKeamanan />
-      </AuthRole>
-    ),
-  },
-  {
-    path: "/keamanan/perizinan/edit/:id",
-    element: (
-      <AuthRole allowedRoles={["keamanan"]}>
-        <PerizinanEditPagesKeamanan />
-      </AuthRole>
-    ),
-  },
+
   {
     path: "/orangtua",
     element: <OrangtuaPage />,

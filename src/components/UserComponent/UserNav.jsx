@@ -37,9 +37,9 @@ const UserNav = () => {
 
   const navigate = useNavigate();
   const menuItem = [
-    { label: "Profile", icon: User, href: "/profile" },
-    { label: "Chat", icon: MessageCircle, href: "/chat" },
-    { label: "Settings", icon: Settings, href: "/settings" },
+    { label: "Profile", icon: User, href: "profile" },
+    { label: "Chat", icon: MessageCircle, href: "chat" },
+    { label: "Settings", icon: Settings, href: "settings" },
   ];
 
   const getUserProfile = async () => {
@@ -59,6 +59,7 @@ const UserNav = () => {
       username: username,
       email: userEmail,
       picture: userProfile.profile_picture,
+      role: userProfile.role,
     });
   };
 
@@ -172,7 +173,10 @@ const UserNav = () => {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             {menuItem.map((item, index) => (
-              <Link to={`${item.href}/${userInfo.id}`}>
+              <Link
+                key={index}
+                to={`/${userInfo.role}/${item.href}/${userInfo.id}`}
+              >
                 <DropdownMenuItem
                   key={index}
                   className="flex items-center gap-2"
