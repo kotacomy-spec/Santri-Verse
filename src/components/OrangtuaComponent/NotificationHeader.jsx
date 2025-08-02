@@ -58,7 +58,10 @@ const dataNotifSementara = [
 
 export default function Notification() {
   const [showAll, setShowAll] = useState(false);
-  const [bacaSemua, setBacaSemua] = useState(["bg-green-100 m-2 rounded-md","font-semibold"]);
+  const [bacaSemua, setBacaSemua] = useState([
+    "bg-green-100 m-2 rounded-md",
+    "font-semibold",
+  ]);
 
   return (
     <>
@@ -68,12 +71,14 @@ export default function Notification() {
         >
           <CardTitle>Notifikasi</CardTitle>
           <CardAction
-            onClick={() => setBacaSemua(["bg-white border-b-[1.5px]","font-medium"])}
+            onClick={() =>
+              setBacaSemua(["bg-white border-b-[1.5px]", "font-medium"])
+            }
             className={
               "flex gap-1 items-center text-sm text-green-700 cursor-pointer"
             }
           >
-            <CheckCheck size={18} /> Baca Semua
+            {/* <CheckCheck size={18} /> Baca Semua */}
           </CardAction>
         </CardHeader>
         <CardContent className={"px-0 my-0"}>
@@ -92,9 +97,7 @@ export default function Notification() {
                   </div>
                   <div className="flex flex-col gap-y-1">
                     <div className="flex justify-between text-sm">
-                      <h3
-                        className={`${bacaSemua[1]} text-sm`}
-                      >
+                      <h3 className={`${bacaSemua[1]} text-sm`}>
                         {data.title}
                       </h3>
                       <span className="font-semibold  text-green-700">
