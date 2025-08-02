@@ -102,8 +102,8 @@ const Footer = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                JL. Ambatron, RT.03/RW.01, Sigma, Kec.Ohio,Kabupaten Ambatukam,
-                Android Selatan
+                Jl. Kita Msh Panjang,Tajurhalang, Kec. Tajur Halang, Kabupaten
+                Bogor, Jawa Barat
               </motion.p>
               <motion.div
                 className="flex items-center space-x-2 text-gray-400"

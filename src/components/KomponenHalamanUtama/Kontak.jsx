@@ -56,7 +56,7 @@ const Kontak = () => {
                 icon: MapPin,
                 title: "Alamat",
                 content:
-                  "JL. Ambatron, RT.03/RW.01, Sigma, Kec.Ohio,Kabupaten Ambatukam, Android Selatan",
+                  "Jl. Kita Msh Panjang,Tajurhalang, Kec. Tajur Halang, Kabupaten Bogor, Jawa Barat",
               },
               {
                 icon: Clock,
@@ -80,13 +80,13 @@ const Kontak = () => {
                   variants={floatVariants}
                   animate="animate"
                 >
-                  <item.icon className="w-6 h-6 text-white" />
+                  <item.icon className="w-12 h-6 text-white" />
                 </motion.div>
                 <div>
                   <h4 className="text-lg font-semibold text-emerald-600">
                     {item.title}
                   </h4>
-                  <p className="text-emerald-700 md:max-w-2/3 max-w-3/4">
+                  <p className=" text-emerald-700 md:max-w-2/3 max-w-3/4">
                     {item.content}
                   </p>
                 </div>

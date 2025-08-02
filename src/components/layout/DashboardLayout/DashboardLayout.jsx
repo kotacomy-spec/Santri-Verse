@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DashboardSidebar from "./DashboardLayoutSidebar/DashboardSidebar";
-import { sidebarMusyrif } from "./DashboardMenu";
+import { sidebarMusyrif, sidebarKeamanan } from "./DashboardMenu";
+import LoadingScreen from "@/components/ui/mondok-loading";
 
 const DashboardLayout = (props) => {
   const { children, type } = props;
-  {
-    type;
-  }
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,10 +12,15 @@ const DashboardLayout = (props) => {
     setIsOpen(!isOpen);
   };
 
+  const sidebarItems = useMemo(() => {
+    if (type === "musyrif") return sidebarMusyrif;
+    else if (type === "keamanan") return sidebarKeamanan;
+  }, [type]);
+
   return (
     <>
       <div className="max-w-screen-3xl 3xl:container flex">
-        <DashboardSidebar sidebarItems={sidebarMusyrif} IsOpen={isOpen} />
+        <DashboardSidebar sidebarItems={sidebarItems} IsOpen={isOpen} />
         <div className="h-screen w-full overflow-y-auto ">
           <div className="mx-8 cursor-pointer mt-2 lg:hidden flex justify-end">
             <button

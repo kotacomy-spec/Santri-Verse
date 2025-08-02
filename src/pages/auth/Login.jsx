@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { Mail, Lock, Eye, EyeOff, BookOpenText, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { supabase } from "@/lib/supabase/supabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -22,37 +22,6 @@ const LoginPages = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", user.id)
-          .single();
-
-        switch (profile?.role) {
-          case "musyrif":
-            navigate("/musyrif/dashboard", { replace: true });
-            break;
-          case "orang_tua":
-            navigate("/orangtua/dashboard", { replace: true });
-            break;
-          case "keamanan":
-            navigate("/keamanan/dashboard", { replace: true });
-            break;
-          default:
-            navigate("/auth/login", { replace: true });
-        }
-      }
-    };
-
-    checkUser();
-  }, [navigate]);
 
   const handleLogin = async () => {
     const toastId = toast.loading("Mohon Tunggu Sebentar...");
@@ -90,10 +59,12 @@ const LoginPages = () => {
       const role = profile.role;
       if (role === "musyrif") {
         navigate("/musyrif/dashboard", { replace: true });
-
       } else if (role === "orang_tua" || role === "santri") {
         navigate("/orangtua/dashboard", { replace: true });
-      }else {
+      } else if (role === "keamanan") {
+        navigate("/keamanan/dashboard", { replace: true });
+      } else {
+
         toast.error("Anda belum memiliki role", { id: toastId });
       }
     } catch (error) {

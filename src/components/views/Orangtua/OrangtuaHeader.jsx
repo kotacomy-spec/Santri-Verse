@@ -16,8 +16,9 @@ import Notification from "@/components/OrangtuaComponent/NotificationHeader";
 import { supabase } from "@/lib/supabase/supabaseClient";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-const dataSementaraAkunOrtu = "url('/profile-default.png')";
+// const dataSementaraAkunOrtu = "url('/profile-default.png')";
 
 const dataSideBar = [
   {
@@ -55,6 +56,8 @@ export default function OrangtuaHeader({ title }) {
       .select(`*`)
       .eq("id", user.id)
       .single();
+
+    console.log("data akun", data);
     if (error) {
       console.log(error);
     } else {
@@ -62,6 +65,7 @@ export default function OrangtuaHeader({ title }) {
         id: data.id,
         nama: data.full_name,
         email: emailUser,
+        profile_picture: data.profile_picture,
       });
     }
   };
@@ -127,7 +131,7 @@ export default function OrangtuaHeader({ title }) {
         </AnimatePresence>
 
         <div className="flex justify-between gap-4 items-center">
-          <Link to="/orangtua" className=" text-white w-fit h-fit ">
+          <Link to="/orangtua/dashboard" className=" text-white w-fit h-fit ">
             <div className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5">
               <BookOpenText size={24} />
             </div>
@@ -196,10 +200,24 @@ export default function OrangtuaHeader({ title }) {
                   <h1>SantriVerse</h1>
                 </div>
                 <div className="h-fit flex flex-col  justify-center items-center w-full pb-4 pt-6 font-semibold text-green-700 border-t-2 border-green-700">
-                  <div
-                    className="rounded-full w-20 h-20 bg-cover bg-center mb-2"
-                    style={{ backgroundImage: `${dataSementaraAkunOrtu}` }}
-                  ></div>
+                  <div className="mb-2 w-20 h-20">
+                    <Avatar className="w-full h-full ">
+                      <AvatarImage
+                        src={
+                          profilUser.profile_picture || `/profile-default.png`
+                        }
+                        alt={profilUser.full_name}
+                        className="object-cover w-full h-full rounded-full"
+                      />
+                      <AvatarFallback>
+                        <AvatarImage
+                          src={`/profile-default.png`}
+                          alt={profilUser.full_name}
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
                   <h1 className="text-xl">{namaDepan}</h1>
                   <p className="text-sm font-medium text-gray-600">
                     {profilUser.email}

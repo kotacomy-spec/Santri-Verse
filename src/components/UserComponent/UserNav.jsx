@@ -37,9 +37,9 @@ const UserNav = () => {
 
   const navigate = useNavigate();
   const menuItem = [
-    { label: "Profile", icon: User, href: "/profile" },
-    { label: "Chat", icon: MessageCircle, href: "/chat" },
-    { label: "Settings", icon: Settings, href: "/settings" },
+    { label: "Profile", icon: User, href: "profile" },
+    { label: "Chat", icon: MessageCircle, href: "chat" },
+    { label: "Settings", icon: Settings, href: "settings" },
   ];
 
   const getUserProfile = async () => {
@@ -59,6 +59,7 @@ const UserNav = () => {
       username: username,
       email: userEmail,
       picture: userProfile.profile_picture,
+      role: userProfile.role,
     });
   };
 
@@ -90,22 +91,22 @@ const UserNav = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center w-full gap-2 cursor-pointer px-2 py-1 rounded-md hover:bg-muted transition">
-            {userInfo?.picture ? (
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={userInfo.picture} alt={userInfo.username} />
-                <AvatarFallback>
-                  {userInfo?.username
-                    ? userInfo.username.charAt(0).toUpperCase()
-                    : "SC"}
-                </AvatarFallback>
-              </Avatar>
-            ) : (
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-muted animate-pulse">
-                  <div className="h-4 w-4 bg-gray-300 rounded animate-pulse"></div>
-                </AvatarFallback>
-              </Avatar>
-            )}
+            <Avatar className="h-8 w-8">
+              <AvatarImage
+                src={userInfo?.picture || "/profile-default.png"}
+                alt={userInfo?.username || "User"}
+              />
+              <AvatarFallback
+                className={!userInfo?.picture ? "bg-muted animate-pulse" : ""}
+              >
+                <img
+                  src="/profile-default.png"
+                  alt={userInfo?.username || "User"}
+                  className="h-full w-full object-cover"
+                />
+              </AvatarFallback>
+            </Avatar>
+
             <div className="grid text-left text-sm leading-tight">
               <span className="truncate font-medium">
                 {userInfo?.username ? (
@@ -130,22 +131,22 @@ const UserNav = () => {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex gap-2">
-              {userInfo?.picture ? (
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={userInfo.picture} alt={userInfo.username} />
-                  <AvatarFallback>
-                    {userInfo?.username
-                      ? userInfo.username.charAt(0).toUpperCase()
-                      : "SC"}
-                  </AvatarFallback>
-                </Avatar>
-              ) : (
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-muted animate-pulse">
-                    <div className="h-4 w-4 bg-gray-300 rounded animate-pulse"></div>
-                  </AvatarFallback>
-                </Avatar>
-              )}
+              <Avatar className="h-8 w-8">
+                <AvatarImage
+                  src={userInfo?.picture || "/profile-default.png"}
+                  alt={userInfo?.username || "User"}
+                />
+                <AvatarFallback
+                  className={!userInfo?.picture ? "bg-muted animate-pulse" : ""}
+                >
+                  <img
+                    src="/profile-default.png"
+                    alt={userInfo?.username || "User"}
+                    className="h-full w-full object-cover"
+                  />
+                </AvatarFallback>
+              </Avatar>
+
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">
                   {userInfo?.username ? (
@@ -172,7 +173,10 @@ const UserNav = () => {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             {menuItem.map((item, index) => (
-              <Link to={`${item.href}/${userInfo.id}`}>
+              <Link
+                key={index}
+                to={`/${userInfo.role}/${item.href}/${userInfo.id}`}
+              >
                 <DropdownMenuItem
                   key={index}
                   className="flex items-center gap-2"
