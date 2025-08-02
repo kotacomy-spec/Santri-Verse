@@ -127,10 +127,7 @@ export default function OrangtuaHeader({ title }) {
         </AnimatePresence>
 
         <div className="flex justify-between gap-4 items-center">
-          <Link
-            to="/orangtua/dashboard"
-            className=" text-white w-fit h-fit "
-          >
+          <Link to="/orangtua" className=" text-white w-fit h-fit ">
             <div className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5">
               <BookOpenText size={24} />
             </div>
@@ -141,14 +138,18 @@ export default function OrangtuaHeader({ title }) {
           </div>
         </div>
         <div className="flex justify-between items-center gap-4 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 h-fit py-1.5 px-2">
-          <button
+          <motion.button
             onClick={() => {
               setMuncul(!muncul);
             }}
-            className=" text-green-100 hover:cursor-pointer p-1.5"
+            whileHover={{
+              rotate: [0, -15, 15, -15, 15, 0],
+              transition: { duration: 0.4, ease: "easeInOut" },
+            }}
+            className=" text-green-100 cursor-pointer p-1.5 "
           >
             <Bell size={22} />
-          </button>
+          </motion.button>
           <button
             onClick={() => setTampil(!tampil)}
             className=" bg-green-100 rounded-full p-1.5 text-green-700 hover:cursor-pointer"
@@ -166,7 +167,7 @@ export default function OrangtuaHeader({ title }) {
               animate={{ opacity: 0.3 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-10"
+              className="fixed inset-0 bg-black z-20"
             />
             <motion.aside
               initial={{ x: "100%" }}
@@ -190,7 +191,7 @@ export default function OrangtuaHeader({ title }) {
               <div className="flex flex-col justify-start px-4 h-full">
                 <div className=" h-fit flex justify-center items-center gap-2 mb-4 text-green-700 font-bold  ">
                   <div className="rounded-full p-3 bg-gradient-to-br from-emerald-500 to-teal-600 text-white">
-                  <BookOpenText size={30} />
+                    <BookOpenText size={30} />
                   </div>
                   <h1>SantriVerse</h1>
                 </div>

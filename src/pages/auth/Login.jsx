@@ -93,7 +93,7 @@ const LoginPages = () => {
 
       } else if (role === "orang_tua" || role === "santri") {
         navigate("/orangtua/dashboard", { replace: true });
-       else {
+      }else {
         toast.error("Anda belum memiliki role", { id: toastId });
       }
     } catch (error) {

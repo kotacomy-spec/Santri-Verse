@@ -79,43 +79,43 @@ const menu = [
     id: 1,
     icon: <LayoutGrid size={22} />,
     title: "Beranda",
-    link: "/orangtua/dashboard",
+    link: ["/orangtua/dashboard", "/orangtua"],
   },
   {
     id: 2,
     icon: <CircleUserRound size={22} />,
     title: "Santri",
-    link: "/orangtua/santri",
+    link: ["/orangtua/santri"],
   },
   {
     id: 3,
     icon: <CalendarCheck size={22} />,
     title: "Ajukan Izin",
-    link: "/orangtua/ajukanizin",
+    link: ["/orangtua/ajukanizin"],
   },
   {
     id: 4,
     icon: <MessageSquareDot size={22} />,
     title: "Berita",
-    link: "/orangtua/berita",
+    link: ["/orangtua/berita"],
   },
   {
     id: 5,
     icon: <Stethoscope size={22} />,
     title: "Kesehatan",
-    link: "/orangtua/kesehatan",
+    link: ["/orangtua/kesehatan"],
   },
   {
     id: 6,
     icon: <ShieldAlert size={22} />,
     title: "Pelanggaran",
-    link: "/orangtua/pelanggaran",
+    link: ["/orangtua/pelanggaran"],
   },
 ];
 
 export default function MenuOrangtua() {
   // Handle menu Dock
-  const [path, setPath] = useState(window.location.pathname);
+  // const [path, setPath] = useState(window.location.pathname);
 
   useEffect(() => {
     const handleChange = () => setPath(window.location.pathname);
@@ -124,7 +124,7 @@ export default function MenuOrangtua() {
   }, []);
   const masihAktif = (path) => {
     const locationPath = window.location.pathname;
-    if (locationPath === path) {
+    if (locationPath === path[0] || locationPath === path[1]) {
       return "group bg-green-700 text-green-100";
     } else {
       return "group bg-green-100 text-green-700 ";
@@ -138,7 +138,7 @@ export default function MenuOrangtua() {
       ),
       label: "Beranda",
       linkNya: "/orangtua/dashboard",
-      className: masihAktif("/orangtua/dashboard"),
+      className: masihAktif(["/orangtua/dashboard", "/orangtua"]),
     },
     {
       icon: (
@@ -146,7 +146,7 @@ export default function MenuOrangtua() {
       ),
       label: "Santri",
       linkNya: "/orangtua/santri",
-      className: masihAktif("/orangtua/santri"),
+      className: masihAktif(["/orangtua/santri"]),
     },
     {
       icon: (
@@ -154,7 +154,7 @@ export default function MenuOrangtua() {
       ),
       label: "Ajukan Izin",
       linkNya: "/orangtua/ajukanizin",
-      className: masihAktif("/orangtua/ajukanizin"),
+      className: masihAktif(["/orangtua/ajukanizin"]),
     },
     {
       icon: (
@@ -162,7 +162,7 @@ export default function MenuOrangtua() {
       ),
       label: "Berita",
       linkNya: "/orangtua/berita",
-      className: masihAktif("/orangtua/berita"),
+      className: masihAktif(["/orangtua/berita"]),
     },
     {
       icon: (
@@ -170,7 +170,7 @@ export default function MenuOrangtua() {
       ),
       label: "Kesehatan",
       linkNya: "/orangtua/kesehatan",
-      className: masihAktif("/orangtua/kesehatan"),
+      className: masihAktif(["/orangtua/kesehatan"]),
     },
     {
       icon: (
@@ -178,7 +178,7 @@ export default function MenuOrangtua() {
       ),
       label: "Pelanggaran",
       linkNya: "/orangtua/pelanggaran",
-      className: masihAktif("/orangtua/pelanggaran"),
+      className: masihAktif(["/orangtua/pelanggaran"]),
     },
   ];
 
@@ -219,21 +219,23 @@ export default function MenuOrangtua() {
               variants={itemVariants}
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.9 }}
-              to={item.link}
+              to={item.link[0]}
               key={item.id}
               className={`flex justify-center items-center gap-2  rounded-2xl py-4 md:h-full   md:text-sm text-sm   text-green-100  md:hover:bg-green-600 md:hover:text-green-200 md:duration-200 md:ease-linear md:hover:rounded-lg cursor-pointer ${
-                window.location.pathname === item.link
+                window.location.pathname === item.link[0] ||
+                window.location.pathname === item.link[1]
                   ? " md:hidden font-bold text-green-700 "
                   : "md:text-gray-100 text-green-700 font-medium"
               }`}
             >
               <Link
-                to={item.link}
+                to={item.link[0]}
                 className={`flex flex-col justify-center items-center  gap-2 `}
               >
                 <span
                   className={`${
-                    window.location.pathname === item.link
+                    window.location.pathname === item.link[0] ||
+                    window.location.pathname === item.link[1]
                       ? "bg-green-100 border-2 border-green-700 text-green-700"
                       : "bg-green-700"
                   }  text-green-100 md:hidden rounded-2xl w-16 h-16 flex justify-center items-center`}
