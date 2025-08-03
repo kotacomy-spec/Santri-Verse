@@ -96,7 +96,7 @@ export default function FormUbahPassword() {
 
   return (
     <>
-      <div className="md:mx-6 mx-4 pb-16 md:my-3 my-6">
+      <div className="md:mx-6 mx-4 pb-16 md:mt-3 mb-20 my-6">
         <AnimatePresence>
           {alert && (
             <>
@@ -123,7 +123,8 @@ export default function FormUbahPassword() {
             "md:text-center w-fit flex justify-center  mx-auto md:text-xl text-md"
           }
           title={
-            " Gunakan kombinasi kata sandi yang kuat untuk melindungi informasi Anda."
+            // " Gunakan kombinasi kata sandi yang kuat untuk melindungi informasi Anda."
+            "Password"
           }
           icon={<Lock size={20} className="hidden md:flex" />}
         />
@@ -199,7 +200,7 @@ export default function FormUbahPassword() {
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             type="submit"
-            className="flex gap-2 justify-center items-center bg-green-700 text-green-100 text-lg font-medium px-12 py-2 mt-10 rounded-full"
+            className="flex gap-2 justify-center items-center bg-green-700 text-green-100 text-lg font-medium px-12 py-2 mt-10 rounded-full cursor-pointer"
           >
             <Save size={20} />
             Simpan

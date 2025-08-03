@@ -101,7 +101,11 @@ export const routes = createBrowserRouter([
 
   {
     path: "/orangtua",
-    element: <OrangtuaPage />,
+    element: (
+      <AuthRole allowedRoles={["orang_tua"]}>
+        <OrangtuaPage />,
+      </AuthRole>
+    ),
   },
   {
     path: "/profile/:id",

@@ -64,13 +64,13 @@ export default function FormProfile() {
           )}
         </AnimatePresence>
 
-        <TitlePage title={"Edit Profil"} className={"text-xl"} />
+        <TitlePage title={"Edit Profil"} className={"text-xl"} width={"w-40"} />
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="md:shadow-[0_7px_15px_2px] md:shadow-green-700/20 w-[92%] rounded-4xl mx-auto mt-4 py-8 px-2"
+          className="border border-green-700 w-[92%] rounded-4xl mx-auto mt-4 mb-24 md:py-0 md:px-0 py-8 px-4"
         >
           <form>
             <div className="md:grid grid-col-3 ">
@@ -79,9 +79,9 @@ export default function FormProfile() {
                 initial={{ opacity: 0, x: -50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="md:col-start-1 row-start-1 col-span-1 row-span-3 flex flex-col justify-around items-center gap-4  py-6 "
+                className="md:col-start-1 row-start-1 col-span-1 row-span-3 flex flex-col justify-around items-center gap-4 md:py-12 py-6 md:bg-gradient-to-br from-emerald-500 to-teal-600 md:rounded-l-4xl"
               >
-                <h3 className="text-green-700 font-semibold text-lg mx-auto mb-1">
+                <h3 className="md:text-green-100 text-green-700 font-semibold text-lg mx-auto mb-1">
                   Ganti Foto Profil
                 </h3>
                 <div className="overflow-hidden w-50 h-50 rounded-full border-2 border-green-700/50">
@@ -95,7 +95,7 @@ export default function FormProfile() {
                     ""
                   )}
                 </div>
-                <div className="flex flex-col justify-center ">
+                <div className="flex flex-col justify-center px-6 ">
                   <Label
                     htmlFor="profileImage"
                     className="text-sm text-gray-400 font-semibold mb-1"
@@ -108,13 +108,13 @@ export default function FormProfile() {
                     accept=".jpg, .jpeg, .png"
                     type={"file"}
                     className={
-                      "mx-auto font-semibold text-green-700 cursor-pointer border border-green-500 file:cursor-pointer file:text-green-500 file:mr-4 rounded-full file:h-6.5  file:bg-green-200 file:px-2 px-1 file:rounded-2xl "
+                      "mx-auto font-semibold md:bg-green-100  text-green-700 cursor-pointer border md:border-green-100 border-green-700 file:cursor-pointer md:file:text-green-200 file:text-green-600 file:mr-4 rounded-full file:h-6.5  md:file:bg-green-600 file:bg-green-100 file:px-2 px-1 file:rounded-2xl "
                     }
                     onChange={handleChangeProfile}
                   ></Input>
                   <button
                     onClick={handleReset}
-                    className="text-red-500 font-semibold text-sm underline rounded-sm  w-full mt-1 text-right pr-4 cursor-pointer"
+                    className="md:text-yellow-300 text-red-500 font-semibold text-sm underline rounded-sm  w-full mt-1 text-right pr-4 cursor-pointer"
                   >
                     Hapus
                   </button>
@@ -125,9 +125,9 @@ export default function FormProfile() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
-                className=" md:col-start-2 row-start-1 col-span-2 row-span-3 flex flex-col gap-2 justify-center  md:pr-10 md:mx-0 mx-auto"
+                className=" md:col-start-2 row-start-1 col-span-2 row-span-3 flex flex-col gap-2 justify-center px-4 md:px-8 md:mx-0 mx-auto md:pt-0 pt-6 md:border-t-0 border-t-2 border-green-700/60"
               >
-                <h3 className="text-green-700 text-lg font-semibold">
+                <h3 className="text-green-700 text-xl text-center md:mb-6 md:mt-0 my-4 font-semibold">
                   Informasi Pribadi Orangtua
                 </h3>
                 <div className="flex  mt-2 w-full  md:gap-8 gap-4">
@@ -185,7 +185,7 @@ export default function FormProfile() {
                     whileTap={{ scale: 0.9 }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                     type="submit"
-                    className="  flex gap-2 w-fit items-center px-12 bg-green-700 text-green-100  py-2 rounded-full mx-auto mt-4"
+                    className="flex gap-2 w-fit items-center px-12 bg-green-700 text-green-100  py-2 rounded-full mx-auto mt-6 cursor-pointer"
                   >
                     <Save size={20} />
                     Simpan

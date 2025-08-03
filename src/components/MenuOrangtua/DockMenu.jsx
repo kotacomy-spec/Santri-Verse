@@ -145,7 +145,7 @@ export default function Dock({
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`${className} absolute bottom-2 left-1/2 transform -translate-x-1/2 flex items-center  w-fit gap-6 rounded-full py-2 px-3`}
+        className={`${className}  absolute bottom-2 left-1/2 transform -translate-x-1/2 flex items-center  w-fit gap-6 rounded-full py-2 px-3`}
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Application dock"

@@ -142,14 +142,18 @@ export default function OrangtuaHeader({ title }) {
           </div>
         </div>
         <div className="flex justify-between items-center gap-4 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 h-fit py-1.5 px-2">
-          <button
+          <motion.button
             onClick={() => {
               setMuncul(!muncul);
             }}
-            className=" text-green-100 hover:cursor-pointer p-1.5"
+            whileHover={{
+              rotate: [0, -15, 15, -15, 15, 0],
+              transition: { duration: 0.4, ease: "easeInOut" },
+            }}
+            className=" text-green-100 cursor-pointer p-1.5 "
           >
             <Bell size={22} />
-          </button>
+          </motion.button>
           <button
             onClick={() => setTampil(!tampil)}
             className=" bg-green-100 rounded-full p-1.5 text-green-700 hover:cursor-pointer"
@@ -167,7 +171,7 @@ export default function OrangtuaHeader({ title }) {
               animate={{ opacity: 0.3 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-10"
+              className="fixed inset-0 bg-black z-20"
             />
             <motion.aside
               initial={{ x: "100%" }}
