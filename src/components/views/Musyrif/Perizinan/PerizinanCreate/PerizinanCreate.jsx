@@ -129,11 +129,15 @@ const PerizinanCreate = () => {
 
   function combineDateTime(date, time) {
     const [hours, minutes] = time.split(":").map(Number);
-    const newDate = new Date(date);
-    newDate.setHours(hours);
-    newDate.setMinutes(minutes);
-    newDate.setSeconds(0);
-    return newDate;
+    const localDate = new Date(date);
+    localDate.setHours(hours);
+    localDate.setMinutes(minutes);
+    localDate.setSeconds(0);
+    localDate.setMilliseconds(0);
+
+    const utcOffset = -localDate.getTimezoneOffset();
+    localDate.setMinutes(localDate.getMinutes() + utcOffset - 420);
+    return localDate;
   }
 
   const handleSubmit = async (e) => {

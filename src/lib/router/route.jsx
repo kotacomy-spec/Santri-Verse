@@ -34,6 +34,7 @@ export const routes = createBrowserRouter([
     path: "/",
     element: <HalamanUtama />,
   },
+
   {
     path: "/auth/login",
     element: <LoginPages />,

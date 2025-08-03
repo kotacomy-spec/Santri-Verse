@@ -108,7 +108,7 @@ const PelanggaranCreate = () => {
         status: kategori,
         tanggal: date,
         tindakan,
-        musyrif_id: musyrif.id,
+        musyrif_id: 1,
       };
 
       const { error } = await supabase
