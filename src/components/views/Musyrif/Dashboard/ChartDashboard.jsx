@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase/supabaseClient";
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 
-export const ChartDashboardUp = () => {
+const ChartDashboard = () => {
   const [Perizinan, SetPerizinan] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasData, setHasData] = useState(false);
@@ -235,7 +235,6 @@ export const ChartDashboardUp = () => {
   };
 
   const kesehatanData = {
-    series: [298, 18, 5, 3],
     options: {
       chart: {
         type: "donut",
@@ -250,7 +249,7 @@ export const ChartDashboardUp = () => {
           },
         },
       },
-      colors: ["#10B981", "#F59E0B", "#EF4444", "#3B82F6"],
+      colors: ["#10B981", "#F59E0B", "#EF4444"],
       labels: ["Sehat", "Sembuh", "Sakit"],
       dataLabels: {
         enabled: false,
@@ -280,7 +279,14 @@ export const ChartDashboardUp = () => {
                 fontWeight: 500,
                 color: "#64748B",
                 formatter: function () {
-                  return "92%";
+                  const total = kesehatanChart.series.reduce(
+                    (a, b) => a + b,
+                    0
+                  );
+                  const sehat = kesehatanChart.series[0];
+                  const persen =
+                    total === 0 ? 0 : Math.round((sehat / total) * 100);
+                  return `${persen}%`;
                 },
               },
               value: {
@@ -395,11 +401,6 @@ export const ChartDashboardUp = () => {
           <h3 className="text-lg font-semibold text-gray-900">
             Status Kesehatan
           </h3>
-          <button className="text-gray-400 hover:text-gray-600 transition-colors duration-200">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-            </svg>
-          </button>
         </div>
 
         {isLoading || !kesehatanChart ? (
@@ -410,6 +411,7 @@ export const ChartDashboardUp = () => {
               options={{
                 ...kesehatanData.options,
                 labels: kesehatanChart.labels,
+                colors: ["#10B981", "#F59E0B", "#EF4444"],
               }}
               series={kesehatanChart.series}
               type="donut"
@@ -418,7 +420,7 @@ export const ChartDashboardUp = () => {
 
             <div className="mt-4 space-y-2">
               {kesehatanChart.labels.map((label, index) => {
-                const colors = ["bg-green-500", "bg-blue-500", "bg-red-500"];
+                const colors = ["bg-green-500", "bg-yellow-500", "bg-red-500"];
                 return (
                   <div
                     key={label}
@@ -445,4 +447,4 @@ export const ChartDashboardUp = () => {
   );
 };
 
-export const ChartDashboardDown = () => {};
+export default ChartDashboard;

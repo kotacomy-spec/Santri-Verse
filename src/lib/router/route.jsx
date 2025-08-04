@@ -42,7 +42,7 @@ export const routes = createBrowserRouter([
   {
     path: "/musyrif",
     element: (
-      <AuthRole allowedRoles={["musyrif"]}>
+      <AuthRole allowedRoles={["musyrif"]} redirect="/auth/login">
         <RoleBasedLayout />
       </AuthRole>
     ),
@@ -74,7 +74,7 @@ export const routes = createBrowserRouter([
   {
     path: "/keamanan",
     element: (
-      <AuthRole allowedRoles={["keamanan"]}>
+      <AuthRole allowedRoles={["keamanan"]} redirect="/auth/login">
         <RoleBasedLayout />
       </AuthRole>
     ),

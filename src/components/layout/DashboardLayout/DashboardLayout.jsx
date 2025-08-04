@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import DashboardSidebar from "./DashboardLayoutSidebar/DashboardSidebar";
 import { sidebarMusyrif, sidebarKeamanan } from "./DashboardMenu";
-import LoadingScreen from "@/components/ui/mondok-loading";
 
 const DashboardLayout = (props) => {
   const { children, type } = props;

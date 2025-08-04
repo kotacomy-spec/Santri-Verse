@@ -1,5 +1,6 @@
 import KpiCard from "./KpiCard";
-import { ChartDashboardUp } from "./ChartDashboard";
+import ChartDashboard from "./ChartDashboard";
+import CardList from "./CardList";
 
 const DashboardMusyrif = () => {
   return (
@@ -15,11 +16,16 @@ const DashboardMusyrif = () => {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <KpiCard />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <ChartDashboardUp />
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <KpiCard />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <ChartDashboard />
+            </div>
+            <div>
+              <CardList />
+            </div>
           </div>
         </div>
       </div>
