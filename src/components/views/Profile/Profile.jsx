@@ -136,7 +136,12 @@ const Profile = () => {
                     ? "bg-red-600 hover:bg-red-700"
                     : "bg-green-700 hover:bg-green-800"
                 }`}
-                onClick={() => setIsEditing(!isEditing)}
+                onClick={() => {
+                  setIsEditing(!isEditing);
+                  if (isEditing) {
+                    handleCancelImage();
+                  }
+                }}
                 disabled={isLoading}
               >
                 {isEditing ? (
@@ -313,7 +318,10 @@ const Profile = () => {
                   <div className="flex justify-end space-x-2">
                     <Button
                       variant="outline"
-                      onClick={() => setIsEditing(false)}
+                      onClick={() => {
+                        setIsEditing(false);
+                        handleCancelImage();
+                      }}
                     >
                       Batal
                     </Button>
