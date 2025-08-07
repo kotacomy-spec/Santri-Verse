@@ -67,7 +67,7 @@ const KpiCard = () => {
         : kpiData.map((item, index) => (
             <Card
               key={index}
-              className="w-full max-w-sm bg-white shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+              className="w-full bg-white shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
             >
               <CardContent className="py-4">
                 <div className="flex items-center justify-between">

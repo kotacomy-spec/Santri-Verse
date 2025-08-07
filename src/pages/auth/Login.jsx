@@ -64,7 +64,6 @@ const LoginPages = () => {
       } else if (role === "keamanan") {
         navigate("/keamanan/dashboard", { replace: true });
       } else {
-
         toast.error("Anda belum memiliki role", { id: toastId });
       }
     } catch (error) {

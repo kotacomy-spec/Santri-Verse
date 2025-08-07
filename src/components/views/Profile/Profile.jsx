@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, Edit3, Save, X } from "lucide-react";
@@ -22,6 +21,7 @@ const Profile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [Submit, SetIsSubmit] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [newImageFile, setNewImageFile] = useState(null);
@@ -36,9 +36,30 @@ const Profile = () => {
     profile_picture: "",
   });
 
+  const MAX_FILE_SIZE_MB = 2;
+  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Hanya file gambar yang diperbolehkan !");
+      return;
+    }
+
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast.error(
+        "Format gambar tidak didukung! Gunakan JPG, JPEG, PNG, atau WEBP."
+      );
+      return;
+    }
+
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > MAX_FILE_SIZE_MB) {
+      toast.error(`Ukuran gambar maksimal ${MAX_FILE_SIZE_MB}MB`);
+      return;
+    }
 
     setNewImageFile(file);
     setPreviewImage(URL.createObjectURL(file));
@@ -77,6 +98,7 @@ const Profile = () => {
   }, [id, navigate]);
 
   const handleProfileSave = async () => {
+    SetIsSubmit(true);
     let imageUrl = profile.profile_picture;
 
     if (newImageFile) {
@@ -91,6 +113,7 @@ const Profile = () => {
       if (uploadError) {
         console.log(uploadError);
         toast.error("Gagal upload gambar");
+        SetIsSubmit(false);
         return;
       }
 
@@ -111,9 +134,12 @@ const Profile = () => {
       .update({ ...profile, profile_picture: imageUrl })
       .eq("id", id);
 
-    if (error) return toast.error("Gagal update profile");
+    if (error) {
+      SetIsSubmit(false);
+      return toast.error("Gagal memperbarui profil");
+    }
 
-    toast.success("Profile diperbarui");
+    toast.success("Profil Berhasil Diperbarui");
     setNewImageFile(null);
     setIsEditing(false);
   };

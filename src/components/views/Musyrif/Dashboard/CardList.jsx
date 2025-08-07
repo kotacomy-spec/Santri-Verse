@@ -13,7 +13,6 @@ const CardList = () => {
             <h3 className="text-xl font-bold text-gray-800 ">
               Pelanggaran Terbaru
             </h3>
-            <Link to={"/keamanan/dashboard"}>Woe</Link>
           </div>
         </CardHeader>
         <CardContent className="py-4">
