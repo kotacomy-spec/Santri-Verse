@@ -5,7 +5,7 @@ export default function UbahPassword() {
   return (
     <>
       <div className="font-manrope">
-        <OrangtuaHeader title={"Ubah Kata Sandi"} />
+        <OrangtuaHeader title={"Keamanan Akun"} />
         <FormUbahPassword/>
       </div>
     </>
