@@ -122,9 +122,11 @@ export default function FormUbahPassword() {
           className={
             "md:text-center w-fit flex justify-center  mx-auto md:text-xl text-md"
           }
+          width={"w-60"}
+          homeWidth={"w-1/5"}
           title={
             // " Gunakan kombinasi kata sandi yang kuat untuk melindungi informasi Anda."
-            "Password"
+            "Ubah Kata Sandi"
           }
           icon={<Lock size={20} className="hidden md:flex" />}
         />

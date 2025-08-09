@@ -56,8 +56,6 @@ export default function OrangtuaHeader({ title }) {
       .select(`*`)
       .eq("id", user.id)
       .single();
-
-    console.log("data akun", data);
     if (error) {
       console.log(error);
     } else {
@@ -99,6 +97,35 @@ export default function OrangtuaHeader({ title }) {
   };
   // Logout
 
+  // Menghandle Notifikasi
+  const popupRef = useRef(null);
+  const buttonRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // cek kalau klik bukan di popup dan bukan di tombol
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setMuncul(false);
+      }
+    };
+
+    if (muncul) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    // cleanup biar gak leak
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [muncul]);
+  // Menghandle Notifikasi
+
   return (
     <>
       <motion.div
@@ -109,8 +136,9 @@ export default function OrangtuaHeader({ title }) {
         className="flex h-full justify-between border-b-2 border-gray-200  py-3 px-4 mx-6 relative"
       >
         <AnimatePresence>
-          {muncul ? (
+          {muncul && (
             <motion.div
+              ref={popupRef}
               initial={{
                 opacity: 0,
                 y: -300,
@@ -127,11 +155,11 @@ export default function OrangtuaHeader({ title }) {
             >
               <Notification />
             </motion.div>
-          ) : null}
+          )}
         </AnimatePresence>
 
         <div className="flex justify-between gap-4 items-center">
-          <Link to="/orangtua/dashboard" className=" text-white w-fit h-fit ">
+          <Link to="/orangtua" className=" text-white w-fit h-fit ">
             <div className="rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5">
               <BookOpenText size={24} />
             </div>
@@ -143,6 +171,7 @@ export default function OrangtuaHeader({ title }) {
         </div>
         <div className="flex justify-between items-center gap-4 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 h-fit py-1.5 px-2">
           <motion.button
+            ref={buttonRef}
             onClick={() => {
               setMuncul(!muncul);
             }}
