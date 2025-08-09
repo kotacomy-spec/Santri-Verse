@@ -1,7 +1,6 @@
 /*eslint-disable */
 import { CircleAlert, Edit3, Save, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { AlertTitle } from "../../ui/alert";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { LabelDanInput, TitlePage } from "./ComponentForm";
 import { Input } from "@/components/ui/input";
@@ -11,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { AlertTitle } from "@/components/ui/alert";
 
 export default function FormProfile() {
   const { id } = useParams();
@@ -60,6 +60,7 @@ export default function FormProfile() {
 
   // when ubahProfile loads, set profileImage and previewImage accordingly
   useEffect(() => {
+    if (fileUpload) return;
     if (ubahProfile?.profile_picture) {
       setProfileImage(ubahProfile.profile_picture); // DB URL
       setPreviewImage(ubahProfile.profile_picture); // tampilkan sama dulu
@@ -74,14 +75,14 @@ export default function FormProfile() {
         setPathGambarLama(null);
       }
     } else {
-      // fallback ke default jika tidak ada foto
+      // ke default jika tidak ada foto
       setProfileImage(profilImageDefault);
       setPreviewImage(profilImageDefault);
       setPathGambarLama(null);
     }
-  }, [ubahProfile]);
+  }, [ubahProfile?.profile_picture, fileUpload]);
 
-  // pilih file (tidak mengganti profileImage!)
+  // pilih file (belum mengganti profileImage)
   const changeImageProfile = (e) => {
     const file = e.target.files?.[0];
     if (file && ["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
@@ -128,7 +129,6 @@ export default function FormProfile() {
             .remove([pathGambarLama]);
           if (deleteError) {
             console.error("Gagal hapus gambar lama:", deleteError.message);
-            // non-blocking: kita lanjut tetap update DB
           }
         }
 
@@ -181,7 +181,7 @@ export default function FormProfile() {
     }
   };
 
-  // Batal / Reset ke state awal dari DB
+  // Batal atau Reset ke state awal dari DB
   const HandleBatal = (e) => {
     e?.preventDefault();
     // tutup edit mode
@@ -192,7 +192,7 @@ export default function FormProfile() {
     setFileUpload(null);
     // reset input file element
     if (inputRef.current) inputRef.current.value = "";
-    // reset ubahProfile.profile_picture agar tidak mengandung preview temp
+    // reset ubahProfile.profile_picture
     setUbahProfile((prev) => ({
       ...prev,
       profile_picture: profileImage || profilImageDefault,
@@ -204,7 +204,6 @@ export default function FormProfile() {
     e.preventDefault();
     setFileUpload(null);
     setPreviewImage(profilImageDefault);
-    // reset input DOM
     if (inputRef.current) inputRef.current.value = "";
 
     // optional: update DB to default (jika mau persist immediately)
@@ -221,7 +220,6 @@ export default function FormProfile() {
       if (databaseError) {
         toast.error("Gagal reset gambar ke default");
       } else {
-        // hapus old storage jika perlu
         if (pathGambarLama) {
           await supabase.storage.from("pesantren").remove([pathGambarLama]);
         }
@@ -246,7 +244,25 @@ export default function FormProfile() {
     <>
       <div className="md:mx-6 mx-4 my-3">
         <AnimatePresence>
-          {/* ...alert UI sama seperti sebelumnya... */}
+          {alert && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ ease: "easeInOut" }}
+                className="absolute bg-red-100 text-red-600 z-10 md:w-xl md:top-10 left-0 right-0 md:mx-auto mx-8 flex  px-4 py-4 justify-between items-center rounded-xl"
+              >
+                <div className="flex gap-4">
+                  <CircleAlert />
+                  <AlertTitle>Mohon pilih file yang sesuai</AlertTitle>
+                </div>
+                <button onClick={resetAlert}>
+                  <X />
+                </button>
+              </motion.div>
+            </>
+          )}
         </AnimatePresence>
 
         <TitlePage title={"Edit Profil"} width={"w-48"} homeWidth={"w-1/4"} />
