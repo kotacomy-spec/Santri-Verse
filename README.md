@@ -1,181 +1,115 @@
-# Santri Verse 🕌
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
+</picture>
 
-**Santri Verse**  adalah aplikasi manajemen pesantren berbasis web yang dibangun dengan **React**, **Tailwind CSS**, **Supabase**, dan **Shadcn/UI**. Proyek ini ditujukan untuk mengelola kegiatan santri, musyrif, dan orang tua dalam lingkungan pondok pesantren.
+<div align="center"><strong>Next.js Admin Dashboard Starter Template With Shadcn-ui</strong></div>
+<div align="center">Built with the Next.js 15 App Router</div>
+<br />
+<div align="center">
+<a href="https://dub.sh/shadcn-dashboard">View Demo</a>
+<span>
+</div>
 
----
+## Overview
 
-## 📌 Fitur Utama
+This is a starter template using the following stack:
 
-### 📝 Pendaftaran Santri (PSB)
+- Framework - [Next.js 15](https://nextjs.org/13)
+- Language - [TypeScript](https://www.typescriptlang.org)
+- Auth - [Clerk](https://go.clerk.com/ILdYhn7)
+- Error tracking - [<picture><img alt="Sentry" src="public/assets/sentry.svg">
+        </picture>](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy26q2-nextjs&utm_content=github-banner-project-tryfree)
+- Styling - [Tailwind CSS v4](https://tailwindcss.com)
+- Components - [Shadcn-ui](https://ui.shadcn.com)
+- Schema Validations - [Zod](https://zod.dev)
+- State Management - [Zustand](https://zustand-demo.pmnd.rs)
+- Search params state manager - [Nuqs](https://nuqs.47ng.com/)
+- Tables - [Tanstack Data Tables](https://ui.shadcn.com/docs/components/data-table) • [Dice table](https://www.diceui.com/docs/components/data-table)
+- Forms - [React Hook Form](https://ui.shadcn.com/docs/components/form)
+- Command+k interface - [kbar](https://kbar.vercel.app/)
+- Linting - [ESLint](https://eslint.org)
+- Pre-commit Hooks - [Husky](https://typicode.github.io/husky/)
+- Formatting - [Prettier](https://prettier.io)
 
-- Formulir pendaftaran santri baru secara online
-- Data calon santri akan masuk ke sistem dan bisa diverifikasi oleh admin
+_If you are looking for a Tanstack start dashboard template, here is the [repo](https://git.new/tanstack-start-dashboard)._
 
-### 🎓 Untuk Musyrif
+## Pages
 
-- **Manajemen Pelanggaran**
-- **Pemantauan Kesehatan Santri**
-- **Pengelolaan Perizinan Santri**
+| Pages                                                                                 | Specifications                                                                                                                                                                                                                                                          |
+| :------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Signup / Signin](https://go.clerk.com/ILdYhn7)      | Authentication with **Clerk** provides secure authentication and user management with multiple sign-in options including passwordless authentication, social logins, and enterprise SSO - all designed to enhance security while delivering a seamless user experience. |
+| [Dashboard (Overview)](https://shadcn-dashboard.kiranism.dev/dashboard)    | Cards with Recharts graphs for analytics. Parallel routes in the overview sections feature independent loading, error handling, and isolated component rendering. |
+| [Product](https://shadcn-dashboard.kiranism.dev/dashboard/product)         | Tanstack tables with server side searching, filter, pagination by Nuqs which is a Type-safe search params state manager in nextjs                                                                                                                                       |
+| [Product/new](https://shadcn-dashboard.kiranism.dev/dashboard/product/new) | A Product Form with shadcn form (react-hook-form + zod).                                                                                                                                                                                                                |
+| [Profile](https://shadcn-dashboard.kiranism.dev/dashboard/profile)         | Clerk's full-featured account management UI that allows users to manage their profile and security settings                                                                                                                                                             |
+| [Kanban Board](https://shadcn-dashboard.kiranism.dev/dashboard/kanban)     | A Drag n Drop task management board with dnd-kit and zustand to persist state locally.                                                                                                                                                                                  |
+| [Not Found](https://shadcn-dashboard.kiranism.dev/dashboard/notfound)      | Not Found Page Added in the root level                                                                                                                                                                                                                                  |
+| [Global Error](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy26q2-nextjs&utm_content=github-banner-project-tryfree)           | A centralized error page that captures and displays errors across the application. Integrated with **Sentry** to log errors, provide detailed reports, and enable replay functionality for better debugging. |
 
-### 🗂️ Master Data (Admin/Musyrif)
+## Feature based organization
 
-- **Perizinan**
-  - Keterangan Izin
-- **Pelanggaran**
-  - Jenis Pelanggaran
-  - Kategori Pelanggaran
-  - Tindakan Disiplin
-- **Santri**
-  - Halaqoh
-  - Kamar
-  - Kelas
-  - Jenjang
-  - Orang Tua
-  - Musyrif
-
-### 👨‍👩‍👧 Untuk Orang Tua
-
-- Melihat data santri terkait:
-  - Pelanggaran
-  - Kesehatan
-  - Perizinan
-  - Informasi Santri
-- Mengajukan Izin Santri
-- Menerima Pengumuman dari Pondok
-- Informasi Akun Pribadi
-
-### 🛡️ Untuk Keamanan (Satpam)
-
-- Verifikasi dan validasi izin santri saat keluar pondok
-- Sistem status izin real-time setelah disetujui oleh musyrif
-
----
-
-## 🚀 Teknologi
-
-<p align="left">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/TailwindCSS-0EA5E9?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" />
-  <img src="https://img.shields.io/badge/Shadcn/UI-000000?style=for-the-badge&logo=ui&logoColor=white" />
-</p>
-
----
-
-## 🧑‍💻 Tim Pengembang
-
-- Naufal ([@NavanKen](https://github.com/NavanKen))
-- Dias ([@D4yezz](https://github.com/D4yezz))
-
----
-
-## 🌐 Bahasa
-
-- 🇮🇩 Bahasa Indonesia
-
----
-
-## 🗂️ Struktur Proyek (Ringkas)
-
-```
-mondok/
-├── components/
-├── pages/
-├── services/
-├── supabase/
-├── utils/
-└── ...
-```
-
----
-
-## 📦 Instalasi
-
-```bash
-git clone https://github.com/NavanKen/Mondok.git
-cd Mondok
-npm install
-npm run dev
+```plaintext
+src/
+├── app/ # Next.js App Router directory
+│ ├── (auth)/ # Auth route group
+│ │ ├── (signin)/
+│ ├── (dashboard)/ # Dashboard route group
+│ │ ├── layout.tsx
+│ │ ├── loading.tsx
+│ │ └── page.tsx
+│ └── api/ # API routes
+│
+├── components/ # Shared components
+│ ├── ui/ # UI components (buttons, inputs, etc.)
+│ └── layout/ # Layout components (header, sidebar, etc.)
+│
+├── features/ # Feature-based modules
+│ ├── feature/
+│ │ ├── components/ # Feature-specific components
+│ │ ├── actions/ # Server actions
+│ │ ├── schemas/ # Form validation schemas
+│ │ └── utils/ # Feature-specific utilities
+│ │
+├── lib/ # Core utilities and configurations
+│ ├── auth/ # Auth configuration
+│ ├── db/ # Database utilities
+│ └── utils/ # Shared utilities
+│
+├── hooks/ # Custom hooks
+│ └── use-debounce.ts
+│
+├── stores/ # Zustand stores
+│ └── dashboard-store.ts
+│
+└── types/ # TypeScript types
+└── index.ts
 ```
 
-Pastikan Anda telah mengatur file `.env` dan konfigurasi Supabase dengan benar.
+## Getting Started
 
----
+> [!NOTE]  
+> We are using **Next 15** with **React 19**, follow these steps:
 
----
+Clone the repo:
 
-## 🇬🇧 English Version
-
-**Santri Verse** is a web-based pesantren (Islamic boarding school) management system built with **React**, **Tailwind CSS**, **Supabase**, and **Shadcn/UI**.
-
-### 🎯 Key Features
-
-#### 📝 Student Registration (PSB)
-
-- Online registration form for new students
-- Submitted student data is stored in the system and can be verified by admin
-
-#### 🎓 For Musyrif (Supervisors)
-
-- Violation Reporting
-- Student Health Monitoring
-- Permission Management
-
-#### 🗂️ Master Data
-
-- Permission Types
-- Violation Categories & Actions
-- Student Placement:
-  - Halaqoh
-  - Room
-  - Grade Level
-  - Guardian / Parent
-  - Assigned Musyrif
-
-#### 👨‍👩‍👧 For Parents
-
-- View student activities:
-  - Violations
-  - Health Reports
-  - Permissions
-  - Announcements
-- Submit Permission Requests
-- Manage Account Information
-
-#### 🛡️ For Security
-
-- Validate outgoing students based on musyrif-approved permissions
-- Real-time permission status checking
-
----
-
-### 💻 Tech Stack
-
-<p align="left">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/TailwindCSS-0EA5E9?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" />
-  <img src="https://img.shields.io/badge/Shadcn/UI-000000?style=for-the-badge&logo=ui&logoColor=white" />
-</p>
-
----
-
-### 👨‍💻 Developers
-
-- Naufal ([@NavanKen](https://github.com/NavanKen))
-- Dias ([@D4yezz](https://github.com/D4yezz))
-
----
-
-### 🛠️ Setup Instructions
-
-```bash
-git clone https://github.com/NavanKen/Mondok.git
-cd Mondok
-npm install
-npm run dev
+```
+git clone https://github.com/Kiranism/next-shadcn-dashboard-starter.git
 ```
 
-Make sure to configure your `.env` file with Supabase credentials.
+- `pnpm install` ( we have legacy-peer-deps=true added in the .npmrc)
+- Create a `.env.local` file by copying the example environment file:
+  `cp env.example.txt .env.local`
+- Add the required environment variables to the `.env.local` file.
+- `pnpm run dev`
 
----
+##### Environment Configuration Setup
+
+To configure the environment for this project, refer to the `env.example.txt` file. This file contains the necessary environment variables required for authentication and error tracking.
+
+You should now be able to access the application at http://localhost:3000.
+
+> [!WARNING]
+> After cloning or forking the repository, be cautious when pulling or syncing with the latest changes, as this may result in breaking conflicts.
+
+Cheers! 🥂
