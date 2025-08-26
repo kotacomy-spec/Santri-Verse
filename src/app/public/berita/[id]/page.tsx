@@ -16,10 +16,14 @@ import {
   IconShare
 } from '@tabler/icons-react';
 
-export default function BlogPostPage({ params }: { params: { id: string } }) {
+export default async function BlogPostPage({
+  params
+}: {
+  params: Promise<any>;
+}) {
   // Mock blog post data
   const blogPost = {
-    id: params.id,
+    id: (await params).id,
     title: 'Perayaan Hari Pendidikan Nasional di SD Muhammadiyah 20',
     content: `
       <p>SD Muhammadiyah 20 Surabaya kembali merayakan Hari Pendidikan Nasional dengan penuh semangat dan antusiasme. Acara yang diselenggarakan pada tanggal 2 Mei 2024 ini diikuti oleh seluruh siswa, guru, dan staf sekolah.</p>
